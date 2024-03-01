@@ -1,0 +1,119 @@
+body {
+  background-image: url('informationpagecontent/background-image.jpg');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center center; /* Center the background image */
+  background-attachment: fixed; /* Ensure the background stays fixed */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+footer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: radial-gradient(circle, #a7a7a7a9, #00000094);
+  padding: 5px 0; /* Adjust padding as needed */
+  text-align: center;
+}
+
+footer nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer nav ul li {
+  display: inline;
+  margin: 0 10px; /* Adjust margin as needed */
+}
+
+footer nav ul li a {
+  color: #fff; /* Text color of the navigation links */
+  text-decoration: none;
+  font-size: 18px; /* Adjust font size as needed */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+footer nav ul li a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+footer nav ul li a.current-page {
+  color: #000000; /* Change text color */
+  text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+}
+/* Your existing CSS continues below */
+/* Position the logo container */
+.logo-container {
+  display: flex;
+  position: center;
+  width: 100%;
+  margin-top: 40px;
+}
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+p {
+  color: #666;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.button {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 15px 30px;
+  background-color: #424242;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button:hover {
+  background-color: #457fa0;
+}
+
+.button img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.button-anim {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+/* Disable text selection for all elements */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
