@@ -292,6 +292,7 @@ main {
   font-weight: bold; /* Set the font weight of the text */
   font-family: cursive;
   max-width: 100px;
+  display: inline-flex;
 }
 /* Disable text selection for all elements */
 * {
