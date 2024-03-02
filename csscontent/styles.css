@@ -288,7 +288,7 @@ main {
 .added-item-text {
   color: #00eeff; /* Set the color of the text */
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  font-size: 20x; /* Set the font size of the text */
+  font-size: 18px; /* Set the font size of the text */
   font-weight: bold; /* Set the font weight of the text */
   font-family: cursive;
   max-width: 100px;
