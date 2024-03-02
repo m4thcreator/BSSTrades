@@ -75,7 +75,7 @@ footer nav ul li a.current-page {
   padding: 20px;
   border: 4px dashed #ffffff;
   position: relative;
-  display: flex;
+  display: block;
   flex-wrap: wrap;
   gap: 10px;
   max-height: calc(6 * (100px + 20px));
