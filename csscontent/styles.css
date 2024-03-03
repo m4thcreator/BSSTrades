@@ -28,14 +28,22 @@ body {
   text-align: center;
   max-width: 400px;
 }
-
-.popup p {
-  color: #8d0023;
+.popup h2 {
+  color: #1e6e39;
   margin-top: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: monospace;
+}
+.popup p {
+  color: #2c2c2c;
+  margin-top: 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bold;
 }
-
+.popup h3 {
+  color: #41282d;
+  margin-top: 0;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
 .popup button {
   padding: 10px 20px;
   background-color: #333;
@@ -159,9 +167,8 @@ main {
 .item-value {
   display: none;
   color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 17px;
-  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 13px;
 }
 .item-value.hidden {
   display: inline-block;
@@ -288,7 +295,7 @@ main {
 .added-item-text {
   color: #00eeff; /* Set the color of the text */
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  font-size: 18px; /* Set the font size of the text */
+  font-size: 20x; /* Set the font size of the text */
   font-weight: bold; /* Set the font weight of the text */
   font-family: cursive;
   max-width: 100px;
