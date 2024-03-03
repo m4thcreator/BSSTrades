@@ -317,7 +317,7 @@ main {
     margin-left: 0; /* Adjust as needed */
   }
   .divider img {
-    width: 100px;
+    width: auto;
     height: auto;
   }
   .you-receive,
