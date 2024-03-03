@@ -318,7 +318,7 @@ main {
   }
   .divider img {
     width: 100px;
-    height: 100px;
+    height: auto;
   }
   .you-receive,
   .i-receive {
