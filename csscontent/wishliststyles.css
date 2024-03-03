@@ -254,3 +254,22 @@ main {
   -ms-user-select: none;
   user-select: none;
 }
+@media only screen and (max-width: 600px) {
+  .popup {
+    max-width: 90%;
+  }
+  
+  .trade-panel {
+    margin-left: 0; /* Adjust as needed */
+  }
+  .you-receive,
+  .i-receive {
+    width: 100%;
+    margin-left: 0; /* Adjust as needed */
+  }
+  .clear-button,
+  .toggle-button {
+    margin-left: auto; /* Move to the right */
+    margin-right: auto; /* Move to the left */
+  }
+}
