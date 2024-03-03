@@ -317,15 +317,18 @@ main {
     margin-left: 0; /* Adjust as needed */
   }
   .divider img {
-    max-width: 100px;
-    max-height: 100px;
+    width: 100px;
+    height: 100px;
   }
   .you-receive,
   .i-receive {
     width: 100%;
     margin-left: 0; /* Adjust as needed */
   }
-
+.items img {
+    width: 20px;
+    height: 20px;
+  }
   .clear-button,
   .toggle-button {
     margin-left: auto; /* Move to the right */
