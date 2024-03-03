@@ -147,26 +147,29 @@ document.addEventListener('DOMContentLoaded', function () {
         const sections = document.querySelectorAll('.you-receive, .i-receive');
         sections.forEach(section => {
             const images = section.querySelectorAll('img');
-            let totalStars = 0;
-            let totalItems = 0;
+            let totalNumbers = 0;
             
             images.forEach(image => {
-                const stars = image.dataset.value.length; // Get the number of stars from the data-value attribute
-                totalStars += stars;
-                totalItems++;
+                const value = image.dataset.value; // Get the data-value attribute
+                const number = parseInt(value); // Parse the number from the data-value attribute
+                if (!isNaN(number)) { // Check if the parsed number is a valid number
+                    totalNumbers += number; // Add the number to the total
+                }
             });
-            
-            let averageStars = totalStars / totalItems; // Calculate the average star rating
             
             const existingTotalText = section.querySelector('.total-value');
             if (existingTotalText) {
                 existingTotalText.remove();
             }
             const totalText = document.createElement('div');
-            totalText.textContent = `Average Rating (1-10): ${averageStars.toFixed(2)} ★`;
+            totalText.textContent = `Total Value: ${formatNumberWithCommas(totalNumbers)}`;
             totalText.classList.add('total-value');
             section.appendChild(totalText);
         });
+    }
+    
+    function formatNumberWithCommas(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     const clearButton = document.querySelector('.clear-button');
