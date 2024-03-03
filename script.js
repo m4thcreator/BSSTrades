@@ -31,15 +31,22 @@ function searchItems(categoryId) {
         // Get the alt text of the current image and convert it to uppercase
         var alt = img.alt.toUpperCase();
         
-        // If the alt text contains the search query, display the image; otherwise, hide it
+        // Get the corresponding item-value span
+        var itemValue = img.nextElementSibling;
+
+        // If the alt text contains the search query, display the image and its item-value; otherwise, hide them
         if (alt.indexOf(filter) > -1) {
             img.style.display = 'inline-flex'; // Show the image
+            // Show the item-value only if the image is being displayed
+            if (img.style.display !== 'none') {
+                itemValue.style.display = 'inline-flex';
+            }
         } else {
             img.style.display = 'none'; // Hide the image
+            itemValue.style.display = 'none'; // Hide the item-value
         }
     });
 }
-
 function addItem(receiver) {
     selectedReceiver = receiver;
     const addSigns = document.querySelectorAll('.add-sign');
