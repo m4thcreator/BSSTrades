@@ -316,7 +316,9 @@ main {
   .trade-panel {
     margin-left: 0; /* Adjust as needed */
   }
-
+  .divider img {
+    max-width: 50%;
+  }
   .you-receive,
   .i-receive {
     width: 100%;
