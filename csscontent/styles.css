@@ -308,3 +308,8 @@ main {
   -ms-user-select: none;
   user-select: none;
 }
+@media screen and (max-width: 480px) {
+  .trade-panel {
+    padding: 10px;
+  }
+}
