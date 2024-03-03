@@ -317,7 +317,8 @@ main {
     margin-left: 0; /* Adjust as needed */
   }
   .divider img {
-    max-width: 50%;
+    max-width: 100px;
+    max-height: 100px;
   }
   .you-receive,
   .i-receive {
