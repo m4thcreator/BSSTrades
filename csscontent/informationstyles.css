@@ -2,8 +2,8 @@ body {
   background-image: url('informationpagecontent/background-image.jpg');
   background-size: cover;
   background-repeat: repeat;
-  background-position: center center; /* Center the background image */
-  background-attachment: fixed; /* Ensure the background stays fixed */
+  background-position: center center; 
+  background-attachment: fixed;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@ footer {
   left: 0;
   width: 100%;
   background: radial-gradient(circle, #a7a7a7a9, #00000094);
-  padding: 5px 0; /* Adjust padding as needed */
+  padding: 5px 0; 
   text-align: center;
 }
 
@@ -26,26 +26,24 @@ footer nav ul {
 
 footer nav ul li {
   display: inline;
-  margin: 0 10px; /* Adjust margin as needed */
+  margin: 0 10px; 
 }
 
 footer nav ul li a {
-  color: #fff; /* Text color of the navigation links */
+  color: #fff; 
   text-decoration: none;
-  font-size: 18px; /* Adjust font size as needed */
+  font-size: 18px; 
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 footer nav ul li a:hover {
-  text-decoration: underline; /* Add underline on hover */
+  text-decoration: underline; 
 }
 footer nav ul li a.current-page {
-  color: #000000; /* Change text color */
+  color: #000000; 
   text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
 }
-/* Your existing CSS continues below */
-/* Position the logo container */
 .logo-container {
   display: flex;
   position: center;
@@ -110,7 +108,6 @@ p {
     transform: scale(1.05);
   }
 }
-/* Disable text selection for all elements */
 * {
   -webkit-user-select: none;
   -moz-user-select: none;
