@@ -2,8 +2,8 @@ body {
   background-image: url('wishlistpagecontent/background-imagealt.png');
   background-size: cover;
   background-repeat: repeat;
-  background-position: center center; /* Center the background image */
-  background-attachment: fixed; /* Ensure the background stays fixed */
+  background-position: center center; 
+  background-attachment: fixed; 
 }
 footer {
   position: fixed;
@@ -11,7 +11,7 @@ footer {
   left: 0;
   width: 100%;
   background: radial-gradient(circle, #a7a7a7a9, #00000094);
-  padding: 5px 0; /* Adjust padding as needed */
+  padding: 5px 0; 
   text-align: center;
 }
 
@@ -23,26 +23,24 @@ footer nav ul {
 
 footer nav ul li {
   display: inline;
-  margin: 0 10px; /* Adjust margin as needed */
+  margin: 0 10px; 
 }
 
 footer nav ul li a {
-  color: #fff; /* Text color of the navigation links */
+  color: #fff;
   text-decoration: none;
-  font-size: 18px; /* Adjust font size as needed */
+  font-size: 18px;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 footer nav ul li a:hover {
-  text-decoration: underline; /* Add underline on hover */
+  text-decoration: underline; 
 }
 footer nav ul li a.current-page {
-  color: #000000; /* Change text color */
+  color: #000000;
   text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
 }
-/* Your existing CSS continues below */
-/* Position the logo container */
 .logo-container {
   display: flex;
   position: center;
@@ -101,12 +99,12 @@ main {
 .items img {
   width: 55px;
   height: 55px;
-  margin: 1px; /* Adjust margin as needed */
+  margin: 1px; 
   transition: transform 0.3s ease;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
 }
-/* Hover effect for images */
+
 .items img:hover {
   transform: scale(1.1);
 }
@@ -128,15 +126,15 @@ main {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 20px;
-  flex-grow: 1; /* Make each category take up equal space */
+  flex-grow: 1; 
   max-width: 500px;
-  height: 380px; /* Set a fixed height */
-  overflow-y: auto; /* Enable vertical scrolling */
+  height: 380px; 
+  overflow-y: auto; 
   border-radius: 10px;
 }
 .item {
-  width: 100%; /* Adjust the width of each item as needed */
-  margin-bottom: 10px; /* Add margin between items */
+  width: 100%; 
+  margin-bottom: 10px;
 }
 .search-bar {
   display: flex;
@@ -160,7 +158,6 @@ main {
   border-color: #007bff;
 }
 
-/* Animation for the search bars */
 @keyframes slideIn {
   0% {
       transform: translateY(-10px);
@@ -182,7 +179,7 @@ main {
   background-image: url('wishlistpagecontent/plus.png');
   background-size: cover;
   transition: opacity 0.3s ease;
-  animation: coolAnimation 0.5s infinite alternate; /* Add animation */
+  animation: coolAnimation 0.5s infinite alternate;
 }
 
 .add-sign.selected {
@@ -239,15 +236,13 @@ main {
   display:none
 }
 .added-item-text {
-  color: #00eeff; /* Set the color of the text */
+  color: #00eeff; 
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  font-size: 18px; /* Set the font size of the text */
-  font-weight: bold; /* Set the font weight of the text */
+  font-size: 20x;
+  font-weight: bold; 
   font-family: cursive;
   max-width: 100px;
-  display: inline-flex;
 }
-/* Disable text selection for all elements */
 * {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -258,18 +253,17 @@ main {
   .popup {
     max-width: 90%;
   }
-  
   .trade-panel {
-    margin-left: 0; /* Adjust as needed */
+    margin-left: 0; 
   }
   .you-receive,
   .i-receive {
     width: 100%;
-    margin-left: 0; /* Adjust as needed */
+    margin-left: 0;
   }
   .clear-button,
   .toggle-button {
-    margin-left: auto; /* Move to the right */
-    margin-right: auto; /* Move to the left */
+    margin-left: auto; 
+    margin-right: auto; 
   }
 }
