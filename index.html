@@ -12,23 +12,6 @@
 </head>
 
 <body>
-<script> 
-        fetch('datavalues.csv') 
-        .then(response => response.text()) 
-        .then(CSV => { 
-            const stickers = document.getElementById("cubsSkins");
-            const rows = CSV.split('\n'); 
-            rows.forEach(row=> { 
-                var image = document.createElement("img");
-                const cells = row.split(','); 
-                image.alt=cells[0];
-                image.data-value=cells[1];
-                image.src = cells[2];
-                stickers.appendChild(image);
-            }); 
-        }) 
-        .catch(error => console.error('error:', error)); 
-    </script>
     <footer>
         <nav>
             <ul>
