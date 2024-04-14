@@ -16,7 +16,7 @@
         fetch('datavalues.csv') 
         .then(response => response.text()) 
         .then(CSV => { 
-            const stickers = document.getElementById("hive_stickers");
+            const stickers = document.getElementById("cubsSkins");
             const rows = CSV.split('\n'); 
             rows.forEach(row=> { 
                 var image = document.createElement("img");
@@ -122,7 +122,7 @@
         <div class="items">
             <div class="category">
                 <h2>Cub Skins</h2>
-                <div class="item">
+                <div class="item" id="cubsSkins">
                     <img src="cub_skins/BrownCub.png" alt="Brown Cub" data-value="10">
                     <span class="item-value">10</span>
                     <img src="cub_skins/RoboCub.png" alt="Robo Cub" data-value="3">
