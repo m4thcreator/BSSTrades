@@ -1,18 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const popup = document.querySelector('.popup-overlay');
-    const closePopupBtn = document.getElementById('closePopup');
-
-    popup.style.display = 'flex';
-
-    closePopupBtn.addEventListener('click', function() {
-        popup.style.opacity = 0;
-        setTimeout(() => {
-            popup.style.display = 'none';
-            popup.style.opacity = 1;
-        }, 500); 
-    });
-});
-
 function searchItems(categoryId) {
     var input = document.getElementById('searchBar_' + categoryId);
     var filter = input.value.toUpperCase();
