@@ -253,9 +253,6 @@ main {
   user-select: none;
 }
 @media only screen and (max-width: 600px) {
-  .popup {
-    max-width: 90%;
-  }
   .trade-panel {
     margin-left: 0; 
   }
