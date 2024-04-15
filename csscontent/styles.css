@@ -267,3 +267,30 @@ main {
     margin-right: auto;
   }
 }
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.button {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 15px 30px;
+  background-color: #424242;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button:hover {
+  background-color: #457fa0;
+}
+
+.button img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
