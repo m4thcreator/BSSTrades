@@ -264,10 +264,9 @@ main {
 .button-container {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 .button {
-  margin-top: 10px;
   background: radial-gradient(circle, #a7a7a7a9, #00000094);
   display: inline-block;
   padding: 0px 30px;
