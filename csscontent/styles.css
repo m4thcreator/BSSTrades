@@ -34,10 +34,10 @@ footer nav ul li a {
 }
 
 footer nav ul li a:hover {
-  color: #0dca2c; 
+  text-decoration: underline;
 }
 footer nav ul li a.current-page {
-  color: #0dca2c;
+  text-decoration: underline;
 }
 .trade-panel {
   display: flex;
