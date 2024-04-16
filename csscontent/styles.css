@@ -30,16 +30,14 @@ footer nav ul li a {
   color: #fff; 
   text-decoration: none;
   font-size: 18px; 
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 footer nav ul li a:hover {
-  text-decoration: underline; 
+  color: #0d8eca; 
 }
 footer nav ul li a.current-page {
-  color: #000000;
-  text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+  color: #0d8eca;
 }
 .trade-panel {
   display: flex;
