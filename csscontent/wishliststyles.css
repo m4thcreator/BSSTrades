@@ -180,12 +180,10 @@ main {
 
 .clear-button {
   padding: 5px 10px;
-  background-color: #8d0023;
+  background-color: #F44336;
   color: #fff;
   border: none;
   cursor: pointer;
-  margin-bottom: 5px;
-  margin-left: 905px;
   transition: transform 0.3s ease;
   border-radius: 5px;
   display:flex;
