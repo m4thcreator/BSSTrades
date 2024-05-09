@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 const additionalText = prompt('Would you like to enter more infos about the beequip:');
                                 if (additionalText !== null) {
                                     itemText += '\n' + additionalText.trim();
-                                    confirmAddMore = confirm('Anything left?');
+                                    confirmAddMore = confirm('Anything else?');
                                 } else {
                                     confirmAddMore = false;
                                 }
@@ -122,42 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    function calculateTotalValue() {
-        const sections = document.querySelectorAll('.you-receive, .i-receive');
-        sections.forEach(section => {
-            const images = section.querySelectorAll('img');
-            let totalNumbers = 0;
-            
-            images.forEach(image => {
-                const value = image.dataset.value;
-                const number = parseInt(value);
-                if (!isNaN(number)) { 
-                    totalNumbers += number; 
-                }
-            });
-            
-            const existingTotalText = section.querySelector('.total-value');
-            if (existingTotalText) {
-                existingTotalText.remove();
-            }
-            const totalText = document.createElement('div');
-            totalText.textContent = `Total Value: ${formatNumberWithCommas(totalNumbers)}`;
-            totalText.classList.add('total-value');
-            section.appendChild(totalText);
-        });
-    }
-    
-    function formatNumberWithCommas(number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
     const clearButton = document.querySelector('.clear-button');
     clearButton.addEventListener('click', clearAllSections);
 });
-
-function toggleItemValues() {
-    const itemValues = document.querySelectorAll('.item-value');
-    itemValues.forEach(function(itemValue) {
-        itemValue.classList.toggle('hidden');
-    });
-}
