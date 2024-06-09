@@ -1,5 +1,5 @@
 body {
-  background-image: url('mainpagecontent/background-imagealtEaster.png');
+  background-color: #EBD844;
   background-size: cover;
   background-repeat: repeat;
   background-position: center center; 
@@ -80,8 +80,9 @@ footer nav ul li a.current-page {
 .i-receive img {
   width: 70px;
   height: 70px;
+  margin: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  background: radial-gradient(circle, #a7a7a7a9, #00000094);
+  background-color: #B5A635;
   border-radius: 10px;
   margin-bottom: 5px; 
   display:inline-flex
@@ -94,9 +95,10 @@ main {
   width: 55px;
   height: 55px;
   margin: 1px;
+  background-color: #B5A635;
   transition: transform 0.3s ease;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 .items img:hover {
   transform: scale(1.1);
