@@ -114,6 +114,7 @@ main {
   box-shadow: 0 0 5px rgba(88, 88, 88, 0.733);
   margin: 20px;
   color: white;
+  background-color: #EBD844;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 20px;
