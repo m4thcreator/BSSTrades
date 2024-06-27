@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Page</title>
+    <link rel="stylesheet" href="questionstyles.css">
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+        <a href="index.html">
+            <img src="csscontentTV/homeicon_side.png" alt="Home" class="icon">
+        </a>
+        <a href="services.html">
+            <img src="csscontentTV/questionicon_side.png" alt="Services" class="icon">
+        </a>
+    </div>
+    <div id="main">
+        <button class="togglebtn" onclick="toggleNav()">☰ Open</button>
+    </div>
+    <div class="faq-container">
+        <h1>Frequently Asked Questions</h1>
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(1)">What is a trade wishlist?</div>
+            <div class="faq-answer" id="answer1">A trade wishlist is a list where you can add items you wish to trade with others. It helps you keep track of what you're looking for and facilitates trading with others.</div>
+        </div>
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(2)">How do I create a trade wishlist?</div>
+            <div class="faq-answer" id="answer2">To create a trade wishlist, go to the wishlist page in the sidebar menu. Once in, you can start adding stickers by searching for them and selecting the ones you want to trade then you take a screenshot and you are good to go.</div>
+        </div>
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(3)">How do i add stickers to my wishlist?</div>
+            <div class="faq-answer" id="answer3">You can add stickers to your wishlist by clicking on the "Add Items" button and searching for them using keywords (like title, words, etc.) and then selecting the stickers from the search results.</div>
+        </div>
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(4)">What if i change my mind or make a mistake while adding stickers?</div>
+            <div class="faq-answer" id="answer4">You can easily remove items from your wishlist at any time. Simply go to your wishlist, find the sticker you want to remove, and click on it to delete it.</div>
+        </div>
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(5)">How secure is my personal information on this website?</div>
+            <div class="faq-answer" id="answer5">We do not collect any informations, the website is cookies free and your connection is encrypted.</div>
+        </div>
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(6)">How do i calculate values of my stickers?</div>
+            <div class="faq-answer" id="answer6">This feature is deprecated. Stickers values changes everyday and the website is not popular enough to create a value chart that would be shared across the community.</div>
+        </div>
+    </div>
+    <script src="questionscript.js"></script>
+</body>
+</html>
