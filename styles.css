@@ -128,8 +128,8 @@ body {
 }
 
 .items img {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     cursor: pointer;
     transition: transform 0.2s;
     background-color: #B5AB38;
@@ -298,8 +298,8 @@ button:hover {
 }
 
 .category .images img {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     cursor: pointer;
     transition: transform 0.2s;
     background-color: #B5AB38;
@@ -348,6 +348,8 @@ img.small-attached-image {
 .image-with-attachments img {
     background-color: #7C8793;
     border-radius: 8px;
+    width: 60px;
+    height: 60px;
 }
 .image-with-attachments .abilityText {
     background-color: #96A5AD;
