@@ -1,7 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,300italic,300,100italic,100);
-
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     width: 100vw;
     height: 100vh;
     background-image: url("csscontentTV/background-image.png");
@@ -146,7 +144,7 @@ textarea {
     margin: 8px;
     color: #FFFFFF;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #8cd943;
     border-radius: 8px;
 }
@@ -154,14 +152,14 @@ textarea {
     margin: 8px;
     color: #FFFFFF;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #d94343;
     border-radius: 8px;
 }
 .container h1 {
     color: #FFFFFF;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #3283FF;
     border-radius: 8px;
     width: 40%;
@@ -273,7 +271,7 @@ button:hover {
     position: relative;
 }
 .modal-content h2 {
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: #252525;
     font-weight: 800;
 }
@@ -298,7 +296,7 @@ button:hover {
     margin: 8px;
     color: #FFFFFF;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .attach-texts {
     padding: 10px;
@@ -350,7 +348,7 @@ button:hover {
     margin: 5px;
     color: #FFFFFF;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .category input {
@@ -427,7 +425,7 @@ img.small-attached-image {
     background-color: #96A5AD;
     padding: 5px;
     border-radius: 8px;
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .remove-btn {
     position: absolute;
@@ -461,5 +459,5 @@ img.small-attached-image {
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    font-family: "Roboto";
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
