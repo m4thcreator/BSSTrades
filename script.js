@@ -93,7 +93,9 @@ function attachText(type) {
     if (type === 'yellow') {
         textToAttach = `[HB] ${text}`;
     }
-
+    if (type === 'black') {
+        textToAttach = `[★] ${text}`;
+    }
     if (!attachedTexts[selectedImage]) {
         attachedTexts[selectedImage] = [];
     }
@@ -137,6 +139,8 @@ function getTextColor(type) {
             return 'SpringGreen';
         case 'red':
             return 'LightSalmon';
+        case 'black':
+            return 'black';
         case 'yellow':
             return 'Gold';
         default:
