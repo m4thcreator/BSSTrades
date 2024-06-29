@@ -236,7 +236,7 @@ button:hover {
 .attached-preview img {
     background-color: #2257A8;
 }
-#greenText, #redText, #yellowText {
+#greenText, #redText, #blackText, #yellowText {
     width: 70%;
     padding: 5px;
     margin-bottom: 10px;
