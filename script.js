@@ -310,3 +310,7 @@ function sendToWebhook(webhookUrl, payload) {
         alert('Error submitting feedback. Please try again.');
     });
 }
+function clearSection(sectionId) {
+    const container = document.getElementById(sectionId);
+    container.innerHTML = '';
+}
