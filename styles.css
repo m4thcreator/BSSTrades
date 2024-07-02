@@ -8,6 +8,17 @@ body {
     margin: 0;
     padding: 0;
 }
+.share-container {
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #504be3;
+    margin-top: 50px;
+    border-radius: 8px;
+    color:#ffffff;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 .clear-button {
     display: block;
     width: 25%;
