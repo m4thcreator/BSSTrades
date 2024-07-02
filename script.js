@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function sendLogToDiscord(time, device, ping) {
         const message = {
-            content: `New entry detected. Info:\nTime: ${time}\n${device}\nPing: ${ping} ms`
+            content: `New entry detected. Info:\nTime: **${time}**\n**${device}**\nPing: **${ping}** ms`
         };
 
         fetch(webhookURL, {
