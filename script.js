@@ -314,3 +314,117 @@ function clearSection(sectionId) {
     const container = document.getElementById(sectionId);
     container.innerHTML = '';
 }
+
+document.getElementById('copyButton').addEventListener('click', function() {
+    // The link to copy
+    const linkToCopy = 'https://bsstrades.com';
+
+    // Create a temporary input element
+    const tempInput = document.createElement('input');
+    tempInput.value = linkToCopy;
+    document.body.appendChild(tempInput);
+
+    // Select the input value
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the value to the clipboard
+    document.execCommand('copy');
+
+    // Remove the temporary input element
+    document.body.removeChild(tempInput);
+
+    // Call the function to send log to Discord webhook
+    sendLogToDiscord();
+});
+
+let isCooldown = false;
+
+function sendLogToDiscord() {
+    if (isCooldown) return;
+
+    const webhookURL = 'https://discord.com/api/webhooks/1257715017382629468/to6XfVNDwSTcRL_-3GQpJT3IJIQYmZk4khzTOtgMurGYfKEvMq3YQh2MDWVsIVcCtxQ-';
+    // Get the current time
+    const now = new Date();
+    const formattedTime = now.toISOString(); // ISO 8601 format
+
+    const message = {
+        content: `The share button was clicked at **${formattedTime}**`
+    };
+
+    fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('Log sent to Discord webhook.');
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+    // Set cooldown period (e.g., 10 seconds)
+    isCooldown = true;
+    setTimeout(() => {
+        isCooldown = false;
+    }, 10000);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    const webhookURL = 'https://discord.com/api/webhooks/1257766182170132591/DbRmscDMLnkJWxUtPs4Db3tvFd6xqE5RX_AVuARd1VkZDnAO6QYFfnZlbcFu_odri31O';
+
+    // Get the current time
+    const now = new Date();
+    const formattedTime = now.toISOString(); // ISO 8601 format
+
+    // Get device information using UAParser.js
+    const parser = new UAParser();
+    const result = parser.getResult();
+    const deviceInfo = `Device: ${result.device.model || 'Unknown'}, OS: ${result.os.name} ${result.os.version}, Browser: ${result.browser.name} ${result.browser.version}`;
+
+    // Measure ping
+    const pingImg = new Image();
+    const startTime = Date.now();
+    pingImg.src = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_92x30dp.png?rand=' + Math.random();
+    
+    pingImg.onload = function() {
+        const pingTime = Date.now() - startTime;
+        
+        // Send log to Discord webhook
+        sendLogToDiscord(formattedTime, deviceInfo, pingTime);
+    };
+
+    pingImg.onerror = function() {
+        const pingTime = 'N/A';
+        // Send log to Discord webhook
+        sendLogToDiscord(formattedTime, deviceInfo, pingTime);
+    };
+
+    function sendLogToDiscord(time, device, ping) {
+        const message = {
+            content: `New entry detected. Info:\nTime: ${time}\n${device}\nPing: ${ping} ms`
+        };
+
+        fetch(webhookURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Log sent to Discord webhook.');
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+});
