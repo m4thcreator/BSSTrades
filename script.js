@@ -377,37 +377,52 @@ function sendLogToDiscord() {
 }
 document.addEventListener('DOMContentLoaded', function() {
     const webhookURL = 'https://discord.com/api/webhooks/1257766182170132591/DbRmscDMLnkJWxUtPs4Db3tvFd6xqE5RX_AVuARd1VkZDnAO6QYFfnZlbcFu_odri31O';
+    const cooldownPeriod = 10 * 60 * 1000; // 10 minutes in milliseconds
+    const lastVisitTimeKey = 'lastVisitTime';
+
+    console.log('DOMContentLoaded event triggered');
 
     // Get the current time
     const now = new Date();
-    const formattedTime = now.toISOString(); // ISO 8601 format
+    const formattedTime = now.toISOString();
+    console.log('Current time:', formattedTime);
+
+    // Check if the user has visited within the cooldown period
+    const lastVisitTime = localStorage.getItem(lastVisitTimeKey);
+    if (lastVisitTime && now - new Date(lastVisitTime) < cooldownPeriod) {
+        console.log('Within cooldown period, not sending webhook');
+        return;
+    }
+
+    // Update the last visit time
+    localStorage.setItem(lastVisitTimeKey, now.toISOString());
 
     // Get device information using UAParser.js
     const parser = new UAParser();
     const result = parser.getResult();
-    const deviceInfo = `Device: ${result.device.model || 'Unknown'}, OS: ${result.os.name} ${result.os.version}, Browser: ${result.browser.name} ${result.browser.version}`;
+    const deviceInfo = `**Device**: ${result.device.model || 'Unknown'}, **OS**: ${result.os.name} ${result.os.version}, **Browser**: ${result.browser.name} ${result.browser.version}`;
+    console.log('Device information:', deviceInfo);
 
     // Measure ping
-    const pingImg = new Image();
     const startTime = Date.now();
+    const pingImg = new Image();
     pingImg.src = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_92x30dp.png?rand=' + Math.random();
-    
+
     pingImg.onload = function() {
         const pingTime = Date.now() - startTime;
-        
-        // Send log to Discord webhook
+        console.log('Ping time:', pingTime, 'ms');
         sendLogToDiscord(formattedTime, deviceInfo, pingTime);
     };
 
     pingImg.onerror = function() {
+        console.log('Error loading image for ping measurement');
         const pingTime = 'N/A';
-        // Send log to Discord webhook
         sendLogToDiscord(formattedTime, deviceInfo, pingTime);
     };
 
     function sendLogToDiscord(time, device, ping) {
         const message = {
-            content: `<@&1257769822624813068> New entry detected. Info:\nTime: **${time}**\n**${device}**\nPing: **${ping}** ms`
+            content: `<@&1257769822624813068> New entry detected. Info:\n**Time**: ${time}\n${device}\nPing: ${ping} ms`
         };
 
         fetch(webhookURL, {
