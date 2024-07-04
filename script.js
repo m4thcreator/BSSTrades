@@ -22,6 +22,17 @@ function openSecondaryModal(imageSrc) {
 function closeAttachModal() {
     document.getElementById('attachImageModal').style.display = 'none';
 }
+function addTextItem(section) {
+    const text = prompt("Enter the text you want to add to the trade:");
+    if (text) {
+        const container = document.getElementById(`${section}-items`);
+        const textDiv = document.createElement('div');
+        textDiv.classList.add("trade-text-item");
+        textDiv.textContent = text;
+        textDiv.onclick = () => container.removeChild(textDiv);
+        container.appendChild(textDiv);
+    }
+}
 
 function selectImage(imageSrc) {
     if (currentSection === 'category5') {
