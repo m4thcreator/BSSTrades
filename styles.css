@@ -8,15 +8,27 @@ body {
     margin: 0;
     padding: 0;
 }
+.h2ss {
+    color: white;
+    justify-content: center;
+    text-align: center;
+}
+
 .share-container {
     text-align: center;
     cursor: pointer;
     padding: 10px;
-    background-color: #504be3;
+    max-width: 30%;
+    background-color: #ffffff;
+    transition: background-color 0.2s;
     margin-top: 50px;
     border-radius: 8px;
-    color:#ffffff;
+    color:#000000;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: auto;
+}
+.share-container:hover {
+    background-color: rgb(190, 190, 190);
 }
 
 .clear-button {
