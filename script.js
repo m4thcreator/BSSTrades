@@ -34,7 +34,7 @@ function addTextItem(section) {
     }
 }
 
-function selectImage(imageSrc) {
+function selectImage(imageSrc, alt) {
     if (currentSection === 'category5') {
         openSecondaryModal(imageSrc);
     } else {
@@ -44,9 +44,52 @@ function selectImage(imageSrc) {
         img.alt = 'Selected Image';
         img.onclick = () => removeImage(img, imageSrc);
         container.appendChild(img);
-    }
+        //sendStickerLog(currentSection, alt);
+        }
 }
 
+function sendStickerLog(currentSection, alt) {
+    if (isCooldown) return;
+
+    let stickerwebhookURL;
+
+    // Determine webhook URL based on currentSection
+    if (currentSection === 'looking-for') {
+        stickerwebhookURL = 'https://discord.com/api/webhooks/1257781952090603540/GTolahgzRI0ETOGmUyoK_cBuRobEIu-G4Tpp8yc--nVlep2jLeXUhDeb5fhlfiGDyBI6';
+    } else if (currentSection === 'to-offer') {
+        stickerwebhookURL = 'https://discord.com/api/webhooks/1258878961421779016/6g6qKYzz0srwSVmjNxrQCKU1WEl2X3ZAfZSVHcqyzsOPKGxg27er7IHjW7hUkBxaJO4z';
+    } else {
+        // Default webhook URL or handle other cases
+        stickerwebhookURL = '';
+    }
+
+    const sticker_message = {
+        content: `Sticker: **${alt}**`
+    };
+
+    fetch(stickerwebhookURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sticker_message)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('Log sent to Discord webhook.');
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+    // Set cooldown period (e.g., 0.5 seconds)
+    isCooldown = true;
+    setTimeout(() => {
+        isCooldown = false;
+    }, 500);
+}
 function removeImage(imgElement, imageSrc) {
     const container = imgElement.parentNode;
     container.removeChild(imgElement);
@@ -166,7 +209,8 @@ function filterImages(input, categoryId) {
 
     for (let i = 0; i < images.length; i++) {
         const altText = images[i].alt.toLowerCase();
-        if (altText.includes(filter)) {
+        const tags = images[i].getAttribute('data-tags').toLowerCase();
+        if (altText.includes(filter) || tags.includes(filter)) {
             images[i].style.display = '';
         } else {
             images[i].style.display = 'none';
@@ -452,5 +496,19 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
+    }
+});
+document.addEventListener("DOMContentLoaded", function() {
+    const popup = document.getElementById("patch-note-popup");
+    const closeBtn = document.querySelector(".close");
+
+    // Check if the popup has been dismissed previously
+    if (!localStorage.getItem("patchNoteDismissed")) {
+        popup.style.display = "flex";
+    }
+
+    closeBtn.onclick = function() {
+        popup.style.display = "none";
+        localStorage.setItem("patchNoteDismissed", "true");
     }
 });
