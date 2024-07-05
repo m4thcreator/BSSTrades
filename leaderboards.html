@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboards - Bee Swarm Simulator Trading</title>
+    <meta name="description" content="This page contains the weekly Top 10, offered and looked for stickers! Use this page to know worthness of your sticker.">
+    <link rel="icon" type="image/png" href="index/favicon.png">
+    <link rel="stylesheet" href="leaderboardstyle.css">
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+        <a href="/">
+            <img src="csscontentTV/homeicon_side.png" alt="Home" class="icon">
+        </a>
+        <a href="/leaderboards">
+            <img src="csscontentTV/lbicon.png" alt="Leaderboards" class="icon">
+        </a>
+        <a href="/informations">
+            <img src="csscontentTV/questionicon_side.png" alt="FAQ" class="icon">
+        </a>
+    </div>
+    <div id="main">
+        <button class="togglebtn" onclick="toggleNav()">☰ Open</button>
+    </div>
+    <div class="titlelb">
+        <h1>🏆 Weekly Leaderboards 🏆</h1>
+    </div>
+    <div class="leaderboard-container">
+        <div class="leaderboard" id="offers">
+            <h2>Top 10 Weekly Offers</h2>
+            <ul>
+                <!-- Example items -->
+                <li data-name="Offer 1" class="first">
+                    <span class="rank">1:</span>
+                    <img src="images/offer1.png" alt="Offer 1" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 2" class="second">
+                    <span class="rank">2:</span>
+                    <img src="images/offer2.png" alt="Offer 2" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 3" class="third">
+                    <span class="rank">3:</span>
+                    <img src="images/offer3.png" alt="Offer 3" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 4" class="more">
+                    <span class="rank">4:</span>
+                    <img src="images/offer3.png" alt="Offer 4" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 5" class="more">
+                    <span class="rank">5:</span>
+                    <img src="images/offer3.png" alt="Offer 5" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 6" class="more">
+                    <span class="rank">6:</span>
+                    <img src="images/offer3.png" alt="Offer 6" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 7" class="more">
+                    <span class="rank">7:</span>
+                    <img src="images/offer3.png" alt="Offer 7" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 8" class="more">
+                    <span class="rank">8:</span>
+                    <img src="images/offer3.png" alt="Offer 8" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 9" class="more">
+                    <span class="rank">9:</span>
+                    <img src="images/offer.png" alt="Offer 9" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Offer 10" class="more">
+                    <span class="rank">10:</span>
+                    <img src="images/offer3.png" alt="Offer 10" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <!-- Add more items as needed -->
+            </ul>
+        </div>
+        <div class="leaderboard" id="demands">
+            <h2>Top 10 Weekly Demands</h2>
+            <ul>
+                <!-- Example items -->
+                <li data-name="Demand 1" class="first">
+                    <span class="rank">1:</span>
+                    <img src="images/demand1.png" alt="Demand 1" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 2" class="second">
+                    <span class="rank">2:</span>
+                    <img src="images/demand2.png" alt="Demand 2" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 3" class="third">
+                    <span class="rank">3:</span>
+                    <img src="images/demand3.png" alt="Demand 3" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 4" class="more">
+                    <span class="rank">4:</span>
+                    <img src="images/demand1.png" alt="Demand 4" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 5" class="more">
+                    <span class="rank">5:</span>
+                    <img src="images/demand2.png" alt="Demand 5" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 6" class="more">
+                    <span class="rank">6:</span>
+                    <img src="images/demand3.png" alt="Demand 6" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 7" class="more">
+                    <span class="rank">7:</span>
+                    <img src="images/demand1.png" alt="Demand 7" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 8" class="more">
+                    <span class="rank">8:</span>
+                    <img src="images/demand2.png" alt="Demand 8" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 9" class="more">
+                    <span class="rank">9:</span>
+                    <img src="images/demand3.png" alt="Demand 9" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <li data-name="Demand 10" class="more">
+                    <span class="rank">10:</span>
+                    <img src="images/demand3.png" alt="Demand 10" class="profile-pic">
+                    <span class="item-name">undefined</span>
+                </li>
+                <!-- Add more items as needed -->
+            </ul>
+        </div>
+    </div>
+    <div id="tooltip" class="tooltip"></div>
+    <script src="questionscript.js"></script>
+</body>
+</html>
