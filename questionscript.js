@@ -21,3 +21,24 @@ function toggleNav() {
         toggleButton.innerHTML = "✖ Close";
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const profilePics = document.querySelectorAll('.profile-pic');
+    const tooltip = document.getElementById('tooltip');
+
+    profilePics.forEach(pic => {
+        pic.addEventListener('mouseenter', function(event) {
+            const name = this.parentElement.getAttribute('data-name');
+            tooltip.innerText = name;
+            tooltip.style.opacity = 1;
+        });
+
+        pic.addEventListener('mousemove', function(event) {
+            tooltip.style.top = `${event.pageY + 10}px`;
+            tooltip.style.left = `${event.pageX + 10}px`;
+        });
+
+        pic.addEventListener('mouseleave', function() {
+            tooltip.style.opacity = 0;
+        });
+    });
+});
