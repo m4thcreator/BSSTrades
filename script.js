@@ -46,7 +46,7 @@ function selectImage(imageSrc, alt) {
         img.alt = 'Selected Image';
         img.onclick = () => removeImage(img, imageSrc);
         container.appendChild(img);
-        sendStickerLog(currentSection, alt);
+        //sendStickerLog(currentSection, alt);
         }
 }
 
