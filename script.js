@@ -2,6 +2,8 @@ let currentSection = 'looking-for';
 let selectedImage = null;
 let attachedImages = {};
 let attachedTexts = {};
+let isOnCooldown = false;
+const altCooldowns = {};
 
 function openModal(section) {
     currentSection = section;
@@ -44,12 +46,26 @@ function selectImage(imageSrc, alt) {
         img.alt = 'Selected Image';
         img.onclick = () => removeImage(img, imageSrc);
         container.appendChild(img);
-        //sendStickerLog(currentSection, alt);
+        sendStickerLog(currentSection, alt);
         }
 }
 
 function sendStickerLog(currentSection, alt) {
-    if (isCooldown) return;
+    if (isOnCooldown) return;
+
+    const globalCooldownPeriod = 500; // 0.5 seconds cooldown for all requests
+    const altCooldownPeriod = 604800000; // 10 seconds cooldown for each unique alt per section
+
+    // Initialize cooldown structure for currentSection if it doesn't exist
+    if (!altCooldowns[currentSection]) {
+        altCooldowns[currentSection] = {};
+    }
+
+    // Check if the same alt in the current section is on cooldown
+    if (altCooldowns[currentSection][alt]) {
+        console.log(`Cooldown in effect for sticker: ${alt} in section: ${currentSection}`);
+        return;
+    }
 
     let stickerwebhookURL;
 
@@ -60,11 +76,11 @@ function sendStickerLog(currentSection, alt) {
         stickerwebhookURL = 'https://discord.com/api/webhooks/1258878961421779016/6g6qKYzz0srwSVmjNxrQCKU1WEl2X3ZAfZSVHcqyzsOPKGxg27er7IHjW7hUkBxaJO4z';
     } else {
         // Default webhook URL or handle other cases
-        stickerwebhookURL = '';
+        stickerwebhookURL = 'https://discord.com/api/webhooks/DEFAULT_WEBHOOK_ID/DEFAULT_WEBHOOK_TOKEN';
     }
 
     const sticker_message = {
-        content: `Sticker: **${alt}**`
+        content: `Sticker: **${alt}** Section: **${currentSection}**`
     };
 
     fetch(stickerwebhookURL, {
@@ -84,12 +100,19 @@ function sendStickerLog(currentSection, alt) {
         console.error('There was a problem with the fetch operation:', error);
     });
 
-    // Set cooldown period (e.g., 0.5 seconds)
-    isCooldown = true;
+    // Set cooldown for the alt in the current section
+    altCooldowns[currentSection][alt] = true;
     setTimeout(() => {
-        isCooldown = false;
-    }, 500);
+        delete altCooldowns[currentSection][alt];
+    }, altCooldownPeriod);
+
+    // Set global cooldown to prevent spamming requests
+    isOnCooldown = true;
+    setTimeout(() => {
+        isOnCooldown = false;
+    }, globalCooldownPeriod);
 }
+
 function removeImage(imgElement, imageSrc) {
     const container = imgElement.parentNode;
     container.removeChild(imgElement);
