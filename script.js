@@ -2,8 +2,6 @@ let currentSection = 'looking-for';
 let selectedImage = null;
 let attachedImages = {};
 let attachedTexts = {};
-let isOnCooldown = false;
-const altCooldowns = {};
 
 function openModal(section) {
     currentSection = section;
@@ -46,7 +44,7 @@ function selectImage(imageSrc, alt) {
         img.alt = 'Selected Image';
         img.onclick = () => removeImage(img, imageSrc);
         container.appendChild(img);
-        //sendStickerLog(currentSection, alt);
+        sendStickerLog(currentSection, alt);
         }
 }
 
@@ -54,16 +52,25 @@ function sendStickerLog(currentSection, alt) {
     if (isOnCooldown) return;
 
     const globalCooldownPeriod = 500; // 0.5 seconds cooldown for all requests
-    const altCooldownPeriod = 604800000; // 10 seconds cooldown for each unique alt per section
+    const altCooldownPeriod = 604800000; // 7 days cooldown for each unique alt per section
 
     // Initialize cooldown structure for currentSection if it doesn't exist
+    let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
     if (!altCooldowns[currentSection]) {
         altCooldowns[currentSection] = {};
     }
 
+    const now = Date.now();
+
     // Check if the same alt in the current section is on cooldown
-    if (altCooldowns[currentSection][alt]) {
+    if (altCooldowns[currentSection][alt] && altCooldowns[currentSection][alt] > now) {
         console.log(`Cooldown in effect for sticker: ${alt} in section: ${currentSection}`);
+        return;
+    }
+
+    // Check if the alt contains "Blacklist"
+    if (alt.includes("Blacklist")) {
+        console.log(`Alt "${alt}" is blacklisted and will not be sent.`);
         return;
     }
 
@@ -101,10 +108,8 @@ function sendStickerLog(currentSection, alt) {
     });
 
     // Set cooldown for the alt in the current section
-    altCooldowns[currentSection][alt] = true;
-    setTimeout(() => {
-        delete altCooldowns[currentSection][alt];
-    }, altCooldownPeriod);
+    altCooldowns[currentSection][alt] = now + altCooldownPeriod;
+    localStorage.setItem('altCooldowns', JSON.stringify(altCooldowns));
 
     // Set global cooldown to prevent spamming requests
     isOnCooldown = true;
@@ -112,6 +117,10 @@ function sendStickerLog(currentSection, alt) {
         isOnCooldown = false;
     }, globalCooldownPeriod);
 }
+
+// Initialize global cooldown and altCooldowns from localStorage
+let isOnCooldown = false;
+let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
 
 function removeImage(imgElement, imageSrc) {
     const container = imgElement.parentNode;
