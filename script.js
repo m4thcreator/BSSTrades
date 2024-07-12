@@ -535,12 +535,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const closeBtn = document.querySelector(".close");
 
     // Check if the popup has been dismissed previously
-    if (!localStorage.getItem("patchNoteDismissed")) {
+    if (!localStorage.getItem("IspatchNoteDismissed")) {
         popup.style.display = "flex";
     }
 
     closeBtn.onclick = function() {
         popup.style.display = "none";
-        localStorage.setItem("patchNoteDismissed", "true");
+        localStorage.setItem("IspatchNoteDismissed", "true");
     }
 });
