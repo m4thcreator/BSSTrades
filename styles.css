@@ -8,6 +8,17 @@ body {
     margin: 0;
     padding: 0;
 }
+.devtext {
+    background-color: rgba(129, 14, 14, 0.7);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    width: 40%;
+    margin: 0 auto;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
 .popup {
     display: none; /* Hidden by default */
     position: fixed; 
