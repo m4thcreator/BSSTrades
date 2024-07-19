@@ -2,6 +2,8 @@ let currentSection = 'looking-for';
 let selectedImage = null;
 let attachedImages = {};
 let attachedTexts = {};
+let tradeSlots = [];
+let currentSlotIndex = -1;
 
 function openModal(section) {
     currentSection = section;
@@ -39,14 +41,39 @@ function selectImage(imageSrc, alt) {
         openSecondaryModal(imageSrc);
     } else {
         const container = document.getElementById(`${currentSection}-items`);
-        const img = document.createElement('img');
-        img.src = imageSrc;
-        img.alt = 'Selected Image';
-        img.onclick = () => removeImage(img, imageSrc);
-        container.appendChild(img);
-        sendStickerLog(currentSection, alt);
+        const existingDiv = Array.from(container.children).find(div => div.querySelector(`img[src="${imageSrc}"]`));
+
+        if (existingDiv) {
+            let countSpan = existingDiv.querySelector('span');
+            let count = parseInt(countSpan.textContent.replace(' x', '')) || 1;
+            count++;
+            countSpan.textContent = ` x${count}`;
+        } else {
+            const div = document.createElement('div');
+            div.className = 'image-item';
+
+            const img = document.createElement('img');
+            img.src = imageSrc;
+            img.alt = 'Selected Image';
+
+            const countSpan = document.createElement('span');
+            countSpan.className = 'count-number'
+            countSpan.textContent = ' x1';
+
+            div.appendChild(img);
+            div.appendChild(countSpan);
+            div.onclick = (e) => {
+                e.stopPropagation();
+                removeImage(div, imageSrc);
+            };
+
+            container.appendChild(div);
         }
+
+        sendStickerLog(currentSection, alt);
+    }
 }
+
 
 function sendStickerLog(currentSection, alt) {
     if (isOnCooldown) return;
@@ -122,16 +149,18 @@ function sendStickerLog(currentSection, alt) {
 let isOnCooldown = false;
 let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
 
-function removeImage(imgElement, imageSrc) {
-    const container = imgElement.parentNode;
-    container.removeChild(imgElement);
-    if (attachedImages[imageSrc]) {
-        delete attachedImages[imageSrc];
-    }
-    if (attachedTexts[imageSrc]) {
-        delete attachedTexts[imageSrc];
+function removeImage(divElement, imageSrc) {
+    const countSpan = divElement.querySelector('span');
+    let count = parseInt(countSpan.textContent.replace(' x', '')) || 1;
+
+    if (count > 1) {
+        count--;
+        countSpan.textContent = ` x${count}`;
+    } else {
+        divElement.parentNode.removeChild(divElement);
     }
 }
+
 
 function selectAttachImage(imageSrc) {
     if (!attachedImages[selectedImage]) {
@@ -258,9 +287,16 @@ function finalizeAttachment() {
     const mainImg = document.createElement('img');
     mainImg.src = selectedImage;
     mainImg.alt = 'Selected Image';
-    mainImg.onclick = () => removeImage(imgWrapper, selectedImage);
+    mainImg.onclick = (e) => {
+        e.stopPropagation();
+        removeImage(imgWrapper, selectedImage);
+    };
 
     imgWrapper.appendChild(mainImg);
+
+    const countSpan = document.createElement('span');
+    countSpan.textContent = ' x1';
+    imgWrapper.appendChild(countSpan);
 
     const imageCounts = (attachedImages[selectedImage] || []).reduce((counts, imgSrc) => {
         counts[imgSrc] = (counts[imgSrc] || 0) + 1;
@@ -278,7 +314,7 @@ function finalizeAttachment() {
 
         const countBadge = document.createElement('span');
         countBadge.className = 'count-badge';
-        countBadge.innerHTML = count > 1 ? count : '';
+        countBadge.innerHTML = ` x${count}`;
 
         attachedImgWrapper.appendChild(attachedImg);
         attachedImgWrapper.appendChild(countBadge);
@@ -298,6 +334,9 @@ function finalizeAttachment() {
     container.appendChild(imgWrapper);
     closeAttachModal();
 }
+
+
+
 
 // Close modal if clicked outside
 window.onclick = function(event) {
@@ -462,74 +501,7 @@ function sendLogToDiscord() {
         isCooldown = false;
     }, 10000);
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const webhookURL = 'https://discord.com/api/webhooks/1257766182170132591/DbRmscDMLnkJWxUtPs4Db3tvFd6xqE5RX_AVuARd1VkZDnAO6QYFfnZlbcFu_odri31O';
-    const cooldownPeriod = 10 * 60 * 1000; // 10 minutes in milliseconds
-    const lastVisitTimeKey = 'lastVisitTime';
 
-    console.log('DOMContentLoaded event triggered');
-
-    // Get the current time
-    const now = new Date();
-    const formattedTime = now.toISOString();
-    console.log('Current time:', formattedTime);
-
-    // Check if the user has visited within the cooldown period
-    const lastVisitTime = localStorage.getItem(lastVisitTimeKey);
-    if (lastVisitTime && now - new Date(lastVisitTime) < cooldownPeriod) {
-        console.log('Within cooldown period, not sending webhook');
-        return;
-    }
-
-    // Update the last visit time
-    localStorage.setItem(lastVisitTimeKey, now.toISOString());
-
-    // Get device information using UAParser.js
-    const parser = new UAParser();
-    const result = parser.getResult();
-    const deviceInfo = `**Device**: ${result.device.model || 'Unknown'}, **OS**: ${result.os.name} ${result.os.version}, **Browser**: ${result.browser.name} ${result.browser.version}`;
-    console.log('Device information:', deviceInfo);
-
-    // Measure ping
-    const startTime = Date.now();
-    const pingImg = new Image();
-    pingImg.src = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_92x30dp.png?rand=' + Math.random();
-
-    pingImg.onload = function() {
-        const pingTime = Date.now() - startTime;
-        console.log('Ping time:', pingTime, 'ms');
-        sendLogToDiscord(formattedTime, deviceInfo, pingTime);
-    };
-
-    pingImg.onerror = function() {
-        console.log('Error loading image for ping measurement');
-        const pingTime = 'N/A';
-        sendLogToDiscord(formattedTime, deviceInfo, pingTime);
-    };
-
-    function sendLogToDiscord(time, device, ping) {
-        const message = {
-            content: `<@&1257769822624813068> New entry detected. Info:\n**Time**: ${time}\n${device}\nPing: ${ping} ms`
-        };
-
-        fetch(webhookURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log('Log sent to Discord webhook.');
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-    }
-});
 document.addEventListener("DOMContentLoaded", function() {
     const popup = document.getElementById("patch-note-popup");
     const closeBtn = document.querySelector(".close");
@@ -544,3 +516,140 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("IspatchNoteDismissed11", "true");
     }
 });
+function renderItems(section) {
+    const container = document.getElementById(section + '-items');
+    container.innerHTML = '';
+    const items = getItems(section);
+
+    // Create a map to count duplicates
+    const itemMap = items.reduce((map, item) => {
+        if (!map[item.src]) {
+            map[item.src] = { ...item, count: 0 };
+        }
+        map[item.src].count += item.count || 1;
+        return map;
+    }, {});
+
+    // Convert the map back to an array for rendering
+    const uniqueItems = Object.values(itemMap);
+
+    uniqueItems.forEach((item, index) => {
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = 'img-item';
+
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = 'Selected Image';
+        img.onclick = (e) => {
+            e.stopPropagation();
+            openSecondaryModal(item.src);
+        };
+
+        const countBadge = document.createElement('span');
+        countBadge.className = 'count-badge';
+        countBadge.innerHTML = item.count > 1 ? `x${item.count}` : '';
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-btn';
+        removeBtn.innerHTML = '×';
+        removeBtn.onclick = (e) => {
+            e.stopPropagation();
+            removeImage(index);
+        };
+
+        imgWrapper.appendChild(img);
+        imgWrapper.appendChild(countBadge);
+        imgWrapper.appendChild(removeBtn);
+        container.appendChild(imgWrapper);
+    });
+}
+
+function createSlot() {
+    if (tradeSlots.length >= 5) {
+        alert("Maximum of 5 slots allowed.");
+        return;
+    }
+    openSlotModal();
+}
+
+function openSlotModal() {
+    document.getElementById("slotModal").style.display = "block";
+}
+
+function closeSlotModal() {
+    document.getElementById("slotModal").style.display = "none";
+}
+
+function saveSlot() {
+    const slotName = document.getElementById("slotName").value.trim();
+    if (slotName === "") {
+        alert("Please enter a slot name.");
+        return;
+    }
+    if (currentSlotIndex === -1) {
+        tradeSlots.push({ name: slotName, data: getCurrentTradeData() });
+    } else {
+        tradeSlots[currentSlotIndex] = { name: slotName, data: getCurrentTradeData() };
+    }
+    updateSlotsUI();
+    closeSlotModal();
+}
+
+function updateSlotsUI() {
+    const container = document.getElementById("slotsContainer");
+    container.innerHTML = "";
+    tradeSlots.forEach((slot, index) => {
+        const slotDiv = document.createElement("div");
+        slotDiv.className = "slot";
+
+        const slotButton = document.createElement("button");
+        slotButton.textContent = slot.name;
+        slotButton.className = "load-button";
+        slotButton.onclick = () => loadSlot(index);
+        slotDiv.appendChild(slotButton);
+
+        const renameButton = document.createElement("button");
+        renameButton.textContent = "Rename";
+        renameButton.className = "rename-button";
+        renameButton.onclick = () => renameSlot(index);
+        slotDiv.appendChild(renameButton);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-button";
+        deleteButton.onclick = () => deleteSlot(index);
+        slotDiv.appendChild(deleteButton);
+
+        container.appendChild(slotDiv);
+    });
+}
+
+function getCurrentTradeData() {
+    const container = document.getElementById(`${currentSection}-items`);
+    const images = Array.from(container.getElementsByTagName("img"));
+    return images.map(img => img.src);
+}
+
+function loadSlot(index) {
+    const slot = tradeSlots[index];
+    const container = document.getElementById(`${currentSection}-items`);
+    container.innerHTML = "";
+    slot.data.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = 'Loaded Image';
+        img.onclick = () => removeImage(img, src);
+        container.appendChild(img);
+    });
+}
+
+function renameSlot(index) {
+    currentSlotIndex = index;
+    document.getElementById("slotName").value = tradeSlots[index].name;
+    openSlotModal();
+}
+
+function deleteSlot(index) {
+    tradeSlots.splice(index, 1);
+    updateSlotsUI();
+}
