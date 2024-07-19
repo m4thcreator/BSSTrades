@@ -285,6 +285,11 @@ textarea {
     padding: 5px;
     border-radius: 8px;
 }
+.count-number {
+    color: #444016;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+}
 .items {
     display: flex;
     flex-wrap: wrap;
@@ -336,7 +341,7 @@ button {
 }
 
 button:hover {
-    background-color: #4569a0;
+    background-color: #008cff;
 }
 .mediabutton-container {
     display: flex;
@@ -346,8 +351,8 @@ button:hover {
 .mediabutton {
     margin: 10px;
     padding: 10px 20px;
-    background-color: #424242;
-    color: #fff;
+    background-color: #555555;
+    color: #ffffff;
     font-size: 16px;
     text-decoration: none;
     border-radius: 5px;
@@ -358,6 +363,86 @@ button:hover {
     background-color: #4569a0;
 }
 /* Modals */
+/* Slot button styles */
+/* Slot Modal styles */
+.slot-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.slot-modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.slot-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.slot-close:hover,
+.slot-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Slot button styles */
+#slotsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.slot {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: calc(100% / 3 - 20px);
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 8px;
+}
+
+.slot button {
+    margin: 5px 0;
+    width: 100%;
+}
+
+.slot .rename-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.slot .delete-button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.slot .load-button {
+    background-color: #2196F3;
+    color: white;
+    padding: 15px;
+}
+
 .modal {
     display: none;
     position: fixed;
