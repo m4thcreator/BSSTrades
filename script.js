@@ -2,8 +2,7 @@ let currentSection = 'looking-for';
 let selectedImage = null;
 let attachedImages = {};
 let attachedTexts = {};
-let tradeSlots = [];
-let currentSlotIndex = -1;
+
 
 function openModal(section) {
     currentSection = section;
@@ -14,15 +13,19 @@ function closeModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
 
-function openSecondaryModal(imageSrc) {
+function openSecondaryModal(imageSrc, alt) {
     selectedImage = imageSrc;
+    selectedAlt = alt; // Ensure selectedAlt is set
     document.getElementById('attachImageModal').style.display = 'block';
     displayAttachedImages();
     displayAttachedTexts();
 }
 
+
 function closeAttachModal() {
     document.getElementById('attachImageModal').style.display = 'none';
+    selectedImage = null;
+    selectedAlt = null; // Reset selectedAlt here
 }
 function addTextItem(section) {
     const text = prompt("Enter the text you want to add to the trade:");
@@ -38,12 +41,12 @@ function addTextItem(section) {
 
 function selectImage(imageSrc, alt) {
     if (currentSection === 'category5') {
-        openSecondaryModal(imageSrc);
+        openSecondaryModal(imageSrc, alt); // Pass alt to secondary modal
     } else {
         const container = document.getElementById(`${currentSection}-items`);
         const existingDiv = Array.from(container.children).find(div => div.querySelector(`img[src="${imageSrc}"]`));
 
-        if (existingDiv) {
+        if (existingDiv && !alt.includes("Blacklist")) {
             let countSpan = existingDiv.querySelector('span');
             let count = parseInt(countSpan.textContent.replace(' x', '')) || 1;
             count++;
@@ -54,14 +57,17 @@ function selectImage(imageSrc, alt) {
 
             const img = document.createElement('img');
             img.src = imageSrc;
-            img.alt = 'Selected Image';
-
-            const countSpan = document.createElement('span');
-            countSpan.className = 'count-number'
-            countSpan.textContent = ' x1';
+            img.alt = alt;
 
             div.appendChild(img);
-            div.appendChild(countSpan);
+
+            if (!alt.includes("Blacklist")) {
+                const countSpan = document.createElement('span');
+                countSpan.className = 'count-number';
+                countSpan.textContent = ' x1';
+                div.appendChild(countSpan);
+            }
+
             div.onclick = (e) => {
                 e.stopPropagation();
                 removeImage(div, imageSrc);
@@ -73,7 +79,6 @@ function selectImage(imageSrc, alt) {
         sendStickerLog(currentSection, alt);
     }
 }
-
 
 function sendStickerLog(currentSection, alt) {
     if (isOnCooldown) return;
@@ -150,6 +155,14 @@ let isOnCooldown = false;
 let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
 
 function removeImage(divElement, imageSrc) {
+    const img = divElement.querySelector('img');
+    const altText = img.alt;
+    
+    if (altText.includes("Blacklist")) {
+        divElement.parentNode.removeChild(divElement);
+        return;
+    }
+
     const countSpan = divElement.querySelector('span');
     let count = parseInt(countSpan.textContent.replace(' x', '')) || 1;
 
@@ -160,6 +173,7 @@ function removeImage(divElement, imageSrc) {
         divElement.parentNode.removeChild(divElement);
     }
 }
+
 
 
 function selectAttachImage(imageSrc) {
@@ -280,13 +294,22 @@ function filterImages(input, categoryId) {
 }
 
 function finalizeAttachment() {
+    console.log("Finalizing attachment");
+    console.log("Selected Image:", selectedImage);
+    console.log("Selected Alt:", selectedAlt);
+
+    if (!selectedAlt) {
+        console.error("Error: selectedAlt is not set.");
+        return;
+    }
+
     const container = document.getElementById(`${currentSection}-items`);
     const imgWrapper = document.createElement('div');
     imgWrapper.className = 'image-with-attachments';
 
     const mainImg = document.createElement('img');
     mainImg.src = selectedImage;
-    mainImg.alt = 'Selected Image';
+    mainImg.alt = selectedAlt; // Use selectedAlt here
     mainImg.onclick = (e) => {
         e.stopPropagation();
         removeImage(imgWrapper, selectedImage);
@@ -294,9 +317,11 @@ function finalizeAttachment() {
 
     imgWrapper.appendChild(mainImg);
 
-    const countSpan = document.createElement('span');
-    countSpan.textContent = ' x1';
-    imgWrapper.appendChild(countSpan);
+    if (!selectedAlt.includes("Blacklist")) { // Use selectedAlt here
+        const countSpan = document.createElement('span');
+        countSpan.textContent = ' x1';
+        imgWrapper.appendChild(countSpan);
+    }
 
     const imageCounts = (attachedImages[selectedImage] || []).reduce((counts, imgSrc) => {
         counts[imgSrc] = (counts[imgSrc] || 0) + 1;
@@ -334,8 +359,6 @@ function finalizeAttachment() {
     container.appendChild(imgWrapper);
     closeAttachModal();
 }
-
-
 
 
 // Close modal if clicked outside
@@ -516,140 +539,3 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("IspatchNoteDismissed11", "true");
     }
 });
-function renderItems(section) {
-    const container = document.getElementById(section + '-items');
-    container.innerHTML = '';
-    const items = getItems(section);
-
-    // Create a map to count duplicates
-    const itemMap = items.reduce((map, item) => {
-        if (!map[item.src]) {
-            map[item.src] = { ...item, count: 0 };
-        }
-        map[item.src].count += item.count || 1;
-        return map;
-    }, {});
-
-    // Convert the map back to an array for rendering
-    const uniqueItems = Object.values(itemMap);
-
-    uniqueItems.forEach((item, index) => {
-        const imgWrapper = document.createElement('div');
-        imgWrapper.className = 'img-item';
-
-        const img = document.createElement('img');
-        img.src = item.src;
-        img.alt = 'Selected Image';
-        img.onclick = (e) => {
-            e.stopPropagation();
-            openSecondaryModal(item.src);
-        };
-
-        const countBadge = document.createElement('span');
-        countBadge.className = 'count-badge';
-        countBadge.innerHTML = item.count > 1 ? `x${item.count}` : '';
-
-        const removeBtn = document.createElement('button');
-        removeBtn.className = 'remove-btn';
-        removeBtn.innerHTML = '×';
-        removeBtn.onclick = (e) => {
-            e.stopPropagation();
-            removeImage(index);
-        };
-
-        imgWrapper.appendChild(img);
-        imgWrapper.appendChild(countBadge);
-        imgWrapper.appendChild(removeBtn);
-        container.appendChild(imgWrapper);
-    });
-}
-
-function createSlot() {
-    if (tradeSlots.length >= 5) {
-        alert("Maximum of 5 slots allowed.");
-        return;
-    }
-    openSlotModal();
-}
-
-function openSlotModal() {
-    document.getElementById("slotModal").style.display = "block";
-}
-
-function closeSlotModal() {
-    document.getElementById("slotModal").style.display = "none";
-}
-
-function saveSlot() {
-    const slotName = document.getElementById("slotName").value.trim();
-    if (slotName === "") {
-        alert("Please enter a slot name.");
-        return;
-    }
-    if (currentSlotIndex === -1) {
-        tradeSlots.push({ name: slotName, data: getCurrentTradeData() });
-    } else {
-        tradeSlots[currentSlotIndex] = { name: slotName, data: getCurrentTradeData() };
-    }
-    updateSlotsUI();
-    closeSlotModal();
-}
-
-function updateSlotsUI() {
-    const container = document.getElementById("slotsContainer");
-    container.innerHTML = "";
-    tradeSlots.forEach((slot, index) => {
-        const slotDiv = document.createElement("div");
-        slotDiv.className = "slot";
-
-        const slotButton = document.createElement("button");
-        slotButton.textContent = slot.name;
-        slotButton.className = "load-button";
-        slotButton.onclick = () => loadSlot(index);
-        slotDiv.appendChild(slotButton);
-
-        const renameButton = document.createElement("button");
-        renameButton.textContent = "Rename";
-        renameButton.className = "rename-button";
-        renameButton.onclick = () => renameSlot(index);
-        slotDiv.appendChild(renameButton);
-
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.className = "delete-button";
-        deleteButton.onclick = () => deleteSlot(index);
-        slotDiv.appendChild(deleteButton);
-
-        container.appendChild(slotDiv);
-    });
-}
-
-function getCurrentTradeData() {
-    const container = document.getElementById(`${currentSection}-items`);
-    const images = Array.from(container.getElementsByTagName("img"));
-    return images.map(img => img.src);
-}
-
-function loadSlot(index) {
-    const slot = tradeSlots[index];
-    const container = document.getElementById(`${currentSection}-items`);
-    container.innerHTML = "";
-    slot.data.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = 'Loaded Image';
-        img.onclick = () => removeImage(img, src);
-        container.appendChild(img);
-    });
-}
-
-function renameSlot(index) {
-    currentSlotIndex = index;
-    document.getElementById("slotName").value = tradeSlots[index].name;
-    openSlotModal();
-}
-
-function deleteSlot(index) {
-    tradeSlots.splice(index, 1);
-    updateSlotsUI();
-}
