@@ -539,3 +539,96 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("IspatchNoteDismissed12", "true");
     }
 });
+
+// Maximum number of slots
+const MAX_SLOTS = 5;
+
+// Function to initialize the slot menu UI
+function initializeSlotMenu() {
+    const slotsContainer = document.getElementById('slots-container');
+    slotsContainer.innerHTML = '';
+
+    for (let i = 1; i <= MAX_SLOTS; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'slot';
+        slot.id = `slot-${i}`;
+
+        const slotLabel = localStorage.getItem(`slot-${i}-label`) || `Slot ${i}`;
+        slot.innerHTML = `
+            <span>${slotLabel}</span>
+            <button onclick="loadSlot(${i})">Load</button>
+            <button class="save" onclick="saveSlot(${i})">Save</button>
+            <button class="rename" onclick="renameSlot(${i})">Rename</button>
+            <button class="delete" onclick="deleteSlot(${i})">Delete</button>
+        `;
+
+        slotsContainer.appendChild(slot);
+
+        // Set background color if slot has been saved
+        if (localStorage.getItem(`slot-${i}-toOffer`) !== null) {
+            slot.style.backgroundColor = '#38b559';
+        }
+    }
+}
+
+// Save the state of "looking-for" and "to-offer" sections to a specified slot
+function saveSlot(slotNumber) {
+    const toOfferItems = document.getElementById('to-offer-items').innerHTML;
+    const lookingForItems = document.getElementById('looking-for-items').innerHTML;
+
+    localStorage.setItem(`slot-${slotNumber}-toOffer`, toOfferItems);
+    localStorage.setItem(`slot-${slotNumber}-lookingFor`, lookingForItems);
+
+    // Change background color to indicate the slot has been saved
+    const slotElement = document.getElementById(`slot-${slotNumber}`);
+    slotElement.style.backgroundColor = '#38b559';
+
+    alert(`Slot ${slotNumber} saved successfully.`);
+}
+
+// Load the state from a specified slot
+function loadSlot(slotNumber) {
+    const toOfferItems = localStorage.getItem(`slot-${slotNumber}-toOffer`);
+    const lookingForItems = localStorage.getItem(`slot-${slotNumber}-lookingFor`);
+
+    if (toOfferItems !== null && lookingForItems !== null) {
+        document.getElementById('to-offer-items').innerHTML = toOfferItems;
+        document.getElementById('looking-for-items').innerHTML = lookingForItems;
+    } else {
+        alert(`Slot ${slotNumber} is empty.`);
+    }
+}
+
+// Rename a specified slot
+function renameSlot(slotNumber) {
+    const newName = prompt('Enter new name for this slot:');
+    if (newName) {
+        localStorage.setItem(`slot-${slotNumber}-label`, newName);
+        initializeSlotMenu();
+    }
+}
+
+// Delete a specified slot
+function deleteSlot(slotNumber) {
+    if (confirm(`Are you sure you want to delete Slot ${slotNumber}?`)) {
+        localStorage.removeItem(`slot-${slotNumber}-toOffer`);
+        localStorage.removeItem(`slot-${slotNumber}-lookingFor`);
+        localStorage.removeItem(`slot-${slotNumber}-label`);
+        initializeSlotMenu();
+        alert(`Slot ${slotNumber} deleted successfully.`);
+    }
+}
+
+// Create a new slot (if there are less than MAX_SLOTS)
+function createNewSlot() {
+    for (let i = 1; i <= MAX_SLOTS; i++) {
+        if (localStorage.getItem(`slot-${i}-toOffer`) === null) {
+            saveSlot(i);
+            return;
+        }
+    }
+    alert('All slots are full. Please delete an existing slot before creating a new one.');
+}
+
+// Initialize the slot menu on page load
+document.addEventListener('DOMContentLoaded', initializeSlotMenu);
