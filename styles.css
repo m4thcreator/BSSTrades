@@ -9,9 +9,9 @@ body {
     padding: 0;
 }
 .devtext {
-    background-color: rgba(129, 14, 14, 0.7);
+    background-color: white;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: white;
+    color: black;
     width: 40%;
     margin: 0 auto;
     padding: 20px;
