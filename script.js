@@ -619,16 +619,5 @@ function deleteSlot(slotNumber) {
     }
 }
 
-// Create a new slot (if there are less than MAX_SLOTS)
-function createNewSlot() {
-    for (let i = 1; i <= MAX_SLOTS; i++) {
-        if (localStorage.getItem(`slot-${i}-toOffer`) === null) {
-            saveSlot(i);
-            return;
-        }
-    }
-    alert('All slots are full. Please delete an existing slot before creating a new one.');
-}
-
 // Initialize the slot menu on page load
 document.addEventListener('DOMContentLoaded', initializeSlotMenu);
