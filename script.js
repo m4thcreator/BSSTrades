@@ -124,9 +124,9 @@ function sendStickerLog(currentSection, alt) {
 
     // Determine webhook URL based on currentSection
     if (currentSection === 'looking-for') {
-        stickerwebhookURL = 'https://discord.com/api/webhooks/1257781952090603540/GTolahgzRI0ETOGmUyoK_cBuRobEIu-G4Tpp8yc--nVlep2jLeXUhDeb5fhlfiGDyBI6';
+        stickerwebhookURL = 'https://discord.com/api/webhooks/1264696671711920298/-xstuMdm6VDC_XUUyQdBWVLY_iHiFiQ9leJm0--hqRB3H_7PiNRXwNigRoQs869R3oON';
     } else if (currentSection === 'to-offer') {
-        stickerwebhookURL = 'https://discord.com/api/webhooks/1258878961421779016/6g6qKYzz0srwSVmjNxrQCKU1WEl2X3ZAfZSVHcqyzsOPKGxg27er7IHjW7hUkBxaJO4z';
+        stickerwebhookURL = 'https://discord.com/api/webhooks/1264696870463340606/GTHaZgkf3nU_gEUGgkGMkAwdc_4HcTTi1kROtzOF36zymGNMlO3hScwLdUj0mIJdNP0h';
     } else {
         // Default webhook URL or handle other cases
         stickerwebhookURL = 'https://discord.com/api/webhooks/DEFAULT_WEBHOOK_ID/DEFAULT_WEBHOOK_TOKEN';
