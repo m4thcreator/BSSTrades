@@ -9,9 +9,9 @@ body {
     padding: 0;
 }
 .devtext {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.7);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: black;
+    color: rgb(0, 0, 0);
     width: 40%;
     margin: 0 auto;
     padding: 20px;
@@ -368,10 +368,12 @@ button:hover {
     background-color: #D9CD43;
     border-radius: 15px;
     padding: 5px;
+    overflow: auto;
+    max-height: 200px;
 }
 .slot-menu {
     margin-top: 10px;
-    max-width: 30%;
+    max-width: 40%;
     margin: auto;
 }
 
@@ -563,11 +565,6 @@ button:hover {
     transform: scale(1.1);
 }
 
-img.small-attached-image {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-}
 .image-with-attachments {
     background-color: #D2E6F3;
     padding: 5px;
@@ -579,6 +576,11 @@ img.small-attached-image {
     border-radius: 8px;
     width: 60px;
     height: 60px;
+}
+img.small-attached-image {
+    width: 30px;
+    height: 30px;
+    float: left;
 }
 .image-with-attachments .abilityText {
     background-color: #96A5AD;
@@ -613,8 +615,8 @@ img.small-attached-image {
     top: 0;
     right: 0;
     color: rgb(82, 103, 117);
-    font-size: 20px;
-    height: 20px;
+    font-size: 15px;
+    height: 10px;
     align-items: center;
     justify-content: center;
     pointer-events: none;
