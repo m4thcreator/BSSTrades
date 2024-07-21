@@ -34,9 +34,20 @@ function addTextItem(section) {
         const textDiv = document.createElement('div');
         textDiv.classList.add("trade-text-item");
         textDiv.textContent = text;
-        textDiv.onclick = () => container.removeChild(textDiv);
+        textDiv.onclick = () => {
+            container.removeChild(textDiv);
+            autoSave(); // Auto-save after removing text
+        };
         container.appendChild(textDiv);
+        autoSave(); // Auto-save after adding text
     }
+}
+
+function autoSave() {
+    const toOfferItems = document.getElementById('to-offer-items').innerHTML;
+    const lookingForItems = document.getElementById('looking-for-items').innerHTML;
+    localStorage.setItem('autoSave-toOffer', toOfferItems);
+    localStorage.setItem('autoSave-lookingFor', lookingForItems);
 }
 
 function selectImage(imageSrc, alt) {
@@ -71,14 +82,17 @@ function selectImage(imageSrc, alt) {
             div.onclick = (e) => {
                 e.stopPropagation();
                 removeImage(div, imageSrc);
+                autoSave(); // Auto-save after removing image
             };
 
             container.appendChild(div);
         }
 
         sendStickerLog(currentSection, alt);
+        autoSave(); // Auto-save after adding image
     }
 }
+
 
 function sendStickerLog(currentSection, alt) {
     if (isOnCooldown) return;
@@ -157,9 +171,10 @@ let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
 function removeImage(divElement, imageSrc) {
     const img = divElement.querySelector('img');
     const altText = img.alt;
-    
+
     if (altText.includes("Blacklist")) {
         divElement.parentNode.removeChild(divElement);
+        autoSave(); // Auto-save after removing image
         return;
     }
 
@@ -172,7 +187,10 @@ function removeImage(divElement, imageSrc) {
     } else {
         divElement.parentNode.removeChild(divElement);
     }
+
+    autoSave(); // Auto-save after removing image
 }
+
 
 
 
@@ -587,16 +605,50 @@ function saveSlot(slotNumber) {
 }
 
 // Load the state from a specified slot
+// Load the state from a specified slot
 function loadSlot(slotNumber) {
     const toOfferItems = localStorage.getItem(`slot-${slotNumber}-toOffer`);
     const lookingForItems = localStorage.getItem(`slot-${slotNumber}-lookingFor`);
 
     if (toOfferItems !== null && lookingForItems !== null) {
-        document.getElementById('to-offer-items').innerHTML = toOfferItems;
-        document.getElementById('looking-for-items').innerHTML = lookingForItems;
+        const toOfferContainer = document.getElementById('to-offer-items');
+        const lookingForContainer = document.getElementById('looking-for-items');
+
+        toOfferContainer.innerHTML = toOfferItems;
+        lookingForContainer.innerHTML = lookingForItems;
+
+        // Re-attach click event listeners to the images
+        reattachImageClickHandlers(toOfferContainer);
+        reattachImageClickHandlers(lookingForContainer);
+
+        // Re-attach click event listeners to the text items
+        reattachTextClickHandlers(toOfferContainer);
+        reattachTextClickHandlers(lookingForContainer);
     } else {
         alert(`Slot ${slotNumber} is empty.`);
     }
+}
+
+// Re-attach click event listeners to images
+function reattachImageClickHandlers(container) {
+    const imageItems = container.querySelectorAll('.image-item, .image-with-attachments');
+    imageItems.forEach(div => {
+        const img = div.querySelector('img');
+        if (img) {
+            div.onclick = (e) => {
+                e.stopPropagation();
+                removeImage(div, img.src);
+            };
+        }
+    });
+}
+
+// Re-attach click event listeners to text items
+function reattachTextClickHandlers(container) {
+    const textItems = container.querySelectorAll('.trade-text-item');
+    textItems.forEach(textDiv => {
+        textDiv.onclick = () => container.removeChild(textDiv);
+    });
 }
 
 // Rename a specified slot
@@ -621,3 +673,21 @@ function deleteSlot(slotNumber) {
 
 // Initialize the slot menu on page load
 document.addEventListener('DOMContentLoaded', initializeSlotMenu);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const savedToOffer = localStorage.getItem('autoSave-toOffer');
+    const savedLookingFor = localStorage.getItem('autoSave-lookingFor');
+
+    if (savedToOffer !== null) {
+        document.getElementById('to-offer-items').innerHTML = savedToOffer;
+    }
+    if (savedLookingFor !== null) {
+        document.getElementById('looking-for-items').innerHTML = savedLookingFor;
+    }
+
+    // Re-attach click handlers for loaded items
+    reattachImageClickHandlers(document.getElementById('to-offer-items'));
+    reattachImageClickHandlers(document.getElementById('looking-for-items'));
+    reattachTextClickHandlers(document.getElementById('to-offer-items'));
+    reattachTextClickHandlers(document.getElementById('looking-for-items'));
+});
