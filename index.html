@@ -14,10 +14,10 @@
         <div class="popup-content">
             <span class="close">&times;</span>
             <h2>Patch Notes</h2>
-            <p>Welcome to the new version of BSSTrades.com! Here are the latest updates:</p>
+            <p>⚠️UPDATES⚠️</p>
             <ul>
-                <li>New Monthly Leaderboards (Tools, Leafs, Mobs, Bees) ! Check<a href="/leaderboards"> leaderboards</a> for more informations.</li>
-                <li>Patched "OR" being abbreviated</li>
+                <li>Added Save Slots!</li>
+                <li>Added "Most Looking For" Element!</li>
                 <li>General Bug Fixes.</li>
             </ul>
         </div>
@@ -36,7 +36,7 @@
     <div id="main">
         <button class="togglebtn" onclick="toggleNav()">☰ Open</button>
     </div>
-    <div class="devtext">I WILL BE ADDING SAVING SLOTS IN 10MINS! IF THERE IS ANY ISSUES USE THE REPORT BUG FORMS TO INFORM ME OF THEM!</div>
+    <!--<div class="devtext">I'M GOING TO BE WORKING ON A SAVE SYSTEM TODAY, EXPECT SOME WEBSITE CRASHES / BUGS, IF YOU FIND ANY DON'T FORGET TO NOTIFY ME ON DISCORD OR SEND A BUG REPORT!</div>-->
     <div class="container">
         <div class="header">
             <h1><img src="csscontentTV/textdeco_icon.webp" alt="Text Deco Icon">Trade Offer Creator<img src="csscontentTV/textdeco_icon.webp" alt="Text Deco Icon"></h1>
@@ -55,6 +55,9 @@
                 <div class="items" id="looking-for-items"></div>
                 <button onclick="openModal('looking-for')">Add Item</button><button class="clear-button clear-looking-button" onclick="clearSection('looking-for-items')">Clear All</button>
             </div>
+        </div>
+        <div class="slot-menu">
+            <div id="slots-container"></div>
         </div>
         <h2 class="h2ss">Screenshot your trade to share it!</h2>
         <div class="share-container" id="copyButton">Share website!</div>
@@ -422,6 +425,7 @@
                         <h3><img src="csscontentTV/icons_icon.webp" alt="Cub Icon">Other<img src="csscontentTV/icons_icon.webp" alt="Cub Icon"></h3>
                         <input type="text" placeholder="Search..." onkeyup="filterImages(this, 'category0')">
                         <div class="images" id="category0">
+                            <img src="index/otheritems/mlficon.png" alt="Most Looking For (Blacklist)" onclick="selectImage('index/otheritems/mlficon.png', alt)">
                             <img src="index/otheritems/offersicon.png" alt="Offers (Blacklist)" onclick="selectImage('index/otheritems/offersicon.png', alt)">
                             <img src="index/otheritems/anyicon.png" alt="Any (Blacklist)" onclick="selectImage('index/otheritems/anyicon.png', alt)">
                             <img src="index/otheritems/demandicon.png" alt="Demand (Blacklist)" onclick="selectImage('index/otheritems/demandicon.png', alt)">
