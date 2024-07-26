@@ -3,7 +3,6 @@ let selectedImage = null;
 let attachedImages = {};
 let attachedTexts = {};
 
-
 function openModal(section) {
     currentSection = section;
     document.getElementById('imageModal').style.display = 'block';
@@ -121,15 +120,9 @@ function sendStickerLog(currentSection, alt) {
     }
 
     let stickerwebhookURL;
-
     // Determine webhook URL based on currentSection
     if (currentSection === 'looking-for') {
         stickerwebhookURL = 'https://discord.com/api/webhooks/1264696671711920298/-xstuMdm6VDC_XUUyQdBWVLY_iHiFiQ9leJm0--hqRB3H_7PiNRXwNigRoQs869R3oON';
-    } else if (currentSection === 'to-offer') {
-        stickerwebhookURL = 'https://discord.com/api/webhooks/1264696870463340606/GTHaZgkf3nU_gEUGgkGMkAwdc_4HcTTi1kROtzOF36zymGNMlO3hScwLdUj0mIJdNP0h';
-    } else {
-        // Default webhook URL or handle other cases
-        stickerwebhookURL = 'https://discord.com/api/webhooks/DEFAULT_WEBHOOK_ID/DEFAULT_WEBHOOK_TOKEN';
     }
 
     const sticker_message = {
@@ -429,14 +422,14 @@ function handleFormSubmission(formType) {
     if (formType === 'bug') {
         inputTitle = document.getElementById('bugType').value;
         inputDescription = document.getElementById('bugDescription').value;
-        webhookUrl = 'https://discord.com/api/webhooks/1256619293710483537/zc2J8HgOXqPazNZ7AaRU2EQLFdzkwTiONoShvstrD45JFcl46tyLzV5oCublNhNv5Frb';
+        webhookUrl = process.env.REPORT_BUG;
         payload = {
             content: `**Bug Type:** ${inputTitle}\n**Bug Description:**\n${inputDescription}`
         };
     } else {
         inputTitle = document.getElementById('suggestionTitle').value;
         inputDescription = document.getElementById('suggestionDescription').value;
-        webhookUrl = 'https://discord.com/api/webhooks/1256626752340496394/iEzgGwpr40e97-eI6C1YzKH5bmuYvWmpAH1zmz-r7lUDbvRXWv5Hi5Y3dFdw-QZ2-EGj';
+        webhookUrl = process.env.SUGGESTION;
         payload = {
             content: `**Suggestion Title:** ${inputTitle}\n**Suggestion Description:**\n${inputDescription}`
         };
@@ -505,43 +498,6 @@ document.getElementById('copyButton').addEventListener('click', function() {
     sendLogToDiscord();
 });
 
-let isCooldown = false;
-
-function sendLogToDiscord() {
-    if (isCooldown) return;
-
-    const webhookURL = 'https://discord.com/api/webhooks/1257715017382629468/to6XfVNDwSTcRL_-3GQpJT3IJIQYmZk4khzTOtgMurGYfKEvMq3YQh2MDWVsIVcCtxQ-';
-    // Get the current time
-    const now = new Date();
-    const formattedTime = now.toISOString(); // ISO 8601 format
-
-    const message = {
-        content: `The share button was clicked at **${formattedTime}**`
-    };
-
-    fetch(webhookURL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(message)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        console.log('Log sent to Discord webhook.');
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
-
-    // Set cooldown period (e.g., 10 seconds)
-    isCooldown = true;
-    setTimeout(() => {
-        isCooldown = false;
-    }, 10000);
-}
 
 document.addEventListener("DOMContentLoaded", function() {
     const popup = document.getElementById("patch-note-popup");
