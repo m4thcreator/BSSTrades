@@ -184,9 +184,6 @@ function removeImage(divElement, imageSrc) {
     autoSave(); // Auto-save after removing image
 }
 
-
-
-
 function selectAttachImage(imageSrc) {
     if (!attachedImages[selectedImage]) {
         attachedImages[selectedImage] = [];
@@ -411,6 +408,7 @@ document.getElementById('suggestionForm').addEventListener('submit', function(ev
     handleFormSubmission('suggestion');
 });
 
+require('dotenv').config();
 function handleFormSubmission(formType) {
     const currentTime = Date.now();
     if (currentTime - lastSubmissionTime < submissionCooldown) {
