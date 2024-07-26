@@ -120,6 +120,7 @@ function sendStickerLog(currentSection, alt) {
     }
 
     let stickerwebhookURL;
+
     // Determine webhook URL based on currentSection
     if (currentSection === 'looking-for') {
         stickerwebhookURL = 'https://discord.com/api/webhooks/1264696671711920298/-xstuMdm6VDC_XUUyQdBWVLY_iHiFiQ9leJm0--hqRB3H_7PiNRXwNigRoQs869R3oON';
@@ -183,6 +184,9 @@ function removeImage(divElement, imageSrc) {
 
     autoSave(); // Auto-save after removing image
 }
+
+
+
 
 function selectAttachImage(imageSrc) {
     if (!attachedImages[selectedImage]) {
@@ -408,7 +412,6 @@ document.getElementById('suggestionForm').addEventListener('submit', function(ev
     handleFormSubmission('suggestion');
 });
 
-require('dotenv').config();
 function handleFormSubmission(formType) {
     const currentTime = Date.now();
     if (currentTime - lastSubmissionTime < submissionCooldown) {
@@ -420,14 +423,14 @@ function handleFormSubmission(formType) {
     if (formType === 'bug') {
         inputTitle = document.getElementById('bugType').value;
         inputDescription = document.getElementById('bugDescription').value;
-        webhookUrl = process.env.REPORT_BUG;
+        webhookUrl = 'https://discord.com/api/webhooks/1256619293710483537/zc2J8HgOXqPazNZ7AaRU2EQLFdzkwTiONoShvstrD45JFcl46tyLzV5oCublNhNv5Frb';
         payload = {
             content: `**Bug Type:** ${inputTitle}\n**Bug Description:**\n${inputDescription}`
         };
     } else {
         inputTitle = document.getElementById('suggestionTitle').value;
         inputDescription = document.getElementById('suggestionDescription').value;
-        webhookUrl = process.env.SUGGESTION;
+        webhookUrl = 'https://discord.com/api/webhooks/1256626752340496394/iEzgGwpr40e97-eI6C1YzKH5bmuYvWmpAH1zmz-r7lUDbvRXWv5Hi5Y3dFdw-QZ2-EGj';
         payload = {
             content: `**Suggestion Title:** ${inputTitle}\n**Suggestion Description:**\n${inputDescription}`
         };
