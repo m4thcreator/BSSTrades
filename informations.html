@@ -56,6 +56,32 @@
             </div>
         </div>
     </div>
+    <div class="feedback-container">
+        <div class="form-container">
+            <h2 class="feedback-title">Report a Bug</h2>
+            <form id="bugReportForm" class="feedback-form">
+                <label for="bugType">Bug Type</label>
+                <input type="text" id="bugType" name="bugType" placeholder="Enter the type of bug" required>
+                
+                <label for="bugDescription">Bug Description</label>
+                <textarea id="bugDescription" name="bugDescription" placeholder="Describe the bug" required></textarea>
+                
+                <button type="submit" class="feedback-button">Submit</button>
+            </form>
+        </div>
+        <div class="form-container">
+            <h2 class="feedback-title">Submit a Suggestion</h2>
+            <form id="suggestionForm" class="feedback-form">
+                <label for="suggestionTitle">Suggestion Title</label>
+                <input type="text" id="suggestionTitle" name="suggestionTitle" placeholder="Enter the suggestion title" required>
+                
+                <label for="suggestionDescription">Suggestion Description</label>
+                <textarea id="suggestionDescription" name="suggestionDescription" placeholder="Describe your suggestion" required></textarea>
+                
+                <button type="submit" class="feedback-button">Submit</button>
+            </form>
+        </div>
+    </div>
     <script src="questionscript.js"></script>
 </body>
 </html>
