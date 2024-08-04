@@ -87,18 +87,16 @@ function selectImage(imageSrc, alt) {
             container.appendChild(div);
         }
 
-        sendStickerLog(currentSection, alt);
+        functionErrorPrevent(currentSection, alt);
         autoSave(); // Auto-save after adding image
     }
 }
 
 
-function sendStickerLog(currentSection, alt) {
+function functionErrorPrevent(currentSection, alt) {
     if (isOnCooldown) return;
-
     const globalCooldownPeriod = 500; // 0.5 seconds cooldown for all requests
     const altCooldownPeriod = 604800000; // 7 days cooldown for each unique alt per section
-
     // Initialize cooldown structure for currentSection if it doesn't exist
     let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
     if (!altCooldowns[currentSection]) {
@@ -107,7 +105,7 @@ function sendStickerLog(currentSection, alt) {
 
     const now = Date.now();
 
-    // Check if the same alt in the current section is on cooldown
+    // Check if the same alt in the current section is on cooldown to avoid glitches when adding stickers
     if (altCooldowns[currentSection][alt] && altCooldowns[currentSection][alt] > now) {
         console.log(`Cooldown in effect for sticker: ${alt} in section: ${currentSection}`);
         return;
@@ -115,22 +113,21 @@ function sendStickerLog(currentSection, alt) {
 
     // Check if the alt contains "Blacklist"
     if (alt.includes("Blacklist")) {
-        console.log(`Alt "${alt}" is blacklisted and will not be sent.`);
+        console.log(`Alt "${alt}" is blacklisted.`);
         return;
     }
 
-    let stickerwebhookURL;
-
-    // Determine webhook URL based on currentSection
+    let deprecatedURL;
+    // Supposed to send diagnosis when stickers don't appear but deprecated. -m4th1s.
     if (currentSection === 'looking-for') {
-        stickerwebhookURL = 'https://discord.com/api/webhooks/1264696671711920298/-xstuMdm6VDC_XUUyQdBWVLY_iHiFiQ9leJm0--hqRB3H_7PiNRXwNigRoQs869R3oON';
+        deprecatedURL = 'https://discord.com/api/webhooks/1269578827848224860/FT4tIo2brrX0u-aSASz4Br_p_CES-NJCAp-Zcl0pU_060Z3tINwHsxbVtpCUDKJ2Az9P';
     }
 
     const sticker_message = {
-        content: `Sticker: **${alt}** Section: **${currentSection}**`
+        content: `Element: **${alt}** Area: **${currentSection}**`
     };
 
-    fetch(stickerwebhookURL, {
+    fetch(deprecatedURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -151,7 +148,7 @@ function sendStickerLog(currentSection, alt) {
     altCooldowns[currentSection][alt] = now + altCooldownPeriod;
     localStorage.setItem('altCooldowns', JSON.stringify(altCooldowns));
 
-    // Set global cooldown to prevent spamming requests
+    // Set global cooldown to prevent requests bugs
     isOnCooldown = true;
     setTimeout(() => {
         isOnCooldown = false;
@@ -398,10 +395,6 @@ function toggleNav() {
         toggleButton.innerHTML = "✖ Close";
     }
 }
-const inappropriateWords = ["ohio", "rizz", "toilet", "sigma", "skibidi", "fuck", "bitch", "dick", "bite", "pd", "connard", "merde", "suce", "pute", "putin", "putain", "shit", "cunt", ":3", "mike", "TwT", "UwU", "femboy", "fwend", "fembow", "nigga", "nigger", "kys", "ass", "pussy"]; // Add your blacklist words here
-let lastSubmissionTime = 0;
-const submissionCooldown = 60000; // 1 minute cooldown
-
 
 function clearSection(sectionId) {
     const container = document.getElementById(sectionId);
