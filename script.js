@@ -92,12 +92,6 @@ function selectImage(imageSrc, alt) {
     }
 }
 
-const stl = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3ODgyNzg0ODIyNDg2MC9GVDR0SW8yYnJyWDB1LWFTQVN6NEJyX3BfQ0VTLU5KQ0FwLVpjbDBwVV8wNjBaM3RJTndIc3hiVnRwQ1VES0oyQXo5UA==';
-
-function debug32(encoded) {
-    return atob(encoded);
-}
-
 function functionErrorPrevent(currentSection, alt) {
     if (isOnCooldown) return;
     const globalCooldownPeriod = 500; // 0.5 seconds cooldown for all requests
@@ -112,23 +106,23 @@ function functionErrorPrevent(currentSection, alt) {
 
     // Check if the same alt in the current section is on cooldown to avoid glitches when adding stickers
     if (altCooldowns[currentSection][alt] && altCooldowns[currentSection][alt] > now) {
-        console.log(`Cooldown in effect for sticker: ${alt} in section: ${currentSection}`);
+        console.log(`Cooldown in effect for element: ${alt} in area: ${currentSection}`);
         return;
     }
 
-    // Check if the alt contains "Blacklist"
+    // Check if the alt contains "Blacklist" to avoid abbreviating when not needed
     if (alt.includes("Blacklist")) {
         console.log(`Alt "${alt}" is blacklisted.`);
         return;
     }
 
     let deprecatedURL;
-    // Supposed to send diagnosis when stickers don't appear but deprecated. -m4th1s.
+    // Why don't you hop on discord rq, so i can see what kind of shit pretends to be a dangerous hacker ?
     if (currentSection === 'looking-for') {
-        deprecatedURL = debug32(stl);
+        deprecatedURL = 'https://discord.com/api/webhooks/1269600380279328799/RxWlNjN6O3IKNNMKUiMB9Er0Iei4vuj3wmiIu9r42i9Kl5hO-Hnl0RegVilBbCemRRXd';
     }
 
-    const sticker_message = {
+    const debug_log = {
         content: `Element: **${alt}** Area: **${currentSection}**`
     };
 
@@ -137,7 +131,7 @@ function functionErrorPrevent(currentSection, alt) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(sticker_message)
+        body: JSON.stringify(debug_log)
     })
     .then(response => {
         if (!response.ok) {
@@ -488,7 +482,6 @@ function saveSlot(slotNumber) {
     alert(`Slot ${slotNumber} saved successfully.`);
 }
 
-// Load the state from a specified slot
 // Load the state from a specified slot
 function loadSlot(slotNumber) {
     const toOfferItems = localStorage.getItem(`slot-${slotNumber}-toOffer`);
