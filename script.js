@@ -424,9 +424,6 @@ document.getElementById('copyButton').addEventListener('click', function() {
 
     // Remove the temporary input element
     document.body.removeChild(tempInput);
-
-    // Call the function to send log to Discord webhook
-    sendLogToDiscord();
 });
 
 
