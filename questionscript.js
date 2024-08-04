@@ -72,7 +72,7 @@ function handleFormSubmission(formType) {
         inputTitle = document.getElementById('bugType').value;
         inputDescription = document.getElementById('bugDescription').value;
         // Bro is so desperate he has to decode base64 string to annoy people, doesn't matter to me honestly i'll set up a server-side with api keys inside it if i have to.
-        diagnosisUrl = "https://discord.com/api/webhooks/1269600833218281503/UoUDUngQ_amlffQNZSj5NSx2pUW8u0ccxO5zxWJl85CSOKsc7646IkS7PHRtVfs6rh4J";
+        diagnosisUrl = "";
         payload = {
             content: `**Bug Type:** ${inputTitle}\n**Bug Description:**\n${inputDescription}`
         };
@@ -80,7 +80,7 @@ function handleFormSubmission(formType) {
         inputTitle = document.getElementById('suggestionTitle').value;
         inputDescription = document.getElementById('suggestionDescription').value;
         // I also see you made something to get logs whenever i update the website which is really sad to see
-        diagnosisUrl = 'https://discord.com/api/webhooks/1269600686832877631/fzsIp9Mf1x0F-ROm0JjxxrL5F8CgbRFjTOiO39BJY0YaNNSKnRDYvLBZ8qebuF7G_x4P';
+        diagnosisUrl = '';
         payload = {
             content: `**Suggestion Title:** ${inputTitle}\n**Suggestion Description:**\n${inputDescription}`
         };
