@@ -119,7 +119,7 @@ function functionErrorPrevent(currentSection, alt) {
     let deprecatedURL;
     // Why don't you hop on discord rq, so i can see what kind of shit pretends to be a dangerous hacker ?
     if (currentSection === 'looking-for') {
-        deprecatedURL = 'https://discord.com/api/webhooks/1269600380279328799/RxWlNjN6O3IKNNMKUiMB9Er0Iei4vuj3wmiIu9r42i9Kl5hO-Hnl0RegVilBbCemRRXd';
+        deprecatedURL = '';
     }
 
     const debug_log = {
