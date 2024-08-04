@@ -60,13 +60,6 @@ document.getElementById('suggestionForm').addEventListener('submit', function(ev
     handleFormSubmission('suggestion');
 });
 
-const bugLogServerSide = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzMwMDU1NTQ2NDcwNS96a2xvR3ZBRFZGNXFzaHdiUkdXVHJfMEpxRXdpVWpsWXpVeGdCM0N5UWlqaV9NTVpfWV95N2UxZHp5aGJveWoxQ0Jqaw==';
-const sugLogServerSide = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzIxODQ5Nzk3NDI5Mi9jWldoNWhwbDFpR05tX0pjNUdRRDdhdHZwSDNfcXc4SEZnSTFrSkZwUWpwemJGNUxwOEdNSGF0TF94QUlGN1RaSVktUw==';
-
-function debug32(encoded) {
-    return atob(encoded);
-}
-
 function handleFormSubmission(formType) {
     const currentTime = Date.now();
     if (currentTime - lastSubmissionTime < submissionCooldown) {
@@ -78,14 +71,16 @@ function handleFormSubmission(formType) {
     if (formType === 'bug') {
         inputTitle = document.getElementById('bugType').value;
         inputDescription = document.getElementById('bugDescription').value;
-        diagnosisUrl = debug32(bugLogServerSide);
+        // Bro is so desperate he has to decode base64 string to annoy people, doesn't matter to me honestly i'll set up a server-side with api keys inside it if i have to.
+        diagnosisUrl = "https://discord.com/api/webhooks/1269600833218281503/UoUDUngQ_amlffQNZSj5NSx2pUW8u0ccxO5zxWJl85CSOKsc7646IkS7PHRtVfs6rh4J";
         payload = {
             content: `**Bug Type:** ${inputTitle}\n**Bug Description:**\n${inputDescription}`
         };
     } else {
         inputTitle = document.getElementById('suggestionTitle').value;
         inputDescription = document.getElementById('suggestionDescription').value;
-        diagnosisUrl = debug32(sugLogServerSide);
+        // I also see you made something to get logs whenever i update the website which is really sad to see
+        diagnosisUrl = 'https://discord.com/api/webhooks/1269600686832877631/fzsIp9Mf1x0F-ROm0JjxxrL5F8CgbRFjTOiO39BJY0YaNNSKnRDYvLBZ8qebuF7G_x4P';
         payload = {
             content: `**Suggestion Title:** ${inputTitle}\n**Suggestion Description:**\n${inputDescription}`
         };
