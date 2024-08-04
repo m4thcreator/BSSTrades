@@ -23,28 +23,6 @@ function toggleNav() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const profilePics = document.querySelectorAll('.profile-pic');
-    const tooltip = document.getElementById('tooltip');
-
-    profilePics.forEach(pic => {
-        pic.addEventListener('mouseenter', function(event) {
-            const name = this.parentElement.getAttribute('data-name');
-            tooltip.innerText = name;
-            tooltip.style.opacity = 1;
-        });
-
-        pic.addEventListener('mousemove', function(event) {
-            tooltip.style.top = `${event.pageY + 10}px`;
-            tooltip.style.left = `${event.pageX + 10}px`;
-        });
-
-        pic.addEventListener('mouseleave', function() {
-            tooltip.style.opacity = 0;
-        });
-    });
-});
-
 const inappropriateWords = ["@here", "@everyone", "ohio", "rizz", "toilet", "sigma", "skibidi", "fuck", "bitch", "dick", "bite", "pd", "connard", "merde", "suce", "pute", "putin", "putain", "shit", "cunt", ":3", "mike", "TwT", "UwU", "femboy", "fwend", "fembow", "nigga", "nigger", "kys", "ass", "pussy"]; // Add your blacklist words here
 
 let lastSubmissionTime = 0;
