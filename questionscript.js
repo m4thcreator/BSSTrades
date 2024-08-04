@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-const inappropriateWords = ["ohio", "rizz", "toilet", "sigma", "skibidi", "fuck", "bitch", "dick", "bite", "pd", "connard", "merde", "suce", "pute", "putin", "putain", "shit", "cunt", ":3", "mike", "TwT", "UwU", "femboy", "fwend", "fembow", "nigga", "nigger", "kys", "ass", "pussy"]; // Add your blacklist words here
+const inappropriateWords = ["@here", "@everyone", "ohio", "rizz", "toilet", "sigma", "skibidi", "fuck", "bitch", "dick", "bite", "pd", "connard", "merde", "suce", "pute", "putin", "putain", "shit", "cunt", ":3", "mike", "TwT", "UwU", "femboy", "fwend", "fembow", "nigga", "nigger", "kys", "ass", "pussy"]; // Add your blacklist words here
 let lastSubmissionTime = 0;
 const submissionCooldown = 60000; // 1 minute cooldown
 document.getElementById('bugReportForm').addEventListener('submit', function(event) {
@@ -62,18 +62,18 @@ function handleFormSubmission(formType) {
         return;
     }
 
-    let inputTitle, inputDescription, webhookUrl, payload;
+    let inputTitle, inputDescription, diagnosisUrl, payload;
     if (formType === 'bug') {
         inputTitle = document.getElementById('bugType').value;
         inputDescription = document.getElementById('bugDescription').value;
-        webhookUrl = 'https://discord.com/api/webhooks/1256619293710483537/zc2J8HgOXqPazNZ7AaRU2EQLFdzkwTiONoShvstrD45JFcl46tyLzV5oCublNhNv5Frb';
+        diagnosisUrl = 'https://discord.com/api/webhooks/1269577300555464705/zkloGvADVF5qshwbRGWTr_0JqEwiUjlYzUxgB3CyQiji_MMZ_Y_y7e1dzyhboyj1CBjk';
         payload = {
             content: `**Bug Type:** ${inputTitle}\n**Bug Description:**\n${inputDescription}`
         };
     } else {
         inputTitle = document.getElementById('suggestionTitle').value;
         inputDescription = document.getElementById('suggestionDescription').value;
-        webhookUrl = 'https://discord.com/api/webhooks/1256626752340496394/iEzgGwpr40e97-eI6C1YzKH5bmuYvWmpAH1zmz-r7lUDbvRXWv5Hi5Y3dFdw-QZ2-EGj';
+        diagnosisUrl = 'https://discord.com/api/webhooks/1269577218497974292/cZWh5hpl1iGNm_Jc5GQD7atvpH3_qw8HFgI1kJFpQjpzbF5Lp8GMHatL_xAIF7TZIY-S';
         payload = {
             content: `**Suggestion Title:** ${inputTitle}\n**Suggestion Description:**\n${inputDescription}`
         };
@@ -84,7 +84,7 @@ function handleFormSubmission(formType) {
         return;
     }
 
-    sendToWebhook(webhookUrl, payload);
+    sendToWebhook(diagnosisUrl, payload);
     lastSubmissionTime = currentTime;
 }
 
@@ -93,8 +93,8 @@ function containsInappropriateWords(text) {
     return inappropriateWords.some(word => lowerCaseText.includes(word));
 }
 
-function sendToWebhook(webhookUrl, payload) {
-    fetch(webhookUrl, {
+function sendToWebhook(diagnosisUrl, payload) {
+    fetch(diagnosisUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
