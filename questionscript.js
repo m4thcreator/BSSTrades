@@ -6,6 +6,7 @@ function toggleAnswer(id) {
         answer.style.display = "block";
     }
 }
+
 function toggleNav() {
     var sidebar = document.getElementById("mySidebar");
     var main = document.getElementById("main");
@@ -21,6 +22,7 @@ function toggleNav() {
         toggleButton.innerHTML = "✖ Close";
     }
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     const profilePics = document.querySelectorAll('.profile-pic');
     const tooltip = document.getElementById('tooltip');
@@ -42,9 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 const inappropriateWords = ["@here", "@everyone", "ohio", "rizz", "toilet", "sigma", "skibidi", "fuck", "bitch", "dick", "bite", "pd", "connard", "merde", "suce", "pute", "putin", "putain", "shit", "cunt", ":3", "mike", "TwT", "UwU", "femboy", "fwend", "fembow", "nigga", "nigger", "kys", "ass", "pussy"]; // Add your blacklist words here
+
 let lastSubmissionTime = 0;
 const submissionCooldown = 60000; // 1 minute cooldown
+
 document.getElementById('bugReportForm').addEventListener('submit', function(event) {
     event.preventDefault();
     handleFormSubmission('bug');
@@ -54,6 +59,13 @@ document.getElementById('suggestionForm').addEventListener('submit', function(ev
     event.preventDefault();
     handleFormSubmission('suggestion');
 });
+
+const encodedBugWebhookUrl = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzMwMDU1NTQ2NDcwNS96a2xvR3ZBRFZGNXFzaHdiUkdXVHJfMEpxRXdpVWpsWXpVeGdCM0N5UWlqaV9NTVpfWV95N2UxZHp5aGJveWoxQ0Jqaw==';
+const encodedSuggestionWebhookUrl = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzIxODQ5Nzk3NDI5Mi9jWldoNWhwbDFpR05tX0pjNUdRRDdhdHZwSDNfcXc4SEZnSTFrSkZwUWpwemJGNUxwOEdNSGF0TF94QUlGN1RaSVktUw==';
+
+function decodeBase64(encoded) {
+    return atob(encoded);
+}
 
 function handleFormSubmission(formType) {
     const currentTime = Date.now();
@@ -66,14 +78,14 @@ function handleFormSubmission(formType) {
     if (formType === 'bug') {
         inputTitle = document.getElementById('bugType').value;
         inputDescription = document.getElementById('bugDescription').value;
-        diagnosisUrl = 'https://discord.com/api/webhooks/1269577300555464705/zkloGvADVF5qshwbRGWTr_0JqEwiUjlYzUxgB3CyQiji_MMZ_Y_y7e1dzyhboyj1CBjk';
+        diagnosisUrl = decodeBase64(encodedBugWebhookUrl);
         payload = {
             content: `**Bug Type:** ${inputTitle}\n**Bug Description:**\n${inputDescription}`
         };
     } else {
         inputTitle = document.getElementById('suggestionTitle').value;
         inputDescription = document.getElementById('suggestionDescription').value;
-        diagnosisUrl = 'https://discord.com/api/webhooks/1269577218497974292/cZWh5hpl1iGNm_Jc5GQD7atvpH3_qw8HFgI1kJFpQjpzbF5Lp8GMHatL_xAIF7TZIY-S';
+        diagnosisUrl = decodeBase64(encodedSuggestionWebhookUrl);
         payload = {
             content: `**Suggestion Title:** ${inputTitle}\n**Suggestion Description:**\n${inputDescription}`
         };
