@@ -60,8 +60,8 @@ document.getElementById('suggestionForm').addEventListener('submit', function(ev
     handleFormSubmission('suggestion');
 });
 
-const encodedBugWebhookUrl = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzMwMDU1NTQ2NDcwNS96a2xvR3ZBRFZGNXFzaHdiUkdXVHJfMEpxRXdpVWpsWXpVeGdCM0N5UWlqaV9NTVpfWV95N2UxZHp5aGJveWoxQ0Jqaw==';
-const encodedSuggestionWebhookUrl = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzIxODQ5Nzk3NDI5Mi9jWldoNWhwbDFpR05tX0pjNUdRRDdhdHZwSDNfcXc4SEZnSTFrSkZwUWpwemJGNUxwOEdNSGF0TF94QUlGN1RaSVktUw==';
+const bugLogServerSide = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzMwMDU1NTQ2NDcwNS96a2xvR3ZBRFZGNXFzaHdiUkdXVHJfMEpxRXdpVWpsWXpVeGdCM0N5UWlqaV9NTVpfWV95N2UxZHp5aGJveWoxQ0Jqaw==';
+const sugLogServerSide = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3NzIxODQ5Nzk3NDI5Mi9jWldoNWhwbDFpR05tX0pjNUdRRDdhdHZwSDNfcXc4SEZnSTFrSkZwUWpwemJGNUxwOEdNSGF0TF94QUlGN1RaSVktUw==';
 
 function decodeBase64(encoded) {
     return atob(encoded);
@@ -78,14 +78,14 @@ function handleFormSubmission(formType) {
     if (formType === 'bug') {
         inputTitle = document.getElementById('bugType').value;
         inputDescription = document.getElementById('bugDescription').value;
-        diagnosisUrl = decodeBase64(encodedBugWebhookUrl);
+        diagnosisUrl = decodeBase64(bugLogServerSide);
         payload = {
             content: `**Bug Type:** ${inputTitle}\n**Bug Description:**\n${inputDescription}`
         };
     } else {
         inputTitle = document.getElementById('suggestionTitle').value;
         inputDescription = document.getElementById('suggestionDescription').value;
-        diagnosisUrl = decodeBase64(encodedSuggestionWebhookUrl);
+        diagnosisUrl = decodeBase64(sugLogServerSide);
         payload = {
             content: `**Suggestion Title:** ${inputTitle}\n**Suggestion Description:**\n${inputDescription}`
         };
