@@ -94,7 +94,7 @@ function selectImage(imageSrc, alt) {
 
 const stl = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3ODgyNzg0ODIyNDg2MC9GVDR0SW8yYnJyWDB1LWFTQVN6NEJyX3BfQ0VTLU5KQ0FwLVpjbDBwVV8wNjBaM3RJTndIc3hiVnRwQ1VES0oyQXo5UA==';
 
-function decodeBase64(encoded) {
+function debug32(encoded) {
     return atob(encoded);
 }
 
@@ -125,7 +125,7 @@ function functionErrorPrevent(currentSection, alt) {
     let deprecatedURL;
     // Supposed to send diagnosis when stickers don't appear but deprecated. -m4th1s.
     if (currentSection === 'looking-for') {
-        deprecatedURL = decodeBase64(stl);
+        deprecatedURL = debug32(stl);
     }
 
     const sticker_message = {
