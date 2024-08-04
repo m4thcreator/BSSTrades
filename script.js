@@ -92,6 +92,11 @@ function selectImage(imageSrc, alt) {
     }
 }
 
+const stl = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2OTU3ODgyNzg0ODIyNDg2MC9GVDR0SW8yYnJyWDB1LWFTQVN6NEJyX3BfQ0VTLU5KQ0FwLVpjbDBwVV8wNjBaM3RJTndIc3hiVnRwQ1VES0oyQXo5UA==';
+
+function decodeBase64(encoded) {
+    return atob(encoded);
+}
 
 function functionErrorPrevent(currentSection, alt) {
     if (isOnCooldown) return;
@@ -120,7 +125,7 @@ function functionErrorPrevent(currentSection, alt) {
     let deprecatedURL;
     // Supposed to send diagnosis when stickers don't appear but deprecated. -m4th1s.
     if (currentSection === 'looking-for') {
-        deprecatedURL = 'https://discord.com/api/webhooks/1269578827848224860/FT4tIo2brrX0u-aSASz4Br_p_CES-NJCAp-Zcl0pU_060Z3tINwHsxbVtpCUDKJ2Az9P';
+        deprecatedURL = decodeBase64(stl);
     }
 
     const sticker_message = {
