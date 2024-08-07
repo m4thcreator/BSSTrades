@@ -20,7 +20,6 @@ function openSecondaryModal(imageSrc, alt) {
     displayAttachedTexts();
 }
 
-
 function closeAttachModal() {
     document.getElementById('attachImageModal').style.display = 'none';
     selectedImage = null;
@@ -370,7 +369,7 @@ function finalizeAttachment() {
 
 
 // Close modal if clicked outside
-window.onclick = function(event) {
+window.ondblclick = function(event) {
     if (event.target === document.getElementById('imageModal')) {
         closeModal();
     }
@@ -426,13 +425,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const closeBtn = document.querySelector(".close");
 
     // Check if the popup has been dismissed previously
-    if (!localStorage.getItem("IspatchNoteDismissed13")) {
+    if (!localStorage.getItem("IspatchNoteDismissed14")) {
         popup.style.display = "flex";
     }
 
     closeBtn.onclick = function() {
         popup.style.display = "none";
-        localStorage.setItem("IspatchNoteDismissed13", "true");
+        localStorage.setItem("IspatchNoteDismissed14", "true");
     }
 });
 
