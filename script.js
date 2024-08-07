@@ -369,7 +369,7 @@ function finalizeAttachment() {
 
 
 // Close modal if clicked outside
-window.ondblclick = function(event) {
+window.onclick = function(event) {
     if (event.target === document.getElementById('imageModal')) {
         closeModal();
     }
