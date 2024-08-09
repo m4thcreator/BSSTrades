@@ -2,11 +2,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
     background-image: url("csscontentFQ/background-image.png");
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: inherit;
 }
 /* Navigation Bar Container */
 .navbar {
