@@ -8,57 +8,51 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
-.sidebar {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 10px rgba(50, 131, 27, 0.1);
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidebar a {
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+/* Navigation Bar Container */
+.navbar {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    transition: 0.3s;
+    background-color: #181818;
+    padding: 5px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
-.sidebar a:hover {
-    color: #f1f1f1;
+/* Website Icon */
+.navbar img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
 }
 
-.icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+/* Centered Navigation Links */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
 }
 
-#main {
-    transition: margin-left .5s;
-    padding: 16px;
-}
-
-.togglebtn {
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #3283FF;
+.nav-links a {
     color: white;
-    border: none;
-    padding: 5px;
-    width: 10%;
+    text-decoration: none;
+    padding: 5px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    border-radius: 5px;
 }
 
-.togglebtn:hover {
-    background-color: #1e509b;
+.nav-links a:hover {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+/* Ensures links are centered */
+.nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 button {
     display: block;
