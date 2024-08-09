@@ -424,6 +424,7 @@ document.getElementById('copyButton').addEventListener('click', function () {
 
     // Copy the value to the clipboard
     document.execCommand('copy');
+    alert('Link copied to clipboard!')
 
     // Remove the temporary input element
     document.body.removeChild(tempInput);
