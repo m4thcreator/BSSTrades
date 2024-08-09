@@ -48,6 +48,7 @@ function autoSave() {
     localStorage.setItem('autoSave-lookingFor', lookingForItems);
 }
 
+// selectImage function
 function selectImage(imageSrc, alt) {
     if (currentSection === 'category5') {
         openSecondaryModal(imageSrc, alt); // Pass alt to secondary modal
@@ -63,6 +64,7 @@ function selectImage(imageSrc, alt) {
         } else {
             const div = document.createElement('div');
             div.className = 'image-item';
+            div.draggable = true;
 
             const img = document.createElement('img');
             img.src = imageSrc;
@@ -76,6 +78,14 @@ function selectImage(imageSrc, alt) {
                 countSpan.textContent = ' x1';
                 div.appendChild(countSpan);
             }
+
+            div.ondragstart = () => {
+                div.classList.add('dragging');
+            };
+
+            div.ondragend = () => {
+                div.classList.remove('dragging');
+            };
 
             div.onclick = (e) => {
                 e.stopPropagation();
@@ -116,7 +126,7 @@ function functionErrorPrevent(currentSection, alt) {
     }
 
     let deprecatedURL;
-    // Why don't you hop on discord rq, so i can see what kind of shit pretends to be a dangerous hacker ?
+    // Why are you looking at my code lol
     if (currentSection === 'looking-for') {
         deprecatedURL = '';
     }
@@ -132,15 +142,15 @@ function functionErrorPrevent(currentSection, alt) {
         },
         body: JSON.stringify(debug_log)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        console.log('Log sent to external server.');
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Log sent to external server.');
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 
     // Set cooldown for the alt in the current section
     altCooldowns[currentSection][alt] = now + altCooldownPeriod;
@@ -369,7 +379,7 @@ function finalizeAttachment() {
 
 
 // Close modal if clicked outside
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target === document.getElementById('imageModal')) {
         closeModal();
     }
@@ -399,7 +409,7 @@ function clearSection(sectionId) {
     container.innerHTML = '';
 }
 
-document.getElementById('copyButton').addEventListener('click', function() {
+document.getElementById('copyButton').addEventListener('click', function () {
     // The link to copy
     const linkToCopy = 'https://bsstrades.com';
 
@@ -410,7 +420,7 @@ document.getElementById('copyButton').addEventListener('click', function() {
 
     // Select the input value
     tempInput.select();
-    tempInput.setSelectionRange(0, 99999); // For mobile devices
+    tempInput.setSelectionRange(0, 99999); // mobile devices
 
     // Copy the value to the clipboard
     document.execCommand('copy');
@@ -420,18 +430,18 @@ document.getElementById('copyButton').addEventListener('click', function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const popup = document.getElementById("patch-note-popup");
     const closeBtn = document.querySelector(".close");
 
     // Check if the popup has been dismissed previously
-    if (!localStorage.getItem("IspatchNoteDismissed15")) {
+    if (!localStorage.getItem("IspatchNoteDismissed16")) {
         popup.style.display = "flex";
     }
 
-    closeBtn.onclick = function() {
+    closeBtn.onclick = function () {
         popup.style.display = "none";
-        localStorage.setItem("IspatchNoteDismissed15", "true");
+        localStorage.setItem("IspatchNoteDismissed16", "true");
     }
 });
 
@@ -493,11 +503,11 @@ function loadSlot(slotNumber) {
         toOfferContainer.innerHTML = toOfferItems;
         lookingForContainer.innerHTML = lookingForItems;
 
-        // Re-attach click event listeners to the images
+        // Re-attach click event listeners to the stickers
         reattachImageClickHandlers(toOfferContainer);
         reattachImageClickHandlers(lookingForContainer);
 
-        // Re-attach click event listeners to the text items
+        // Re-attach click event listeners to the text element
         reattachTextClickHandlers(toOfferContainer);
         reattachTextClickHandlers(lookingForContainer);
     } else {
@@ -505,7 +515,7 @@ function loadSlot(slotNumber) {
     }
 }
 
-// Re-attach click event listeners to images
+// Re-attach click event listeners to stickers
 function reattachImageClickHandlers(container) {
     const imageItems = container.querySelectorAll('.image-item, .image-with-attachments');
     imageItems.forEach(div => {
@@ -515,11 +525,20 @@ function reattachImageClickHandlers(container) {
                 e.stopPropagation();
                 removeImage(div, img.src);
             };
+
+            // Re-attach drag event listeners
+            div.setAttribute('draggable', 'true');
+            div.addEventListener('dragstart', () => {
+                div.classList.add('dragging');
+            });
+            div.addEventListener('dragend', () => {
+                div.classList.remove('dragging');
+            });
         }
     });
 }
 
-// Re-attach click event listeners to text items
+// Re-attach click event listeners to text elements
 function reattachTextClickHandlers(container) {
     const textItems = container.querySelectorAll('.trade-text-item');
     textItems.forEach(textDiv => {
@@ -550,7 +569,7 @@ function deleteSlot(slotNumber) {
 // Initialize the slot menu on page load
 document.addEventListener('DOMContentLoaded', initializeSlotMenu);
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const savedToOffer = localStorage.getItem('autoSave-toOffer');
     const savedLookingFor = localStorage.getItem('autoSave-lookingFor');
 
@@ -566,4 +585,36 @@ document.addEventListener('DOMContentLoaded', function() {
     reattachImageClickHandlers(document.getElementById('looking-for-items'));
     reattachTextClickHandlers(document.getElementById('to-offer-items'));
     reattachTextClickHandlers(document.getElementById('looking-for-items'));
+});
+document.addEventListener('DOMContentLoaded', function () {
+    const containers = document.querySelectorAll('.items');
+
+    containers.forEach(container => {
+        container.addEventListener('dragover', e => {
+            e.preventDefault();
+        });
+
+        container.addEventListener('drop', e => {
+            e.preventDefault();
+            const draggingElement = document.querySelector('.dragging');
+            const dropTarget = e.target.closest('.image-item, .image-with-attachments');
+
+            if (dropTarget && dropTarget !== draggingElement) {
+                swapElements(draggingElement, dropTarget);
+                autoSave(); // Save the new order
+            }
+
+            draggingElement.classList.remove('dragging');
+        });
+    });
+
+    function swapElements(el1, el2) {
+        const parent = el1.parentNode;
+        const nextSibling1 = el1.nextSibling === el2 ? el1 : el1.nextSibling;
+        const nextSibling2 = el2.nextSibling === el1 ? el2 : el2.nextSibling;
+
+        // Swap the positions of the two elements
+        parent.insertBefore(el2, nextSibling1);
+        parent.insertBefore(el1, nextSibling2);
+    }
 });
