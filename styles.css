@@ -530,7 +530,9 @@ img.small-attached-image {
     background-color: #96A5AD;
     padding: 5px;
     border-radius: 8px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 .remove-btn {
     position: absolute;
