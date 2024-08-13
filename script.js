@@ -25,6 +25,86 @@ function closeAttachModal() {
     selectedImage = null;
     selectedAlt = null; // Reset selectedAlt here
 }
+const subcategoryOptions = {
+    "Pollen": ["Red Pollen", "Blue Pollen", "White Pollen", "Bubble Pollen", "Bee Ability Pollen", "Duped Ability Pollen", "Bee Gathering Pollen", "Bomb Pollen", "Blue Bomb Pollen", "Red Bomb Pollen", "Buzz Bomb Pollen", "Common Bee Pollen", "Rare Bee Pollen", "Epic Bee Pollen", "Legendary Bee Pollen", "Mythic Bee Pollen", "Event Bee Pollen", "Gifted Bee Pollen", "Ungifted Bee Pollen", "Mark Ability Pollen", "Scratch Pollen", "Pineapple Patch Pollen", "Rose Field Pollen", "Stump Field Pollen", "Mountain Top Field Pollen", "Cactus Field Pollen", "Coconut Field Pollen", "Mushroom Field Pollen", "Dandelion Field Pollen", "Sunflower Field Pollen", "Blue Flower Field Pollen", "Clover Field Pollen", "Strawberry Field Pollen", "Spider Field Pollen", "Bamboo Field Pollen", "Pine Tree Field Pollen", "Pumpkin Patch Pollen", "Pepper Patch Pollen", "Hub Field Pollen", "Pollen From Tools", "Movement Collection Pollen", "Tornado Pollen", "Flame Pollen", "Honey Per Pollen"],
+    "Convert Rate": ["Mutated Bee Convert Rate", "Colorless Bee Convert Rate", "Red Bee Convert Rate", "Blue Bee Convert Rate", "Convert Rate At Hive"],
+    "Capacity": ["White Field Capacity", "Red Field Capacity", "Blue Field Capacity", "Pumpkin Patch Capacity"],
+    "Attack": ["Bee Attack", "Blue Bee Attack", "Rare Bee Attack", "Epic Bee Attack", "Legendary Bee Attack"],
+    "Conversion": ["Instant Bee Gather Conversion", "Instant Red Bee Conversion", "Instant Rare Bee Conversion", "Instant Event Bee Conversion", "Instant Colorless Bee Conversion", "Instant Tool Conversion", "Instant Bomb Conversion", "Instant Gifted Bee Conversion", "Unique Instant Conversion"],
+    "Other": ["Honey Per Goo", "Bee Movespeed", "Critical Power", "Super Critical Power", "Honey From Tokens"]
+};
+
+function handleCategoryChange() {
+    const categorySelect = document.getElementById("categorySelect");
+    const subcategorySelect = document.getElementById("subcategorySelect");
+    const selectedCategory = categorySelect.value;
+
+    if (selectedCategory) {
+        subcategorySelect.style.display = 'inline-block';
+        updateSubcategoryOptions(selectedCategory);
+    } else {
+        subcategorySelect.style.display = 'none';
+        subcategorySelect.innerHTML = '<option value="">Select a Subcategory</option>';
+    }
+    filterImages(); // Ensure images are filtered based on the selected category/subcategory and search input
+}
+
+function updateSubcategoryOptions(selectedCategory) {
+    const subcategorySelect = document.getElementById("subcategorySelect");
+    subcategorySelect.innerHTML = '<option value="">Select a Subcategory</option>';
+
+    if (selectedCategory && subcategoryOptions[selectedCategory]) {
+        subcategoryOptions[selectedCategory].forEach(subcat => {
+            const option = document.createElement("option");
+            option.value = subcat;
+            option.textContent = subcat;
+            subcategorySelect.appendChild(option);
+        });
+    }
+}
+
+function filterImages() {
+    const categorySelect = document.getElementById("categorySelect");
+    const subcategorySelect = document.getElementById("subcategorySelect");
+    const searchInput = document.querySelector('.search-container input');
+    const filter = searchInput.value.toLowerCase();
+    const selectedCategory = categorySelect.value.toLowerCase();
+    const selectedSubcategory = subcategorySelect.value.toLowerCase();
+    const images = document.querySelectorAll('.images img');
+
+    images.forEach((img) => {
+        const altText = img.getAttribute('alt').toLowerCase();
+        const dataStack = img.getAttribute('data-stack') ? img.getAttribute('data-stack').toLowerCase() : '';
+
+        // Determine if the image should be shown based on filters
+        let categoryMatch = true;
+        let subcategoryMatch = true;
+        let searchMatch = altText.includes(filter);
+
+        if (selectedCategory && selectedCategory !== "other") {
+            categoryMatch = dataStack.includes(selectedCategory);
+        }
+
+        if (selectedSubcategory) {
+            subcategoryMatch = dataStack.includes(selectedSubcategory);
+        }
+
+        if (selectedCategory === "other") {
+            categoryMatch = true; // Ignore category filter for "Other"
+            if (selectedSubcategory) {
+                subcategoryMatch = dataStack.includes(selectedSubcategory);
+            }
+        }
+
+        // Display image if it matches all the criteria
+        if (categoryMatch && subcategoryMatch && searchMatch) {
+            img.style.display = ''; // Show the image
+        } else {
+            img.style.display = 'none'; // Hide the image
+        }
+    });
+}
+
 // Add an item that displays text
 function addTextItem(section) {
     const text = prompt("Enter the text you want to add to the trade:");
@@ -223,22 +303,7 @@ function getTextColor(type) {
             return 'black';
     }
 }
-// Search bar in the modal
-function filterImages(input, categoryId) {
-    const filter = input.value.toLowerCase();
-    const category = document.getElementById(categoryId);
-    const images = category.getElementsByTagName('img');
 
-    for (let i = 0; i < images.length; i++) {
-        const altText = images[i].alt.toLowerCase();
-        const tags = images[i].getAttribute('data-tags').toLowerCase();
-        if (altText.includes(filter) || tags.includes(filter)) {
-            images[i].style.display = '';
-        } else {
-            images[i].style.display = 'none';
-        }
-    }
-}
 // Finalize the "image-with-attachments" by adding all attachments and attached text from previews to it and adding it in the respective section
 function finalizeAttachment() {
     console.log("Finalizing attachment");
@@ -364,7 +429,7 @@ function initializeSlotMenu() {
         const slotLabel = localStorage.getItem(`slot-${i}-label`) || `Slot ${i}`;
         slot.innerHTML = `
             <span>${slotLabel}</span>
-            <button onclick="loadSlot(${i})">Load</button>
+            <button class="load" onclick="loadSlot(${i})">Load</button>
             <button class="save" onclick="saveSlot(${i})">Save</button>
             <button class="rename" onclick="renameSlot(${i})">Rename</button>
             <button class="delete" onclick="deleteSlot(${i})">Delete</button>
@@ -548,12 +613,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeBtn = document.querySelector(".close");
 
     // Check if the popup has been dismissed previously
-    if (!localStorage.getItem("IspatchNoteDismissed17")) {
+    if (!localStorage.getItem("IspatchNoteDismissed18")) {
         popup.style.display = "flex";
     }
 
     closeBtn.onclick = function () {
         popup.style.display = "none";
-        localStorage.setItem("IspatchNoteDismissed17", "true");
+        localStorage.setItem("IspatchNoteDismissed18", "true");
     }
 });
