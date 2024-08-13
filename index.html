@@ -6,7 +6,6 @@
     <title>Trade Offer Creator - Bee Swarm Simulator Trading</title>
     <meta name="description" content="BSSTrades is a tool that allows you to make a wishlist with an advanced index that allows you to search stickers with keywords, the main goal is to help you with Bee Swarm Simulator trading.">
     <link rel="icon" type="image/png" href="index/favicon.png">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.31/ua-parser.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -16,7 +15,10 @@
         <div class="nav-center">
             <div class="nav-links">
                 <a href="/">Home</a>
+                <!--<a>Trade Ads</a>-->
+                <!--<a>Hive Builder</a>-->
                 <a href="/informations">About</a>
+                <!--<a>Contact us</a>-->
             </div>
         </div>
     </nav>
@@ -27,11 +29,13 @@
             <p>⚠️UPDATES⚠️</p>
             <ul>
                 <li>Drag-Drop feature added!.</li>
-                <li>Bug Fixes.</li>
+                <li>Ability to drag-drop from a section to another has been patched.</li>
+                <li>You can now drag text.</li>
+                <li>Beequips are now auto-saving again.</li>
             </ul>
         </div>
     </div>
-    <div class="devtext">Rolling out the so waited "Drag-Drop" system in BETA. (⚠️ Quick tip regarding beequip not autosaving: As long as you add any type of sticker beside a beequip after adding a beequip it autosaves it (I would still recommand saving it in a slot). I'll work on a fix this week⚠️)</div>
+    <div class="devtext">You can swap stickers positions by drag-dropping them. Beequips not auto-saving has been patched ! ✅</div>
     <div class="container">
         <div class="header">
             <h1><img src="csscontentTV/textdeco_icon.webp" alt="Text Deco Icon">Trade Offer Creator<img src="csscontentTV/textdeco_icon.webp" alt="Text Deco Icon"></h1>
@@ -39,7 +43,7 @@
         <div class="main">
             <div class="section" id="to-offer">
                 <h2 class="offering">Offering</h2>
-                <div class="items" id="to-offer-items"></div>
+                <div class="items" id="to-offer-items" data-section="to-offer"></div>
                 <button onclick="openModal('to-offer')">Add Item</button><button class="clear-button clear-offer-button" onclick="clearSection('to-offer-items')">Clear All</button>
             </div>
             <div>
@@ -47,7 +51,7 @@
             </div>
             <div class="section" id="looking-for">
                 <h2 class="receiving">Looking For</h2>
-                <div class="items" id="looking-for-items"></div>
+                <div class="items" id="looking-for-items" data-section="to-offer"></div>
                 <button onclick="openModal('looking-for')">Add Item</button><button class="clear-button clear-looking-button" onclick="clearSection('looking-for-items')">Clear All</button>
             </div>
         </div>
