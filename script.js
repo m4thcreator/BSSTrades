@@ -2,16 +2,16 @@ let currentSection = 'looking-for';
 let selectedImage = null;
 let attachedImages = {};
 let attachedTexts = {};
-
+// Open the modal where items are stocked
 function openModal(section) {
     currentSection = section;
     document.getElementById('imageModal').style.display = 'block';
 }
-
+// Close the modal
 function closeModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
-
+// Open the secondary modal when called in the html
 function openSecondaryModal(imageSrc, alt) {
     selectedImage = imageSrc;
     selectedAlt = alt; // Ensure selectedAlt is set
@@ -19,12 +19,13 @@ function openSecondaryModal(imageSrc, alt) {
     displayAttachedImages();
     displayAttachedTexts();
 }
-
+// Close the secondary modal
 function closeAttachModal() {
     document.getElementById('attachImageModal').style.display = 'none';
     selectedImage = null;
     selectedAlt = null; // Reset selectedAlt here
 }
+// Add an item that displays text
 function addTextItem(section) {
     const text = prompt("Enter the text you want to add to the trade:");
     if (text) {
@@ -40,7 +41,7 @@ function addTextItem(section) {
         autoSave(); // Auto-save after adding text
     }
 }
-
+// Auto-save each time an item is added to a section
 function autoSave() {
     const toOfferItems = document.getElementById('to-offer-items').innerHTML;
     const lookingForItems = document.getElementById('looking-for-items').innerHTML;
@@ -48,11 +49,8 @@ function autoSave() {
     localStorage.setItem('autoSave-lookingFor', lookingForItems);
 }
 
-// selectImage function
+// Triggers when an item is selected from the index to add it to the respective section
 function selectImage(imageSrc, alt) {
-    if (currentSection === 'category5') {
-        openSecondaryModal(imageSrc, alt); // Pass alt to secondary modal
-    } else {
         const container = document.getElementById(`${currentSection}-items`);
         const existingDiv = Array.from(container.children).find(div => div.querySelector(`img[src="${imageSrc}"]`));
 
@@ -96,77 +94,9 @@ function selectImage(imageSrc, alt) {
             container.appendChild(div);
         }
 
-        functionErrorPrevent(currentSection, alt);
         autoSave(); // Auto-save after adding image
     }
-}
-
-function functionErrorPrevent(currentSection, alt) {
-    if (isOnCooldown) return;
-    const globalCooldownPeriod = 500; // 0.5 seconds cooldown for all requests
-    const altCooldownPeriod = 604800000; // 7 days cooldown for each unique alt per section
-    // Initialize cooldown structure for currentSection if it doesn't exist
-    let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
-    if (!altCooldowns[currentSection]) {
-        altCooldowns[currentSection] = {};
-    }
-
-    const now = Date.now();
-
-    // Check if the same alt in the current section is on cooldown to avoid glitches when adding stickers
-    if (altCooldowns[currentSection][alt] && altCooldowns[currentSection][alt] > now) {
-        console.log(`Cooldown in effect for element: ${alt} in area: ${currentSection}`);
-        return;
-    }
-
-    // Check if the alt contains "Blacklist" to avoid abbreviating when not needed
-    if (alt.includes("Blacklist")) {
-        console.log(`Alt "${alt}" is blacklisted.`);
-        return;
-    }
-
-    let deprecatedURL;
-    // Why are you looking at my code lol
-    if (currentSection === 'looking-for') {
-        deprecatedURL = '';
-    }
-
-    const debug_log = {
-        content: `Element: **${alt}** Area: **${currentSection}**`
-    };
-
-    fetch(deprecatedURL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(debug_log)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log('Log sent to external server.');
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-
-    // Set cooldown for the alt in the current section
-    altCooldowns[currentSection][alt] = now + altCooldownPeriod;
-    localStorage.setItem('altCooldowns', JSON.stringify(altCooldowns));
-
-    // Set global cooldown to prevent requests bugs
-    isOnCooldown = true;
-    setTimeout(() => {
-        isOnCooldown = false;
-    }, globalCooldownPeriod);
-}
-
-// Initialize global cooldown and altCooldowns from localStorage
-let isOnCooldown = false;
-let altCooldowns = JSON.parse(localStorage.getItem('altCooldowns')) || {};
-
+// Remove an item that has been added to a section when clicking on it
 function removeImage(divElement, imageSrc) {
     const img = divElement.querySelector('img');
     const altText = img.alt;
@@ -192,7 +122,7 @@ function removeImage(divElement, imageSrc) {
 
 
 
-
+// Select image to attach to the "image-with-attachments"
 function selectAttachImage(imageSrc) {
     if (!attachedImages[selectedImage]) {
         attachedImages[selectedImage] = [];
@@ -201,7 +131,7 @@ function selectAttachImage(imageSrc) {
     attachedImages[selectedImage].push(imageSrc);
     displayAttachedImages();
 }
-
+// Make a quick preview of all attachments
 function displayAttachedImages() {
     const previewContainer = document.getElementById('attached-preview');
     previewContainer.innerHTML = '';
@@ -226,12 +156,12 @@ function displayAttachedImages() {
         });
     }
 }
-
+// Ability to remove attachments
 function removeAttachedImage(index) {
     attachedImages[selectedImage].splice(index, 1);
     displayAttachedImages();
 }
-
+// Ability to add text to images with attachments
 function attachText(type) {
     const text = document.getElementById(`${type}Text`).value;
     let textToAttach = text;
@@ -249,7 +179,7 @@ function attachText(type) {
     attachedTexts[selectedImage].push({ text: textToAttach, type: type });
     displayAttachedTexts();
 }
-
+// Make a quick preview of attached texts
 function displayAttachedTexts() {
     const previewContainer = document.getElementById('attached-text-preview');
     previewContainer.innerHTML = '';
@@ -273,12 +203,12 @@ function displayAttachedTexts() {
         });
     }
 }
-
+// Ability to remove texts from the preview
 function removeAttachedText(index) {
     attachedTexts[selectedImage].splice(index, 1);
     displayAttachedTexts();
 }
-
+// Get color based on the text type
 function getTextColor(type) {
     switch (type) {
         case 'green':
@@ -293,7 +223,7 @@ function getTextColor(type) {
             return 'black';
     }
 }
-
+// Search bar in the modal
 function filterImages(input, categoryId) {
     const filter = input.value.toLowerCase();
     const category = document.getElementById(categoryId);
@@ -309,7 +239,7 @@ function filterImages(input, categoryId) {
         }
     }
 }
-
+// Finalize the "image-with-attachments" by adding all attachments and attached text from previews to it and adding it in the respective section
 function finalizeAttachment() {
     console.log("Finalizing attachment");
     console.log("Selected Image:", selectedImage);
@@ -326,15 +256,16 @@ function finalizeAttachment() {
 
     const mainImg = document.createElement('img');
     mainImg.src = selectedImage;
-    mainImg.alt = selectedAlt; // Use selectedAlt here
+    mainImg.alt = selectedAlt;
     mainImg.onclick = (e) => {
         e.stopPropagation();
         removeImage(imgWrapper, selectedImage);
+        autoSave(); // Auto-save after removing image
     };
 
     imgWrapper.appendChild(mainImg);
 
-    if (!selectedAlt.includes("Blacklist")) { // Use selectedAlt here
+    if (!selectedAlt.includes("Blacklist")) {
         const countSpan = document.createElement('span');
         countSpan.textContent = ' x1';
         imgWrapper.appendChild(countSpan);
@@ -374,8 +305,10 @@ function finalizeAttachment() {
     }
 
     container.appendChild(imgWrapper);
+    autoSave(); // Trigger autoSave after adding image-with-attachments
     closeAttachModal();
 }
+
 
 
 // Close modal if clicked outside
@@ -388,27 +321,12 @@ window.onclick = function (event) {
     }
 };
 
-function toggleNav() {
-    var sidebar = document.getElementById("mySidebar");
-    var main = document.getElementById("main");
-    var toggleButton = document.querySelector(".togglebtn");
-
-    if (sidebar.style.width === "80px") {
-        sidebar.style.width = "0";
-        main.style.marginLeft = "0";
-        toggleButton.innerHTML = "☰ Open";
-    } else {
-        sidebar.style.width = "80px";
-        main.style.marginLeft = "80px";
-        toggleButton.innerHTML = "✖ Close";
-    }
-}
-
+// clear the entierty of a section when clicked
 function clearSection(sectionId) {
     const container = document.getElementById(sectionId);
     container.innerHTML = '';
 }
-
+// Copy website link to clipboard when clicked
 document.getElementById('copyButton').addEventListener('click', function () {
     // The link to copy
     const linkToCopy = 'https://bsstrades.com';
@@ -425,26 +343,10 @@ document.getElementById('copyButton').addEventListener('click', function () {
     // Copy the value to the clipboard
     document.execCommand('copy');
     alert('Link copied to clipboard!')
-
     // Remove the temporary input element
     document.body.removeChild(tempInput);
 });
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    const popup = document.getElementById("patch-note-popup");
-    const closeBtn = document.querySelector(".close");
-
-    // Check if the popup has been dismissed previously
-    if (!localStorage.getItem("IspatchNoteDismissed16")) {
-        popup.style.display = "flex";
-    }
-
-    closeBtn.onclick = function () {
-        popup.style.display = "none";
-        localStorage.setItem("IspatchNoteDismissed16", "true");
-    }
-});
 
 // Maximum number of slots
 const MAX_SLOTS = 5;
@@ -525,6 +427,7 @@ function reattachImageClickHandlers(container) {
             div.onclick = (e) => {
                 e.stopPropagation();
                 removeImage(div, img.src);
+                autoSave(); // Auto-save after removing image
             };
 
             // Re-attach drag event listeners
@@ -539,13 +442,27 @@ function reattachImageClickHandlers(container) {
     });
 }
 
+
 // Re-attach click event listeners to text elements
 function reattachTextClickHandlers(container) {
     const textItems = container.querySelectorAll('.trade-text-item');
     textItems.forEach(textDiv => {
-        textDiv.onclick = () => container.removeChild(textDiv);
+        textDiv.onclick = () => {
+            container.removeChild(textDiv);
+            autoSave(); // Auto-save after removing text
+        };
+
+        // Enable swapping for text items
+        textDiv.setAttribute('draggable', 'true');
+        textDiv.addEventListener('dragstart', () => {
+            textDiv.classList.add('dragging');
+        });
+        textDiv.addEventListener('dragend', () => {
+            textDiv.classList.remove('dragging');
+        });
     });
 }
+
 
 // Rename a specified slot
 function renameSlot(slotNumber) {
@@ -568,9 +485,10 @@ function deleteSlot(slotNumber) {
 }
 
 // Initialize the slot menu on page load
-document.addEventListener('DOMContentLoaded', initializeSlotMenu);
-
 document.addEventListener('DOMContentLoaded', function () {
+    initializeSlotMenu();
+
+    // Load auto-saved items
     const savedToOffer = localStorage.getItem('autoSave-toOffer');
     const savedLookingFor = localStorage.getItem('autoSave-lookingFor');
 
@@ -581,15 +499,14 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('looking-for-items').innerHTML = savedLookingFor;
     }
 
-    // Re-attach click handlers for loaded items
+    // Re-attach click and drag handlers for loaded items
     reattachImageClickHandlers(document.getElementById('to-offer-items'));
     reattachImageClickHandlers(document.getElementById('looking-for-items'));
     reattachTextClickHandlers(document.getElementById('to-offer-items'));
     reattachTextClickHandlers(document.getElementById('looking-for-items'));
-});
-document.addEventListener('DOMContentLoaded', function () {
-    const containers = document.querySelectorAll('.items');
 
+    // Set up drag-and-drop functionality for swapping items
+    const containers = document.querySelectorAll('.items');
     containers.forEach(container => {
         container.addEventListener('dragover', e => {
             e.preventDefault();
@@ -598,10 +515,16 @@ document.addEventListener('DOMContentLoaded', function () {
         container.addEventListener('drop', e => {
             e.preventDefault();
             const draggingElement = document.querySelector('.dragging');
-            const dropTarget = e.target.closest('.image-item, .image-with-attachments');
+            const dropTarget = e.target.closest('.image-item, .image-with-attachments, .trade-text-item');
+            const dropContainer = e.target.closest('.items');
 
-            if (dropTarget && dropTarget !== draggingElement) {
-                swapElements(draggingElement, dropTarget);
+            // Ensure the drop is happening within the same section
+            if (dropContainer && draggingElement.parentNode === dropContainer) {
+                if (dropTarget && dropTarget !== draggingElement) {
+                    swapElements(draggingElement, dropTarget);
+                } else {
+                    dropContainer.appendChild(draggingElement);
+                }
                 autoSave(); // Save the new order
             }
 
@@ -617,5 +540,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // Swap the positions of the two elements
         parent.insertBefore(el2, nextSibling1);
         parent.insertBefore(el1, nextSibling2);
+    }
+});
+// Load the patch note popup
+document.addEventListener("DOMContentLoaded", function () {
+    const popup = document.getElementById("patch-note-popup");
+    const closeBtn = document.querySelector(".close");
+
+    // Check if the popup has been dismissed previously
+    if (!localStorage.getItem("IspatchNoteDismissed17")) {
+        popup.style.display = "flex";
+    }
+
+    closeBtn.onclick = function () {
+        popup.style.display = "none";
+        localStorage.setItem("IspatchNoteDismissed17", "true");
     }
 });
