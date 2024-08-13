@@ -87,6 +87,7 @@ body {
     height: 100%; 
     opacity: 0; /* Start with opacity 0 for fade-in effect */
     animation: fadeIn 1s forwards; /* Fade-in animation */
+    z-index: 1;
 }
 
 .popup-content {
@@ -134,7 +135,7 @@ body {
     text-align: center;
     cursor: pointer;
     padding: 10px;
-    max-width: 30%;
+    max-width: 20%;
     background-color: #ffffff;
     transition: background-color 0.2s;
     margin-top: 50px;
@@ -147,31 +148,13 @@ body {
     background-color: rgb(190, 190, 190);
 }
 
-.clear-button {
-    display: block;
-    width: 25%;
-    padding: 10px;
-    margin-top: 20px;
-    margin: 10px;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    background-color: #f44336;
-}
-
-.clear-button:hover {
-    background-color: #d32f2f;
-}
-
 .container {
     width: 80%;
     margin: 0 auto;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0 0 20px rgba(31, 31, 31, 0.8);
-    border-radius: 8px;
+    border-radius: 15px;
     border-style: solid;
     border-color: #1f1f1f;
 }
@@ -180,16 +163,19 @@ body {
     color: #FFFFFF;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: #d94343;
+    background-color: #dd2f2f;
     border-radius: 8px;
+    border: 3px solid #8c1c1c;
 }
 .container .receiving {
+    justify-content: right;
     margin: 8px;
     color: #FFFFFF;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: #8cd943;
+    background-color: #4bda34;
     border-radius: 8px;
+    border: 3px solid #37a427;
 }
 .container h1 {
     color: #FFFFFF;
@@ -197,8 +183,18 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #3283FF;
     border-radius: 8px;
-    width: 40%;
+    width: 30%;
     margin: auto;
+    border: 3px solid #2059ae;
+    font-size: medium;
+}
+.container img {
+    width: 20px;
+    height: auto;
+}
+.container img.divider {
+    width: 100%;
+    height: auto;
 }
 .header {
     text-align: center;
@@ -221,11 +217,13 @@ body {
     background-color: #D9CD43;
     padding: 8px;
     border-radius: 10px;
+    border: 3px solid #B5AB38;
 }
 #to-offer-items {
     background-color: #D9CD43;
     padding: 8px;
     border-radius: 10px;
+    border: 3px solid #B5AB38;
 }
 .count-number {
     color: #444016;
@@ -244,7 +242,8 @@ body {
     cursor: pointer;
     transition: transform 0.2s;
     background-color: #B5AB38;
-    margin: 3px;
+    margin: 1px;
+    border-radius: 5px;
 }
 
 .items img:hover {
@@ -268,23 +267,46 @@ body {
     opacity: .5;
     color: #b54738;
 }
-
-button {
-    display: block;
-    width: 25%;
-    padding: 10px;
-    margin-top: 20px;
-    margin: 10px;
-    background-color: #4c74af;
-    color: white;
+.button-container {
+    display: flex;
+}
+.rotate-button img {
+    width: 40px;
+    height: 40px;
+    animation: continuous-rotate 3s infinite linear; /* Apply rotation to the content */
+}
+.rotate-button {
+    margin: 8px;
+    width: auto;
+    height: 40px;
+    margin-top: 10px;
+    font-size: 1rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
+    background-color: rgba(53, 53, 53, 0.5);
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out; /* Smooth scaling */
 }
 
-button:hover {
-    background-color: #008cff;
+.rotate-button:hover {
+    transform: scale(1.1);
+    background-color: rgba(151, 151, 151, 0.3);
+}
+
+@keyframes continuous-rotate {
+    0% {
+        transform: rotate(-10deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    100% {
+        transform: rotate(-10deg);
+    }
 }
 .mediabutton-container {
     display: flex;
@@ -313,6 +335,7 @@ button:hover {
     padding: 5px;
     overflow: auto;
     max-height: 200px;
+    border: 3px solid #B5AB38;
 }
 .slot-menu {
     margin-top: 10px;
@@ -336,23 +359,35 @@ button:hover {
 }
 .slot button {
     margin-left: 5px;
-    max-width: 80px;
-    background-color: #318500;
+    border-radius: 5px;
+    background-color: #4a82d6;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
 }
 .slot button.save {
     margin-left: 5px;
-    max-width: 80px;
-    background-color: #3883b5;
+    border-radius: 5px;
+    background-color: #4fc73a;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
 }
 .slot button.rename {
     margin-left: 5px;
-    max-width: 80px;
-    background-color: #3a3a3a;
+    border-radius: 5px;
+    background-color: #deb811;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
 }
 .slot button.delete {
     margin-left: 5px;
-    max-width: 80px;
-    background-color: #a71313;
+    border-radius: 5px;
+    background-color: #c63232;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
 }
 .modal {
     display: none;
@@ -365,20 +400,126 @@ button:hover {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 }
+/* General container styling */
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style for the select elements */
+select {
+    appearance: none; /* Remove default styling */
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Style for the select elements when focused */
+select:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Custom arrow for the select elements */
+select::after {
+    content: '\u25BC'; /* Downward arrow */
+    font-size: 12px;
+    color: #333;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Style for the search container */
+.search-container {
+    margin-bottom: 20px;
+}
+
+/* Style for the search input */
+.search-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Style for the search input when focused */
+.search-container input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Image container styling */
+.images img {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    display: inline-block;
+    margin: 5px;
+    transition: opacity 0.3s;
+}
+
+/* Fade in/out effect for images */
+.images img {
+    opacity: 1;
+}
+
+.images img.hidden {
+    opacity: 0;
+}
+
+/* Fancy dropdown effect */
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333;
+    transform: translateY(-50%);
+    transition: border-color 0.3s;
+}
+
+.select-wrapper select:focus ~ .select-wrapper::after {
+    border-top-color: #007bff;
+}
 
 .modal-content {
     background-color: #FFF940;
     margin:5% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 5px solid #D9CD43;
     width: 50%;
-    border-radius: 8px;
+    border-radius: 10px;
     position: relative;
 }
 .modal-content h2 {
+    color: #FFFFFF;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: #252525;
-    font-weight: 800;
 }
 .close {
     color: #810E0E;
@@ -392,7 +533,7 @@ button:hover {
     background-color: #3283FF;
     margin:5% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 3px solid #ffffff;
     width: 50%;
     border-radius: 8px;
     position: relative;
@@ -444,8 +585,9 @@ button:hover {
     background: #555; 
 }
 .category {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background-color: #D9CD43;
+    border-radius: 10px;
     
 }
 
@@ -456,8 +598,8 @@ button:hover {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.category input {
-    width: 70%;
+.modal-content input {
+    width: 50%;
     padding: 5px;
     margin-bottom: 10px;
     margin: 5px;
@@ -478,7 +620,8 @@ button:hover {
     cursor: pointer;
     transition: transform 0.2s;
     background-color: #B5AB38;
-    margin-bottom: 3px;
+    margin-bottom: 1px;
+    border-radius: 10px;
 }
 
 .category .images img:hover {
