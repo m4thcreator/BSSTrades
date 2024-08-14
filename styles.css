@@ -193,7 +193,7 @@ body {
     height: auto;
 }
 .container img.divider {
-    width: 100%;
+    width: 150px;
     height: auto;
 }
 .header {
@@ -237,8 +237,8 @@ body {
 }
 
 .items img {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     cursor: pointer;
     transition: transform 0.2s;
     background-color: #B5AB38;
