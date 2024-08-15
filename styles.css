@@ -57,6 +57,7 @@ body {
     width: 100%;
     max-width: 800px;
     margin: auto;
+    margin-top: 10px;
     padding: 10px;
     background: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -138,7 +139,6 @@ body {
     max-width: 20%;
     background-color: #ffffff;
     transition: background-color 0.2s;
-    margin-top: 50px;
     border-radius: 8px;
     color:#000000;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -314,9 +314,10 @@ body {
     margin-top: 15px;
 }
 .mediabutton {
+    animation: continuous-rotate 3s infinite linear; /* Apply rotation to the content */
     margin: 10px;
     padding: 10px 20px;
-    background-color: #555555;
+    background-color: #3b3b3b;
     color: #ffffff;
     font-size: 16px;
     text-decoration: none;
@@ -325,7 +326,7 @@ body {
     transition: background-color 0.3s ease;
 }
 .mediabutton:hover {
-    background-color: #4569a0;
+    background-color: #0066ff;
 }
 /* Modals */
 /* Slot Modal styles */
