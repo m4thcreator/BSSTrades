@@ -195,6 +195,7 @@ body {
 .container img.divider {
     width: 150px;
     height: auto;
+    margin-top: 20px;
 }
 .header {
     text-align: center;
