@@ -1,7 +1,7 @@
 body {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-image: url("csscontentTV/FutureBackGround.png");
-    background-size: contain;
+    background-size: cover;
     background-repeat: inherit;
     margin: 0;
     padding: 0;
