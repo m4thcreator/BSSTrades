@@ -352,7 +352,7 @@ function finalizeAttachment() {
     }
     for (const [imgSrc, count] of Object.entries(imageCounts)) {
         const attachedImgWrapper = document.createElement('div');
-        attachedImgWrapper.style.float = 'right';
+        attachedImgWrapper.style.float = 'left';
 
         const attachedImg = document.createElement('img');
         attachedImg.src = imgSrc;
