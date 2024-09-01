@@ -341,6 +341,15 @@ function finalizeAttachment() {
         return counts;
     }, {});
 
+    if (attachedTexts[selectedImage]) {
+        attachedTexts[selectedImage].forEach((textObj) => {
+            const textDiv = document.createElement('div');
+            textDiv.classList.add("abilityText");
+            textDiv.style.color = getTextColor(textObj.type);
+            textDiv.textContent = textObj.text;
+            imgWrapper.appendChild(textDiv);
+        });
+    }
     for (const [imgSrc, count] of Object.entries(imageCounts)) {
         const attachedImgWrapper = document.createElement('div');
         attachedImgWrapper.style.float = 'right';
@@ -358,17 +367,6 @@ function finalizeAttachment() {
         attachedImgWrapper.appendChild(countBadge);
         imgWrapper.appendChild(attachedImgWrapper);
     }
-
-    if (attachedTexts[selectedImage]) {
-        attachedTexts[selectedImage].forEach((textObj) => {
-            const textDiv = document.createElement('div');
-            textDiv.classList.add("abilityText");
-            textDiv.style.color = getTextColor(textObj.type);
-            textDiv.textContent = textObj.text;
-            imgWrapper.appendChild(textDiv);
-        });
-    }
-
     container.appendChild(imgWrapper);
     autoSave(); // Trigger autoSave after adding image-with-attachments
     closeAttachModal();
