@@ -292,7 +292,7 @@ function removeAttachedText(index) {
 function getTextColor(type) {
     switch (type) {
         case 'green':
-            return 'SpringGreen';
+            return '#268100';
         case 'red':
             return 'LightSalmon';
         case 'black':
