@@ -125,7 +125,7 @@ function sortAllImages(sectionId) {
 
     // If any items without data-order are found, prompt the user
     if (itemsWithoutDataOrder.length > 0) {
-        var userConfirmed = confirm("⚠️The sort feature encountered an incompatible item, likely added before the update. To fix this, items in the current section will be deleted, and slots will be reset. To avoid future issues, please delete pre-update slots, re-add items, and save them again. Do you want to proceed?(⚠️Proceeding will enable the sort feature and clear the current section along with deleting all saved slots!⚠️)");
+        var userConfirmed = confirm("⚠️The sort feature encountered an incompatible item, likely added before the update. To fix this, items in the current section will be deleted, and slots will be reset. Do you want to proceed?(⚠️Proceeding will enable the sort feature and clear the current section along with deleting all saved slots!⚠️)");
 
         if (!userConfirmed) {
             return; // User canceled, abort sorting
