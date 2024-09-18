@@ -14,7 +14,8 @@ function closeModal() {
 // Open the secondary modal when called in the html
 function openSecondaryModal(imageSrc, alt) {
     selectedImage = imageSrc;
-    selectedAlt = alt; // Ensure selectedAlt is set
+    selectedAlt = alt;
+    selectedOrder = document.querySelector(`img[src="${imageSrc}"]`).getAttribute('data-order'); // Capture the order
     document.getElementById('attachImageModal').style.display = 'block';
     displayAttachedImages();
     displayAttachedTexts();
@@ -25,6 +26,15 @@ function closeAttachModal() {
     selectedImage = null;
     selectedAlt = null; // Reset selectedAlt here
 }
+// Close modal if clicked outside
+window.onclick = function(event) {
+    if (event.target === document.getElementById('imageModal')) {
+        closeModal();
+    }
+    if (event.target === document.getElementById('attachImageModal')) {
+        closeAttachModal();
+    }
+};
 const subcategoryOptions = {
     "Pollen": ["Red Pollen", "Blue Pollen", "White Pollen", "Bubble Pollen", "Bee Ability Pollen", "Duped Ability Pollen", "Bee Gathering Pollen", "Bomb Pollen", "Blue Bomb Pollen", "Red Bomb Pollen", "Buzz Bomb Pollen", "Common Bee Pollen", "Rare Bee Pollen", "Epic Bee Pollen", "Legendary Bee Pollen", "Mythic Bee Pollen", "Event Bee Pollen", "Gifted Bee Pollen", "Ungifted Bee Pollen", "Mark Ability Pollen", "Scratch Pollen", "Pineapple Patch Pollen", "Rose Field Pollen", "Stump Field Pollen", "Mountain Top Field Pollen", "Cactus Field Pollen", "Coconut Field Pollen", "Mushroom Field Pollen", "Dandelion Field Pollen", "Sunflower Field Pollen", "Blue Flower Field Pollen", "Clover Field Pollen", "Strawberry Field Pollen", "Spider Field Pollen", "Bamboo Field Pollen", "Pine Tree Field Pollen", "Pumpkin Patch Pollen", "Pepper Patch Pollen", "Hub Field Pollen", "Pollen From Tools", "Movement Collection Pollen", "Tornado Pollen", "Flame Pollen", "Honey Per Pollen"],
     "Convert Rate": ["Mutated Bee Convert Rate", "Colorless Bee Convert Rate", "Red Bee Convert Rate", "Blue Bee Convert Rate", "Convert Rate At Hive"],
@@ -105,12 +115,73 @@ function filterImages() {
     });
 }
 
+function sortAllImages(sectionId) {
+    var section = document.getElementById(sectionId);
+    
+    // Check for items in auto-saves or saved slots without a data-order attribute
+    var itemsWithoutDataOrder = Array.from(section.children).filter(function(item) {
+        return item.getAttribute('data-order') === null;
+    });
+
+    // If any items without data-order are found, prompt the user
+    if (itemsWithoutDataOrder.length > 0) {
+        var userConfirmed = confirm("⚠️The sort feature encountered an incompatible item, likely added before the update. To fix this, items in the current section will be deleted, and slots will be reset. To avoid future issues, please delete pre-update slots, re-add items, and save them again. Do you want to proceed?(⚠️Proceeding will enable the sort feature and clear the current section along with deleting all saved slots!⚠️)");
+
+        if (!userConfirmed) {
+            return; // User canceled, abort sorting
+        }
+
+        // User confirmed, delete items without data-order
+        itemsWithoutDataOrder.forEach(function(item) {
+            section.removeChild(item);
+        });
+
+        // Reset all slots
+        for (let i = 1; i <= MAX_SLOTS; i++) {
+            localStorage.removeItem(`slot-${i}-toOffer`);
+            localStorage.removeItem(`slot-${i}-lookingFor`);
+            localStorage.removeItem(`slot-${i}-label`);
+            const slotElement = document.getElementById(`slot-${i}`);
+            if (slotElement) {
+                slotElement.style.backgroundColor = ''; // Reset background color
+                slotElement.querySelector('span').textContent = `Slot ${i}`; // Reset label
+            }
+        }
+
+        autoSave(); // Auto-save after making changes
+    }
+
+    // Proceed with sorting
+    var itemsArray = Array.from(section.children); // Get all remaining children of the section
+
+    itemsArray.sort(function(a, b) {
+        var orderA = parseInt(a.getAttribute('data-order')) || 0;
+        var orderB = parseInt(b.getAttribute('data-order')) || 0;
+        return orderA - orderB;
+    });
+
+    section.innerHTML = '';
+    itemsArray.forEach(function(item) {
+        section.appendChild(item);
+    });
+
+    // Reattach event listeners after sorting
+    reattachImageClickHandlers(section);
+    reattachTextClickHandlers(section);
+    autoSave(); // Auto-save after making changes
+}
+function clearSection(sectionId) {
+    const container = document.getElementById(sectionId);
+    container.innerHTML = '';
+}
+
 // Add an item that displays text
-function addTextItem(section) {
+function addTextItem(section, order) {
     const text = prompt("Enter the text you want to add to the trade:");
     if (text) {
         const container = document.getElementById(`${section}-items`);
         const textDiv = document.createElement('div');
+        textDiv.setAttribute('data-order', order);
         textDiv.classList.add("trade-text-item");
         textDiv.textContent = text;
         textDiv.onclick = () => {
@@ -130,52 +201,48 @@ function autoSave() {
 }
 
 // Triggers when an item is selected from the index to add it to the respective section
-function selectImage(imageSrc, alt) {
-        const container = document.getElementById(`${currentSection}-items`);
-        const existingDiv = Array.from(container.children).find(div => div.querySelector(`img[src="${imageSrc}"]`));
+function selectImage(imageSrc, alt, order) {
+    const container = document.getElementById(`${currentSection}-items`);
+    const existingDiv = Array.from(container.children).find(div => div.querySelector(`img[src="${imageSrc}"]`));
 
-        if (existingDiv && !alt.includes("Blacklist")) {
-            let countSpan = existingDiv.querySelector('span');
-            let count = parseInt(countSpan.textContent.replace(' x', '')) || 1;
-            count++;
-            countSpan.textContent = ` x${count}`;
-        } else {
-            const div = document.createElement('div');
-            div.className = 'image-item';
-            div.draggable = true;
+    if (existingDiv && !alt.includes("Blacklist")) {
+        let countSpan = existingDiv.querySelector('span');
+        let count = parseInt(countSpan.textContent.replace(' x', '')) || 1;
+        count++;
+        countSpan.textContent = ` x${count}`;
+    } else {
+        const div = document.createElement('div');
+        div.className = 'image-item';
+        div.draggable = true;
 
-            const img = document.createElement('img');
-            img.src = imageSrc;
-            img.alt = alt;
+        div.setAttribute('data-order', order);
 
-            div.appendChild(img);
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = alt;
 
-            if (!alt.includes("Blacklist")) {
-                const countSpan = document.createElement('span');
-                countSpan.className = 'count-number';
-                countSpan.textContent = ' x1';
-                div.appendChild(countSpan);
-            }
+        div.appendChild(img);
 
-            div.ondragstart = () => {
-                div.classList.add('dragging');
-            };
-
-            div.ondragend = () => {
-                div.classList.remove('dragging');
-            };
-
-            div.onclick = (e) => {
-                e.stopPropagation();
-                removeImage(div, imageSrc);
-                autoSave(); // Auto-save after removing image
-            };
-
-            container.appendChild(div);
+        if (!alt.includes("Blacklist")) {
+            const countSpan = document.createElement('span');
+            countSpan.className = 'count-number';
+            countSpan.textContent = ' x1';
+            div.appendChild(countSpan);
         }
 
-        autoSave(); // Auto-save after adding image
+        div.onclick = (e) => {
+            e.stopPropagation();
+            removeImage(div, imageSrc);
+            autoSave(); // Auto-save after removing image
+        };
+
+        container.appendChild(div);
     }
+
+    autoSave(); // Auto-save after adding image
+}
+
+
 // Remove an item that has been added to a section when clicking on it
 function removeImage(divElement, imageSrc) {
     const img = divElement.querySelector('img');
@@ -306,10 +373,6 @@ function getTextColor(type) {
 
 // Finalize the "image-with-attachments" by adding all attachments and attached text from previews to it and adding it in the respective section
 function finalizeAttachment() {
-    console.log("Finalizing attachment");
-    console.log("Selected Image:", selectedImage);
-    console.log("Selected Alt:", selectedAlt);
-
     if (!selectedAlt) {
         console.error("Error: selectedAlt is not set.");
         return;
@@ -318,6 +381,7 @@ function finalizeAttachment() {
     const container = document.getElementById(`${currentSection}-items`);
     const imgWrapper = document.createElement('div');
     imgWrapper.className = 'image-with-attachments';
+    imgWrapper.setAttribute('data-order', selectedOrder); // Ensure the data-order is set correctly
 
     const mainImg = document.createElement('img');
     mainImg.src = selectedImage;
@@ -372,23 +436,6 @@ function finalizeAttachment() {
     closeAttachModal();
 }
 
-
-
-// Close modal if clicked outside
-window.onclick = function (event) {
-    if (event.target === document.getElementById('imageModal')) {
-        closeModal();
-    }
-    if (event.target === document.getElementById('attachImageModal')) {
-        closeAttachModal();
-    }
-};
-
-// clear the entierty of a section when clicked
-function clearSection(sectionId) {
-    const container = document.getElementById(sectionId);
-    container.innerHTML = '';
-}
 // Copy website link to clipboard when clicked
 document.getElementById('copyButton').addEventListener('click', function () {
     // The link to copy
@@ -476,6 +523,9 @@ function loadSlot(slotNumber) {
         // Re-attach click event listeners to the text element
         reattachTextClickHandlers(toOfferContainer);
         reattachTextClickHandlers(lookingForContainer);
+
+        // Auto-save new content
+        autoSave();
     } else {
         alert(`Slot ${slotNumber} is empty.`);
     }
@@ -611,12 +661,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeBtn = document.querySelector(".close");
 
     // Check if the popup has been dismissed previously
-    if (!localStorage.getItem("IspatchNoteDismissed18")) {
+    if (!localStorage.getItem("IspatchNoteDismissed19")) {
         popup.style.display = "flex";
     }
 
     closeBtn.onclick = function () {
         popup.style.display = "none";
-        localStorage.setItem("IspatchNoteDismissed18", "true");
+        localStorage.setItem("IspatchNoteDismissed19", "true");
     }
 });
