@@ -1,0 +1,27 @@
+body {
+    color: #1B2A35;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url(background-website.png);
+    background-size: cover;
+}
+
+button {
+    position: absolute;
+    bottom: 400px;
+    left: 120px;
+    background-color: rgb(255, 255, 255);
+    padding: 8px 12px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #1e1e1e;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-family: fantasy;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: rgb(133, 133, 133);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
