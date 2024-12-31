@@ -1,0 +1,131 @@
+body {
+    color: #1B2A35;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url(imageslibrary/other/background-website.png);
+    background-size: cover;
+}
+
+.center-buttons a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px;
+    background-color: #2e2e2e;
+}
+
+.center-buttons a:hover {
+    background-color: #555;
+    border-radius: 5px;
+}
+/* Header Styling */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: rgb(19, 19, 19);; /* Original color */
+    color: white;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.4s ease; /* Smooth background transition */
+    border-radius: 5px;
+}
+
+/* Right button container styling */
+.right-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Aligns the entire group to the right */
+    gap: 10px; /* Space between buttons */
+}
+
+.header button img {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+}
+/* Youtube Icon Button Styling */
+.header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.header button:hover {
+    transform: scale(1.1);
+}
+.fav-icon {
+    width: 100%;
+    max-width: 50px; /* Make items smaller */
+    height: auto;
+    display: inline;
+}
+
+.info-container {
+    display: block;
+    max-width: 50%;
+    height: 800px;
+    margin: auto;
+    overflow: scroll;
+    background-color: #2c2c2c;
+    border-radius: 12px;
+    padding: 10px;
+}
+.attribute-container {
+    padding: 20px;
+    background: linear-gradient(135deg, #2872a7, #1b3e77);
+    margin-bottom: 5px;
+    border-radius: 12px;
+}
+.attribute-container img {
+    background-color: #163f64;
+    border-radius: 12px;
+    padding: 5px;
+    max-width: 100%;
+    width: 70px;
+    height: auto;
+}
+
+.attribute-container .text {
+    font-size: large;
+    color: white;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.attribute-container h2 {
+    color: white;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* Responsive design for smaller screens (e.g., phones) */
+@media (max-width: 768px) {
+    .attribute-container img {
+        max-width: 100%;
+        width: 50px;
+        height: auto;
+    }
+    .attribute-container .text {
+        font-size: 15px;
+    }
+    .attribute-container h2 {
+        font-size: 20px;
+    }
+    .info-container {
+        max-width: 85%;
+    }
+    .center-buttons a {
+        font-size: 10px;
+        margin: 10px;
+    }
+}
+@media (max-width: 1200px) {
+    body {
+        background-size: auto;
+    }
+    
+}
