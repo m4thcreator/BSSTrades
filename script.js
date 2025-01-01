@@ -247,12 +247,19 @@ function addItemToField(item) {
     const itemKey = item.src; // Unique identifier
     const currentCounts = currentField === offeringField ? offeringItemCounts : receivingItemCounts;
 
-    if (currentCounts[itemKey]) {
+    // Check if the item is blacklisted from stacking
+    const isBlacklisted = item.getAttribute('data-reward')?.includes('BLACKLIST');
+
+    if (!isBlacklisted && currentCounts[itemKey]) {
+        // Stack the item if it's not blacklisted
         currentCounts[itemKey] += 1;
         const existingBadge = currentField.querySelector(`[data-key="${itemKey}"] .quantity-badge`);
         existingBadge.textContent = `x${currentCounts[itemKey]}`;
     } else {
-        currentCounts[itemKey] = 1;
+        // Treat the item as a new entry if it's blacklisted or not already in the field
+        if (!isBlacklisted) {
+            currentCounts[itemKey] = 1; // Initialize count only for stackable items
+        }
 
         // Create container for item with image and badge
         const itemContainer = document.createElement('div');
@@ -274,8 +281,12 @@ function addItemToField(item) {
         badge.classList.add('quantity-badge');
         badge.textContent = 'x1';
 
+        // Append the badge only if the item is stackable
+        if (!isBlacklisted) {
+            itemContainer.appendChild(badge);
+        }
+
         itemContainer.appendChild(img);
-        itemContainer.appendChild(badge);
 
         // Using DocumentFragment to batch DOM insertion
         const fragment = document.createDocumentFragment();
