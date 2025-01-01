@@ -378,6 +378,7 @@ body {
     transform: translate(15%, 238%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    z-index: 1;
 }
 /* Item Image Styling */
 .field img {
