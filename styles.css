@@ -1083,6 +1083,9 @@ button img.iconsb {
         height: 20px;
         border-radius: 5px;
     }
+    .item-text {
+        font-size: 8px;
+    }
     .fav-icon {
         width: 100%;
         max-width: 25px; /* Make items smaller */
@@ -1160,6 +1163,9 @@ button img.iconsb {
 @media (max-width: 1200px) {
     body {
         background-size: auto;
+    }
+    .item-text {
+        font-size: 10px;
     }
     .watermark {
         width: 100%;
