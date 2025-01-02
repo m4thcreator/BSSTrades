@@ -848,6 +848,8 @@ function closePopup() {
 // Automatically show popup on page load
 window.onload = showPopup;
 
+
+// Handle the Moon-icon for dark theme
 const moonIcon = document.getElementById('moon-icon');
 const moonImage = moonIcon.querySelector('img');
 const body = document.body;
@@ -861,6 +863,22 @@ moonIcon.addEventListener('click', () => {
     } else {
         moonImage.src = 'imageslibrary/other/lightmode-iconNEW.png';
         moonIcon.classList.remove('glow'); // Remove glow in light mode
+    }
+});
+
+// Handle the Theme-icon for Yellow/Blue theme
+const themeIcon = document.getElementById('theme-icon');
+const themeImage = themeIcon.querySelector('img');
+
+themeIcon.addEventListener('click', () => {
+    body.classList.toggle('yellow-mode');
+
+    if (body.classList.contains('yellow-mode')) {
+        themeImage.src = 'imageslibrary/other/BlueTheme.png';
+        themeIcon.classList.add('glow'); // Add glow effect for dark mode
+    } else {
+        themeImage.src = 'imageslibrary/other/YellowTheme.png';
+        themeIcon.classList.remove('glow'); // Remove glow in light mode
     }
 });
 
