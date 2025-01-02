@@ -404,6 +404,9 @@ function showMenu(event, itemContainer) {
     const isStacked = itemCounts[itemKey] > 1;
 
     // Update button titles dynamically
+    const hasText = itemContainer.querySelector('.item-text') !== null;
+    document.getElementById('text-toggle-item').textContent = hasText ? 'Clear Text' : 'Add Text';
+    
     const highlightButton = document.getElementById('highlight-item');
     highlightButton.textContent = isHighlighted ? 'Unhighlight' : 'Highlight';
 
@@ -414,7 +417,7 @@ function showMenu(event, itemContainer) {
         stackButton.style.display = 'block';
         stackButton.textContent = isStacked ? 'Unstack' : 'Stack';
     }
-
+    
     // Get the viewport dimensions
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
@@ -577,6 +580,78 @@ document.getElementById('unstack-item').addEventListener('click', () => {
         hideMenu(); // Close the menu after action
     }
 });
+// Handle Add/Clear Text Toggle
+document.getElementById('text-toggle-item').addEventListener('click', () => {
+    if (activeItemContainer) {
+        const textElement = activeItemContainer.querySelector('.item-text');
+        if (textElement) {
+            // Clear text if it exists
+            clearTextFromItem(activeItemContainer);
+        } else {
+            // Prompt user for text input
+            showTextInputPopup();
+        }
+    }
+});
+
+// Function to add text to an item
+function addTextToItem(container, text) {
+    let textElement = container.querySelector('.item-text');
+    if (!textElement) {
+        textElement = document.createElement('div');
+        textElement.classList.add('item-text');
+        container.appendChild(textElement);
+    }
+    textElement.textContent = text;
+
+    // Update the button label to "Clear Text"
+    document.getElementById('text-toggle-item').textContent = 'Clear Text';
+
+    hideMenu(); // Close the menu
+}
+
+// Function to clear text from an item
+function clearTextFromItem(container) {
+    const textElement = container.querySelector('.item-text');
+    if (textElement) {
+        textElement.remove();
+    }
+
+    // Update the button label to "Add Text"
+    document.getElementById('text-toggle-item').textContent = 'Add Text';
+
+    hideMenu(); // Close the menu
+}
+
+// Function to show the text input popup
+function showTextInputPopup() {
+    const textPopup = document.createElement('div');
+    textPopup.classList.add('text-popup');
+
+    const inputField = document.createElement('textarea');
+    inputField.placeholder = "Enter your text here...";
+    textPopup.appendChild(inputField);
+
+    const confirmButton = document.createElement('button');
+    confirmButton.textContent = "Add Text";
+    confirmButton.addEventListener('click', () => {
+        const userText = inputField.value.trim();
+        if (userText) {
+            addTextToItem(activeItemContainer, userText);
+        }
+        document.body.removeChild(textPopup); // Remove popup
+    });
+    textPopup.appendChild(confirmButton);
+
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = "Cancel";
+    cancelButton.addEventListener('click', () => {
+        document.body.removeChild(textPopup); // Remove popup
+    });
+    textPopup.appendChild(cancelButton);
+
+    document.body.appendChild(textPopup); // Show the popup
+}
 
 // Event listener to open menu on item click
 document.querySelectorAll('.item-container').forEach(itemContainer => {
@@ -1011,10 +1086,10 @@ themeIcon.addEventListener('click', () => {
     body.classList.toggle('yellow-mode');
 
     if (body.classList.contains('yellow-mode')) {
-        themeImage.src = 'imageslibrary/other/BlueTheme.png';
+        themeImage.src = 'imageslibrary/other/blthem.png';
         themeIcon.classList.add('glow'); // Add glow effect for dark mode
     } else {
-        themeImage.src = 'imageslibrary/other/YellowTheme.png';
+        themeImage.src = 'imageslibrary/other/ylthem.png';
         themeIcon.classList.remove('glow'); // Remove glow in light mode
     }
 });
