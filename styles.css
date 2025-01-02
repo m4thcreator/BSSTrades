@@ -21,8 +21,23 @@ body {
     background-color: #555;
     border-radius: 5px;
 }
+
 .dev-container {
-    background: linear-gradient(to right, #cfcfcf, #656667);
+    background-color: rgba(9, 9, 9, 0.7);
+    padding: 5px 10px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 300px;
+    margin: auto;
+}
+.dev-container h2 {
+    background: linear-gradient(to right, #c7c075, #c7b54e);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+.dev-container h3 {
+    background: linear-gradient(to right, #cdabab, #c98989);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     padding: 5px 10px;
@@ -30,6 +45,11 @@ body {
     text-align: center;
     border-radius: 5px;
     margin: 20px;
+}
+.dev-container h4 {
+    background: linear-gradient(to right, #cccbba, #cac3a7);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
 }
 .item-container.dragging {
     opacity: 0.5;
@@ -135,24 +155,24 @@ body {
 /* Right button container styling */
 .right-buttons {
     display: flex;
-    align-items: center;
     margin-left: auto; /* Aligns the entire group to the right */
     gap: 10px; /* Space between buttons */
+    justify-content: center;
 }
 
-.header button img {
+.right-buttons button img {
     width: 35px;
     height: 35px;
     border-radius: 8px;
 }
-/* Youtube Icon Button Styling */
-.header button {
+
+.right-buttons button {
     background: none;
     border: none;
     cursor: pointer;
     transition: transform 0.2s;
 }
-.header button:hover {
+.right-buttons button:hover {
     transform: scale(1.1);
 }
 .fav-icon {
@@ -322,6 +342,7 @@ body {
     font-family: Arial Black, sans-serif;
     text-align: center;
     background: linear-gradient(135deg, #D94A3D, #C9271C);
+    margin-top: auto;
 }
 
 #receiving h3 {
@@ -333,6 +354,7 @@ body {
     font-family: Arial Black, sans-serif;;
     text-align: center;
     background: linear-gradient(135deg, #28A745, #1B772B);
+    margin-top: auto;
 }
 
 /* Trade Field Styling */
@@ -383,7 +405,7 @@ body {
 /* Item Image Styling */
 .field img {
     width: 75px;
-    height: 75px;
+    height: auto;
     background: #3283FF;
     border-radius: 8px;
     padding: 4px;
@@ -407,7 +429,37 @@ body {
 .dark-mode .field img {
     background-color: rgb(45, 45, 45);
 }
+.dark-mode .item-menu {
+    background-color: rgb(23, 23, 23);
+}
+/* Yellow mode styles */
+.yellow-mode .trade-field {
+    background: #B5AB38;
+}
 
+.yellow-mode .field {
+    background: #D9CD43;
+}
+
+.yellow-mode .field img {
+    background-color: #B5AB38;
+}
+.yellow-mode #saves-button {
+    background: #3866b5;
+    color: #203966
+}
+.yellow-mode #saves-button:hover {
+    background: #264780;
+    color: #203966
+}
+.yellow-mode .quantity-badge {
+    color: #444016;
+    text-shadow: -1px -1px 0 #00000000, 1px -1px 0 #54000000, -1px 1px 0 #00000000, 1px 1px 0 #00000000;
+}
+
+.yellow-mode .item-menu {
+    background-color: #B5AB38;
+}
 /* Item Menu */
 .item-menu {
     position: absolute;
@@ -422,9 +474,7 @@ body {
     animation: fadeIn 0.15s ease-out;
 }
 
-.dark-mode .item-menu {
-    background-color: rgb(23, 23, 23);
-}
+
 /* Show menu with animation */
 .item-menu.show {
     display: flex;
@@ -976,7 +1026,6 @@ button img.iconsb {
 
     .field img {
         max-width: 36px; /* Slightly larger images for better visibility on phone */
-        height: max-content;
     }
     .quantity-badge {
         font-size: 13px;
@@ -1052,7 +1101,6 @@ button img.iconsb {
 
     .field img {
         max-width: 36px; /* Slightly larger images for better visibility on phone */
-        height: max-content;
     }
     .quantity-badge {
         font-size: 15px;
