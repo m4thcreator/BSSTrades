@@ -253,7 +253,22 @@ function addItemToField(item) {
     if (!isBlacklisted && currentCounts[itemKey]) {
         // Stack the item if it's not blacklisted
         currentCounts[itemKey] += 1;
-        const existingBadge = currentField.querySelector(`[data-key="${itemKey}"] .quantity-badge`);
+        let existingBadge = currentField.querySelector(`[data-key="${itemKey}"] .quantity-badge`);
+
+        // Ensure the badge exists, or recreate it if missing
+        if (!existingBadge) {
+            const existingContainer = currentField.querySelector(`[data-key="${itemKey}"]`);
+            if (existingContainer) {
+                existingBadge = document.createElement('div');
+                existingBadge.classList.add('quantity-badge');
+                existingContainer.appendChild(existingBadge);
+            } else {
+                console.error(`Container for key ${itemKey} is missing.`);
+                return; // Exit early if the container is completely missing
+            }
+        }
+
+        // Update the badge text
         existingBadge.textContent = `x${currentCounts[itemKey]}`;
     } else {
         // Treat the item as a new entry if it's blacklisted or not already in the field
@@ -298,6 +313,7 @@ function addItemToField(item) {
     }
 }
 
+
 function setupDragAndDropListeners(itemContainer, itemKey) {
     const parentField = itemContainer.closest('.field'); // Dynamically get the parent field
 
@@ -326,11 +342,35 @@ function setupDragAndDropListeners(itemContainer, itemKey) {
 
         if (draggedItem && draggedItem !== itemContainer) {
             itemContainer.classList.remove('drop-target');
-            swapElements(draggedItem, itemContainer); // Use swapElements for swapping
+
+            const draggedImg = draggedItem.querySelector('.item-image');
+            const targetImg = itemContainer.querySelector('.item-image');
+
+            // Check if the items are the same
+            if (draggedImg.src === targetImg.src) {
+                // Combine stacks if items are the same
+                const currentCounts = parentField === offeringField ? offeringItemCounts : receivingItemCounts;
+                const targetKey = itemContainer.getAttribute('data-key');
+
+                const draggedCount = parseInt(draggedItem.querySelector('.quantity-badge')?.textContent.slice(1)) || 1;
+                const targetCount = parseInt(itemContainer.querySelector('.quantity-badge')?.textContent.slice(1)) || 1;
+
+                const newCount = draggedCount + targetCount;
+                currentCounts[targetKey] = newCount;
+
+                // Update badge on target
+                const targetBadge = itemContainer.querySelector('.quantity-badge');
+                targetBadge.textContent = `x${newCount}`;
+
+                // Remove the dragged item
+                draggedItem.remove();
+            } else {
+                // Swap positions if items are not the same
+                swapElements(draggedItem, itemContainer);
+            }
         }
     });
 }
-
 
 // Swap elements within the same parent
 function swapElements(el1, el2) {
@@ -356,6 +396,25 @@ function getItemCountsForContainer(container) {
 function showMenu(event, itemContainer) {
     activeItemContainer = itemContainer;
 
+    const img = itemContainer.querySelector('.item-image');
+    const itemKey = itemContainer.getAttribute('data-key');
+    const itemCounts = getItemCountsForContainer(itemContainer);
+    const isHighlighted = img.classList.contains('highlighted');
+    const isBlacklisted = img.getAttribute('data-reward')?.includes('BLACKLIST');
+    const isStacked = itemCounts[itemKey] > 1;
+
+    // Update button titles dynamically
+    const highlightButton = document.getElementById('highlight-item');
+    highlightButton.textContent = isHighlighted ? 'Unhighlight' : 'Highlight';
+
+    const stackButton = document.getElementById('unstack-item');
+    if (isBlacklisted) {
+        stackButton.style.display = 'none'; // Hide for blacklisted items
+    } else {
+        stackButton.style.display = 'block';
+        stackButton.textContent = isStacked ? 'Unstack' : 'Stack';
+    }
+
     // Get the viewport dimensions
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
@@ -373,7 +432,6 @@ function showMenu(event, itemContainer) {
         menuTop = viewportHeight - menuHeight - 10; // Add some padding
     }
 
-    // Adjust the left position if the menu would go off the right of the viewport
     if (menuLeft + menuWidth > viewportWidth) {
         menuLeft = viewportWidth - menuWidth - 10; // Add some padding
     }
@@ -383,6 +441,7 @@ function showMenu(event, itemContainer) {
     itemMenu.style.left = `${menuLeft}px`;
     itemMenu.classList.add('show');
 }
+
 
 // Hide the menu
 function hideMenu() {
@@ -414,9 +473,21 @@ document.getElementById('delete-bulk').addEventListener('click', () => {
         const itemKey = activeItemContainer.getAttribute('data-key');
         const itemCounts = getItemCountsForContainer(activeItemContainer); // Determine correct counts object
 
-        delete itemCounts[itemKey]; // Clear count for the item
-        activeItemContainer.remove(); // Remove the container from the field
-        hideMenu(); // Close the menu after bulk deletion
+        // Select all matching items in the field by their data-key
+        const fieldItems = Array.from(currentField.querySelectorAll(`[data-key="${itemKey}"]`));
+
+        if (fieldItems.length > 0) {
+            // Remove all matching items
+            fieldItems.forEach(item => {
+                item.remove();
+            });
+
+            // Remove the itemKey from the counts object
+            delete itemCounts[itemKey];
+        }
+
+        // Close the menu after deletion
+        hideMenu();
     }
 });
 
@@ -438,6 +509,72 @@ document.getElementById('highlight-item').addEventListener('click', () => {
             activeItemContainer.setAttribute('data-order', img.getAttribute('data-original-order') || '1');
             img.style.background = ''; // Reset background
         }
+    }
+});
+// Handle Unstack/Stack toggle
+document.getElementById('unstack-item').addEventListener('click', () => {
+    if (activeItemContainer) {
+        const itemKey = activeItemContainer.getAttribute('data-key');
+        const itemCounts = getItemCountsForContainer(activeItemContainer); // Determine correct counts object
+        const itemCount = itemCounts[itemKey] || 1;
+
+        // Dynamically determine the field if currentField is null
+        const parentField = currentField || activeItemContainer.closest('.field');
+        if (!parentField) {
+            console.error('Parent field not found for item:', activeItemContainer);
+            return;
+        }
+
+        if (itemCount > 1) {
+            // Unstack the items
+            for (let i = 1; i < itemCount; i++) {
+                const newContainer = activeItemContainer.cloneNode(true); // Clone the container
+                const newImg = newContainer.querySelector('img');
+                const newKey = `${itemKey}`; // Generate a unique key for the clone
+
+                newContainer.setAttribute('data-key', newKey);
+                newImg.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    showMenu(event, newContainer);
+                });
+
+                // Reset badge and count for the cloned container
+                const badge = newContainer.querySelector('.quantity-badge');
+                if (badge) {
+                    badge.textContent = 'x1';
+                }
+
+                // Append the unstacked item to the field
+                parentField.appendChild(newContainer);
+                setupDragAndDropListeners(newContainer, newKey); // Reinitialize drag-and-drop for the new item
+            }
+
+            // Update the original item to show as a single item
+            itemCounts[itemKey] = 1;
+            const badge = activeItemContainer.querySelector('.quantity-badge');
+            if (badge) {
+                badge.textContent = 'x1';
+            }
+        } else {
+            // Stack items back together
+            const fieldItems = Array.from(parentField.querySelectorAll(`[data-key^="${itemKey}"]`));
+            const originalContainer = fieldItems[0];
+
+            // Count the total instances of the item
+            const totalCount = fieldItems.length;
+
+            // Remove all clones
+            fieldItems.slice(1).forEach(clone => clone.remove());
+
+            // Update the original item to show the total count
+            itemCounts[itemKey] = totalCount;
+            const badge = originalContainer.querySelector('.quantity-badge');
+            if (badge) {
+                badge.textContent = `x${totalCount}`;
+            }
+        }
+
+        hideMenu(); // Close the menu after action
     }
 });
 
