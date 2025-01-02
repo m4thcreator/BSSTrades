@@ -37,7 +37,7 @@ body {
     -webkit-background-clip: text;
 }
 .dev-container h3 {
-    background: linear-gradient(to right, #cdabab, #c98989);
+    background: linear-gradient(to right, #abb3cd, #8993c9);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     padding: 5px 10px;
@@ -55,12 +55,8 @@ body {
     opacity: 0.5;
 }
 
-.item-container.drop-target {
-    border: 3px dashed #ffffff;
-    border-radius: 8px;
-    max-height: 85px;
-    border-radius: 8px;
-    transition: border 0.1s ease-in-out;
+.item-container.drop-target img {
+    transform: scale(1.1);
 }
 .beequip-container {
     cursor: grab;
@@ -511,6 +507,18 @@ body {
     font-weight: bolder;
     color: #ffdc4e;
     text-shadow: 0 4px 10px rgba(229, 198, 0, 0.6);
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-left: 5px;
+}
+#unstack-item {
+    background: none;
+    border: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    color: #4ed0ff;
+    text-shadow: 0 4px 10px rgba(0, 229, 225, 0.6);
     font-size: 15px;
     cursor: pointer;
     transition: transform 0.2s;
