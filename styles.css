@@ -347,10 +347,72 @@ body {
     font-weight: bold;
     margin-bottom: 12px;
     color: #95cb97;
-    font-family: Arial Black, sans-serif;;
+    font-family: Arial Black, sans-serif;
     text-align: center;
     background: linear-gradient(135deg, #28A745, #1B772B);
     margin-top: auto;
+}
+.item-text {
+    position: absolute;
+    top: 5px; /* Adjust as needed */
+    left: 5px; /* Adjust as needed */
+    font-size: 14px;
+    color: #d8f0ff;
+    background: rgba(38, 38, 38, 0.6);
+    padding: 2px 4px;
+    border-radius: 3px;
+    pointer-events: none; /* Prevent interference with clicks */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+.text-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #2257A8, #184080);
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.dark-mode .text-popup {
+    background: linear-gradient(135deg, #171717, #151515);
+}
+.yellow-mode .text-popup {
+    background: #D9CD43;
+}
+.yellow-mode .text-popup textarea {
+    color: #1c1c1c;
+}
+.text-popup textarea {
+    height: 100px;
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #3283FF00;
+    color: #f9fbff;
+}
+.text-popup button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.text-popup button:nth-child(2) {
+    background: linear-gradient(135deg, #28A745, #1B772B);
+    color: #95cb97;
+    font-family: Arial Black, sans-serif;
+}
+.text-popup button:nth-child(3) {
+    background: linear-gradient(135deg, #D94A3D, #C9271C);
+    color: #e1b2b2;
+    font-family: Arial Black, sans-serif;
 }
 
 /* Trade Field Styling */
@@ -524,14 +586,25 @@ body {
     transition: transform 0.2s;
     margin-left: 5px;
 }
-
+#text-toggle-item {
+    background: none;
+    border: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    color: #4eff60;
+    text-shadow: 0 4px 10px rgba(0, 229, 57, 0.6);
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-left: 5px;
+}
 /* Style for highlighted items */
 .item-image.highlighted {
     background: linear-gradient(135deg, #532F09, #ffcb00);
     filter: drop-shadow(0 0 8px rgba(239, 203, 113, 0.8)); /* Green glow */
 }
 
-#delete-item:hover, #delete-bulk:hover, #highlight-item:hover {
+#delete-item:hover, #delete-bulk:hover, #highlight-item:hover, #unstack-item:hover, #text-toggle-item:hover {
     transform: scale(1.15);
 }
 .open-menu {
