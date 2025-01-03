@@ -353,9 +353,6 @@ body {
     margin-top: auto;
 }
 .item-text {
-    position: absolute;
-    top: 5px; /* Adjust as needed */
-    left: 5px; /* Adjust as needed */
     font-size: 14px;
     color: #d8f0ff;
     background: rgba(38, 38, 38, 0.6);
@@ -1092,12 +1089,7 @@ button img.iconsb {
         height: auto;
         display: inline;
     }
-    .watermark {
-        width: 100%;
-        max-width: 150px; /* Make items smaller */
-        height: auto;
-        display: inline;
-    }
+    
     /* Stack the fields vertically */
     .container {
         flex-direction: column;
@@ -1159,19 +1151,19 @@ button img.iconsb {
         font-size: 10px;
         margin: 10px;
     }
+    #delete-item, #delete-bulk, #highlight-item, #unstack-item, #text-toggle-item {
+        font-size: 12px;
+    }
 }
 @media (max-width: 1200px) {
     body {
-        background-size: auto;
+        background-size: cover;
     }
     .item-text {
         font-size: 10px;
     }
     .watermark {
-        width: 100%;
-        max-width: 150px; /* Make items smaller */
-        height: auto;
-        display: inline;
+        display: none;
     }
     /* Stack the fields vertically */
     .container {
@@ -1184,6 +1176,7 @@ button img.iconsb {
     }
     .trade-field {
         width: 100%; /* Full width for mobile */
+        margin: 10px;
     }
 
     .field img {
