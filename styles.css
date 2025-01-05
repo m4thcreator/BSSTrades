@@ -303,7 +303,9 @@ body {
     height: auto;
     display: inline;
 }
-
+.watermark2 {
+    display: none;
+}
 .icons {
     width: 100%;
     max-width: 35px; /* Make items smaller */
@@ -1179,6 +1181,12 @@ button img.iconsb {
     .watermark {
         display: none;
     }
+    .watermark2 {
+        width: 100%;
+        max-width: 150px; /* Make items smaller */
+        height: auto;
+        display: inline;
+    }
     /* Stack the fields vertically */
     .container {
         gap: 0px;
@@ -1190,7 +1198,7 @@ button img.iconsb {
     }
     .trade-field {
         width: 100%; /* Full width for mobile */
-        margin: 10px;
+        margin: 5px;
     }
 
     .field img {
