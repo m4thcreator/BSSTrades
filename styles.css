@@ -429,7 +429,7 @@ body {
 /* Inner Field Box Styling */
 .field {
     min-height: 150px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     padding: 10px;
     border-radius: 12px;
     background: linear-gradient(135deg, #2257A8, #184080);
@@ -467,7 +467,6 @@ body {
     border-radius: 8px;
     padding: 4px;
     transition: transform 0.2s;
-    margin-bottom: 5px
 }
 
 .field img:hover {
