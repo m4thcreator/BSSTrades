@@ -222,14 +222,11 @@ openReceivingMenu.addEventListener('click', () => {
     openMenuForField(openReceivingMenu, receivingField);
 });
 
-// Handle item click (both regular items and Beequips)
-document.querySelectorAll('.menu-grid img').forEach(item => {
+// Handle item click for both regular items and Beequips from all grids
+document.querySelectorAll('.menu-grid img, .star-grid img').forEach(item => {
     item.addEventListener('click', () => {
-        const buffs = item.getAttribute('data-buffs');
-        const debuffs = item.getAttribute('data-debuffs');
-        const bonuses = item.getAttribute('data-bonuses');
-
-        if (buffs || debuffs || bonuses) {
+        const isBeequip = item.getAttribute('data-type')?.includes('beequip');
+        if (isBeequip) {
             // Open Beequip modal for items with buffs/debuffs/bonuses
             openBeequipModal(item);
         } else {
@@ -1161,9 +1158,13 @@ function loadFavoritesFromLocalStorage() {
         }
     });
 
+    // Reinitialize click handlers for star-grid items
+    initializeClickHandlersForGrid('.star-grid');
+
     // Sync star states after loading
     savedFavorites.forEach(syncFavoriteStars);
 }
+
 // Function to toggle favorite state and sync stars
 function toggleFavorite(item) {
     const itemKey = item.getAttribute('data-order') || item.src;
@@ -1194,10 +1195,9 @@ function addItemToFavorites(item) {
     // Prevent adding duplicates
     if (favoritesGrid.querySelector(`[data-order="${itemKey}"]`)) return;
 
-    // Clone the item and add a click event to add it to the field
+    // Clone the item and retain its attributes
     const clonedItem = item.cloneNode(true);
     clonedItem.setAttribute('data-order', itemKey); // Ensure the cloned item has a unique identifier
-    clonedItem.addEventListener('click', () => addItemToField(clonedItem)); // Make clickable to add to field
 
     // Wrap cloned item in a container and append to favorites
     const container = document.createElement('div');
@@ -1205,9 +1205,13 @@ function addItemToFavorites(item) {
     container.appendChild(clonedItem);
     favoritesGrid.appendChild(container);
 
+    // Add click handlers to the cloned item
+    initializeClickHandlersForGrid('.star-grid');
+
     // Add star button to the cloned item within the favorites grid
     addStarButton(clonedItem, true);
 }
+
 
 // Remove item from favorites section
 function removeItemFromFavorites(itemKey) {
@@ -1238,7 +1242,7 @@ function syncFavoriteStars(itemKey) {
 
 // Add star button dynamically to non-beequip items
 function addStarButton(item) {
-    if (item.getAttribute('data-type') === 'beequip') return; // Skip Beequips
+    
 
     const starButton = document.createElement('div');
     starButton.classList.add('favorite-star'); // Initialize with the default state
@@ -1269,13 +1273,26 @@ function wrapItemWithContainer(item) {
 }
 
 // Initialize star buttons for all items in a specified grid
-function initializeStarsForItems(gridSelector) {
+
+function initializeClickHandlersForGrid(gridSelector) {
     const items = document.querySelectorAll(`${gridSelector} img`);
     items.forEach(item => {
-        const container = wrapItemWithContainer(item);
-        if (container) addStarButton(item);
+        const isBeequip = item.getAttribute('data-type')?.includes('beequip');
+        item.removeEventListener('click', handleItemClick); // Prevent duplicate handlers
+        item.addEventListener('click', handleItemClick);
     });
 }
+
+function handleItemClick(event) {
+    const item = event.target;
+    const isBeequip = item.getAttribute('data-type')?.includes('beequip');
+    if (isBeequip) {
+        openBeequipModal(item);
+    } else {
+        addItemToField(item);
+    }
+}
+
 // Call loadFavoritesFromLocalStorage on page load
 document.addEventListener('DOMContentLoaded', () => {
     loadFavoritesFromLocalStorage();
