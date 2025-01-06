@@ -394,7 +394,12 @@ function getItemCountsForContainer(container) {
 
 // Show pop-up menu on item click
 function showMenu(event, itemContainer) {
+    if (!itemContainer.querySelector('img')) {
+        console.error('No img found in itemContainer:', itemContainer);
+        return;
+    }
     activeItemContainer = itemContainer;
+    console.log('Show Menu Triggered:', { event, itemContainer });
 
     const img = itemContainer.querySelector('.item-image');
     const itemKey = itemContainer.getAttribute('data-key');
@@ -443,6 +448,7 @@ function showMenu(event, itemContainer) {
     itemMenu.style.top = `${menuTop}px`;
     itemMenu.style.left = `${menuLeft}px`;
     itemMenu.classList.add('show');
+    console.log('Show Menu Triggered:', { event, itemContainer });
 }
 
 
@@ -824,11 +830,25 @@ function appendBeequipToField(item, waxes) {
     const container = document.createElement('div');
     container.classList.add('beequip-container');
     container.setAttribute('draggable', true); // Make the container draggable
+    const itemKey = item.src; // Unique identifier
+    container.setAttribute('data-key', itemKey);
 
+    // Append image to the container
     const img = document.createElement('img');
+    img.classList.add('item-image');
     img.src = item.src;
     img.alt = item.alt;
+    img.setAttribute('data-reward', item.getAttribute('data-reward'));
     container.appendChild(img);
+    
+    // Add click event listener for the image
+    img.addEventListener('click', (event) => {
+        event.stopPropagation();
+        showMenu(event, container);
+    });
+  
+    
+    
 
     // Display star rating
     if (selectedStars >= 0) {
@@ -901,12 +921,6 @@ function appendBeequipToField(item, waxes) {
         container.appendChild(waxSlotsContainer);
     }
 
-    // Add click to show menu
-    img.addEventListener('click', (event) => {
-        event.stopPropagation();
-        showMenu(event, container);
-    });
-
     // Enable drag and drop for the container
     container.addEventListener('dragstart', (event) => {
         event.dataTransfer.setData('text/plain', item.alt); // Use item.alt as identifier
@@ -947,6 +961,7 @@ function appendBeequipToField(item, waxes) {
     });
 
     currentField.appendChild(container); // Add the Beequip to the offering or receiving field
+    
 }
 
 document.addEventListener("DOMContentLoaded", function () {
