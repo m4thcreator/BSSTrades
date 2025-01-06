@@ -53,6 +53,7 @@ body {
 }
 .item-container.dragging {
     opacity: 0.5;
+    cursor: grabbing;
 }
 
 .item-container.drop-target img {
@@ -60,6 +61,7 @@ body {
 }
 .beequip-container {
     cursor: grab;
+    transition: transform 0.2s;
 }
 
 .beequip-container img.dragging {
@@ -68,8 +70,7 @@ body {
 }
 
 .beequip-container.drop-target {
-    border: 2px dashed #ffffff;
-    transition: border 0.2s ease-in-out;
+    transform: scale(1.1);
 }
 .favorite-star {
     position: absolute;
