@@ -889,7 +889,7 @@ button img.iconsb {
     color: #1B2A35;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
-    max-height: 850px;
+    max-height: 70%;
     overflow: scroll;
 }
 
@@ -1154,7 +1154,7 @@ button img.iconsb {
         height: auto;
     }
     .beequips-form {
-        max-height: 600px;
+        max-height: 70%;
     }
     .item-container.drop-target {
         border: 3px solid #ffffff;
@@ -1194,7 +1194,7 @@ button img.iconsb {
 
     }
     .beequips-form {
-        max-height: 600px;
+        max-height: 70%;
     }
     .trade-field {
         width: 100%; /* Full width for mobile */
