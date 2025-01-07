@@ -708,7 +708,7 @@ function initializeWaxSelection() {
     // Create 5 empty slots for waxes in the form container only
     for (let i = 0; i < 5; i++) {
         const slot = document.createElement('img');
-        slot.src = 'images/empty_slot.png'; // Empty slot image for form
+        slot.src = 'imageslibrary/waxes/EmptyWax.webp'; // Empty slot image for form
         slot.alt = '';
         slot.classList.add('wax-slot');
         slot.dataset.slotIndex = i; // Assign slot index to keep track in the form
