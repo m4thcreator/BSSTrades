@@ -396,12 +396,11 @@ function showMenu(event, itemContainer) {
         return;
     }
     activeItemContainer = itemContainer;
-    console.log('Show Menu Triggered:', { event, itemContainer });
 
     const img = itemContainer.querySelector('.item-image');
     const itemKey = itemContainer.getAttribute('data-key');
     const itemCounts = getItemCountsForContainer(itemContainer);
-    const isHighlighted = img.classList.contains('highlighted');
+    const isHighlighted = itemContainer.classList.contains('highlighted');
     const isBlacklisted = img.getAttribute('data-reward')?.includes('BLACKLIST');
     const isStacked = itemCounts[itemKey] > 1;
 
@@ -445,7 +444,6 @@ function showMenu(event, itemContainer) {
     itemMenu.style.top = `${menuTop}px`;
     itemMenu.style.left = `${menuLeft}px`;
     itemMenu.classList.add('show');
-    console.log('Show Menu Triggered:', { event, itemContainer });
 }
 
 
@@ -1082,10 +1080,10 @@ moonIcon.addEventListener('click', () => {
     body.classList.toggle('dark-mode');
 
     if (body.classList.contains('dark-mode')) {
-        moonImage.src = 'imageslibrary/other/darkmode-iconNEW.png';
+        moonImage.src = 'imageslibrary/other/darkmode-icon.png';
         moonIcon.classList.add('glow'); // Add glow effect for dark mode
     } else {
-        moonImage.src = 'imageslibrary/other/lightmode-iconNEW.png';
+        moonImage.src = 'imageslibrary/other/lightmode-icon.png';
         moonIcon.classList.remove('glow'); // Remove glow in light mode
     }
 });
