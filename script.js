@@ -1273,7 +1273,13 @@ function wrapItemWithContainer(item) {
 }
 
 // Initialize star buttons for all items in a specified grid
-
+function initializeStarsForItems(gridSelector) {
+    const items = document.querySelectorAll(`${gridSelector} img`);
+    items.forEach(item => {
+        const container = wrapItemWithContainer(item);
+        if (container) addStarButton(item);
+    });
+}
 function initializeClickHandlersForGrid(gridSelector) {
     const items = document.querySelectorAll(`${gridSelector} img`);
     items.forEach(item => {
