@@ -1047,12 +1047,12 @@ window.addEventListener('click', (event) => {
     }
 });
  // Show the popup with a fade-in animation
- function showPopup() {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'flex';
-    popup.classList.remove('fade-out');
-    popup.classList.add('fade-in');
-}
+ //function showPopup() {
+   // const popup = document.getElementById('popup');
+   // popup.style.display = 'flex';
+   // popup.classList.remove('fade-out');
+   // popup.classList.add('fade-in');
+//}
 
 function closePopup() {
     const popup = document.getElementById('popup');
