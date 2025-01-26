@@ -1059,10 +1059,10 @@ function closePopup() {
     popup.classList.remove('fade-in');
     popup.classList.add('fade-out');
 
-    // Use an animationend event to hide the element after the fade-out animation completes
+    // hide the element after the fade-out animation completes
     popup.addEventListener('animationend', () => {
         popup.style.display = 'none';
-        popup.classList.remove('fade-out'); // Reset class for future use
+        popup.classList.remove('fade-out'); // Reset class
     }, { once: true }); // Ensures the event only triggers once
 }
 
