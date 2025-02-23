@@ -254,8 +254,8 @@ body {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 }
-.popup-image {
-    width: 35%;
+.inside-popup img {
+    max-width: 35%;
     height: fit-content;
     border-radius: 10px;
 }
@@ -1104,7 +1104,7 @@ button img.iconsb {
     .popup-content {
         max-width: fit-content;
         }
-    .popup-image {
+    .inside-popup img {
         width: 100%;
         height: fit-content;
     }
