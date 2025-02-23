@@ -1098,7 +1098,10 @@ button img.iconsb {
     .popup-content {
         max-width: fit-content;
         }
-
+    .popup-image {
+        width: 100%;
+        height: fit-content;
+    }
     button img.iconsb {
         display: none;
         }
