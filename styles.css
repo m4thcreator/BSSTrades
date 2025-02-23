@@ -255,8 +255,7 @@ body {
     -webkit-background-clip: text;
 }
 .inside-popup img {
-    max-width: 50%;
-    height: fit-content;
+    max-width: 300px;
     border-radius: 10px;
 }
 
@@ -1105,8 +1104,8 @@ button img.iconsb {
         max-width: fit-content;
         }
     .inside-popup img {
-        width: 100%;
-        height: fit-content;
+        width: 50px;
+        max-height: 50px;
     }
     button img.iconsb {
         display: none;
