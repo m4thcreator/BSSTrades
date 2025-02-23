@@ -1046,6 +1046,10 @@ button img.iconsb {
 
 /* Responsive design for smaller screens (e.g., phones) */
 @media (max-width: 768px) {
+    .popup-content {
+        max-width: fit-content;
+        }
+
     button img.iconsb {
         display: none;
         }
