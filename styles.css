@@ -256,7 +256,7 @@ body {
 }
 .popup-image {
     max-width: 35%;
-    height: fit-content;
+    height: min-content;
     border-radius: 10px;
 }
 
