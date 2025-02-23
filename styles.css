@@ -241,36 +241,85 @@ body {
 }
 
 .popup-content {
-    background: transparent; /* No background */
+    background-color:rgba(33, 33, 33, 0.851);
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(170, 149, 182, 0.8);
     transform: scale(0.8);
     animation: scaleUp 0.5s forwards;
-    display: grid;
     border-radius: 20px;
+    max-width: 50%;
 }
-
+.popup-content h2 {
+    background: linear-gradient(to right, #e6a5ff, #ffffff);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
 .popup-image {
-    max-width: 100%;
-    height: auto;
+    max-width: 35%;
+    height: fit-content;
     border-radius: 10px;
 }
 
+.inside-popup {
+    background-color:rgb(19, 19, 19);
+    display: flex;
+    margin: 10px;
+    border-radius: 12px;
+    padding: 10px;
+}
+.inside-popup h3 {
+    margin: 20px;
+    text-align: left;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Open Sans', sans-serif;
+    background: linear-gradient(to right, #c4bbc8, #ffffff);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: medium;
+}
+.inside-popup h3 a {
+    background: linear-gradient(to right, #8eabda, #b0bbd3);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    text-decoration: none;
+}
+.inside-popup h4 {
+    margin: 20px;
+    text-align: left;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Open Sans', sans-serif;
+    background-color: rgba(94, 94, 94, 0.3);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: smaller;
+}
 .dismiss-button {
-    margin-top: 15px;
+    margin: 10px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #59615b;
+    background-color: #9a6767;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: white;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
 }
-
+.link-button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #64ca7c;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
 .dismiss-button:hover {
-    background-color: #7d8980;
+    background-color: #623e3e;
+}
+.link-button:hover {
+    background-color: #43623e;
 }
 
 @keyframes fadeIn {
