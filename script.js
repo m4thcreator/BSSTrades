@@ -1047,28 +1047,28 @@ window.addEventListener('click', (event) => {
     }
 });
  // Show the popup with a fade-in animation
- //function showPopup() {
-   // const popup = document.getElementById('popup');
-   // popup.style.display = 'flex';
-   // popup.classList.remove('fade-out');
-   // popup.classList.add('fade-in');
-//}
+function showPopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'flex';
+    popup.classList.remove('fade-out');
+    popup.classList.add('fade-in');
+}
 
 function closePopup() {
     const popup = document.getElementById('popup');
     popup.classList.remove('fade-in');
     popup.classList.add('fade-out');
 
-    // hide the element after the fade-out animation completes
+    // Use an animationend event to hide the element after the fade-out animation completes
     popup.addEventListener('animationend', () => {
         popup.style.display = 'none';
-        popup.classList.remove('fade-out'); // Reset class
+        popup.classList.remove('fade-out'); // Reset class for future use
     }, { once: true }); // Ensures the event only triggers once
 }
 
 
 // Automatically show popup on page load
-// window.onload = showPopup;
+window.onload = showPopup;
 
 
 // Handle the Moon-icon for dark theme
