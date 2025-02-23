@@ -255,8 +255,8 @@ body {
     -webkit-background-clip: text;
 }
 .popup-image {
-    max-width: 35%;
-    height: min-content;
+    width: 35%;
+    height: fit-content;
     border-radius: 10px;
 }
 
