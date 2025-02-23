@@ -1199,7 +1199,7 @@ button img.iconsb {
     }
     .center-buttons a {
         font-size: 10px;
-        margin: 10px;
+        margin: 5px;
     }
     #delete-item, #delete-bulk, #highlight-item, #unstack-item, #text-toggle-item {
         font-size: 12px;
