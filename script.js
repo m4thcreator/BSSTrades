@@ -1068,7 +1068,7 @@ function closePopup() {
 
 
 // Automatically show popup on page load
-window.onload = showPopup;
+// window.onload = showPopup;
 
 
 // Handle the Moon-icon for dark theme
