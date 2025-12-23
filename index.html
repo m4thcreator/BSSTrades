@@ -28,40 +28,6 @@
             <button id="moon-icon" class="moon-icon">
                 <img src="imageslibrary/other/lightmode-icon.png" alt="Toggle Dark Mode">
             </button>
-
-            <audio id="audio" src="sound.mp3"></audio>
-
-            <script>
-            let userInteracted = false;
-
-            // Detect ANY user interaction
-            ["click", "keydown", "mousemove", "touchstart"].forEach(event => {
-            document.addEventListener(event, () => {
-                userInteracted = true;
-            }, { once: true });
-            });
-
-            // Start timer on page load
-            window.addEventListener("load", () => {
-            scheduleRandomSound();
-            });
-
-            function scheduleRandomSound() {
-            // 1–2 hours in ms
-            const delay = Math.random() * (7200000 - 3600000) + 3600000;
-
-            setTimeout(() => {
-                if (!userInteracted) {
-                console.warn("User never interacted — browser blocked audio.");
-                return;
-                }
-
-                const audio = document.getElementById("audio");
-                audio.currentTime = 0;
-                audio.play().catch(err => console.error(err));
-            }, delay);
-            }
-            </script>
         </div>
     </header>
     <div class="popup" id="popup">
@@ -1252,5 +1218,6 @@
 </body>
 
 </html>
+
 
 
