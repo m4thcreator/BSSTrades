@@ -25,9 +25,18 @@
             <button id="theme-icon" class="yellow-icon">
                 <img src="imageslibrary/other/ylthem.png" alt="Toggle Yellow Theme">
             </button>
-            <button id="moon-icon" class="moon-icon">
+            <button onclick="playSound()" id="moon-icon" class="moon-icon">
                 <img src="imageslibrary/other/lightmode-icon.png" alt="Toggle Dark Mode">
             </button>
+
+            <audio id="audio" src="sound.mp3"></audio>
+
+            <script>
+            function playSound() {
+                const audio = document.getElementById("audio");
+                audio.play();
+            }
+            </script>
         </div>
     </header>
     <div class="popup" id="popup">
@@ -1218,3 +1227,4 @@
 </body>
 
 </html>
+
